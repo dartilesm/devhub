@@ -1,8 +1,4 @@
-
+import { ThoughtBox } from "@/components/thought-box";
 export default function Home() {
-  return (
-    <div>
-      <h1>Hello World</h1>
-    </div>
-  );
+  return <ThoughtBox />;
 }
