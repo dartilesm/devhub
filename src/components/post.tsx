@@ -1,0 +1,192 @@
+"use client";
+
+import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { Avatar, Button, Card, CardBody, CardFooter, CardHeader, Tooltip } from "@heroui/react";
+
+type Reaction = "recommend" | "funny" | "interesting" | "love" | "celebrate";
+
+interface ReactionType {
+  type: Reaction;
+  icon: string;
+  label: string;
+}
+
+const reactions: ReactionType[] = [
+  { type: "recommend", icon: "👍", label: "Recommend" },
+  { type: "funny", icon: "😄", label: "Funny" },
+  { type: "interesting", icon: "🤔", label: "Interesting" },
+  { type: "love", icon: "❤️", label: "Love" },
+  { type: "celebrate", icon: "🎉", label: "Celebrate" },
+];
+
+interface PostProps {
+  id: string;
+  author: {
+    id: string;
+    name: string;
+    username: string;
+    avatarUrl: string;
+  };
+  content: string;
+  createdAt: string;
+  isFollowing?: boolean;
+  isThread?: boolean;
+  isFirstInThread?: boolean;
+  isLastInThread?: boolean;
+  onFollow?: (authorId: string) => void;
+  onReact?: (postId: string, reaction: Reaction) => void;
+  className?: string;
+}
+
+export function Post({
+  id,
+  author,
+  content,
+  createdAt,
+  isFollowing = false,
+  isThread = false,
+  isFirstInThread = false,
+  isLastInThread = false,
+  onFollow,
+  onReact,
+  className,
+}: PostProps) {
+  const [showReactions, setShowReactions] = useState(false);
+  const [selectedReaction, setSelectedReaction] = useState<Reaction | null>(null);
+
+  function handleFollow() {
+    onFollow?.(author.id);
+  }
+
+  function handleReaction(reaction: Reaction) {
+    setSelectedReaction(reaction);
+    setShowReactions(false);
+    onReact?.(id, reaction);
+  }
+
+  return (
+    <Card className={cn("relative rounded-none flex flex-row", className)} as='article'>
+      {/* Avatar */}
+      <div
+        className={cn("flex py-4 pl-4 pr-2 justify-center relative", {
+          "max-h-fit": isLastInThread,
+        })}
+      >
+        <Avatar
+          isBordered
+          src={author.avatarUrl}
+          alt={author.name}
+          className='flex-shrink-0 z-20'
+        />
+        {/* Thread Line Container */}
+        {isThread && (
+          <div
+            className={cn("absolute w-18 h-full top-0 flex items-center justify-center", {
+              "top-8": isFirstInThread,
+              "h-1/2": isLastInThread,
+            })}
+          >
+            <div className='relative w-[2px] z-10 h-full'>
+              {/* Main vertical line */}
+              <div className='absolute left-0 top-0 bottom-0 w-full bg-border/60 border border-content3' />
+            </div>
+          </div>
+        )}
+      </div>
+      <div className='w-full'>
+        <CardHeader className='flex items-center gap-4 pb-2'>
+          <div className='flex items-center justify-between w-full'>
+            <div className='flex items-center gap-2'>
+              <span className='font-semibold'>{author.name}</span>
+              <span className='text-sm text-muted-foreground'>@{author.username}</span>
+              <span className='text-sm text-muted-foreground'>·</span>
+              <time className='text-sm text-muted-foreground'>{createdAt}</time>
+            </div>
+
+            {!isFollowing && onFollow && (
+              <Button
+                variant='solid'
+                color='primary'
+                size='sm'
+                onPress={handleFollow}
+                className='rounded-full'
+              >
+                Follow
+              </Button>
+            )}
+          </div>
+        </CardHeader>
+
+        {/* Content */}
+        <CardBody className='flex-1 py-0'>
+          <p className='text-sm'>{content}</p>
+        </CardBody>
+        <CardFooter className='z-30'>
+          {/* Reactions */}
+          <Tooltip
+            className='relative mt-4 flex flex-row gap-2 rounded-full p-1'
+            placement='top-start'
+            content={
+              <>
+                {reactions.map((reaction) => (
+                  <div key={reaction.type} className='group relative'>
+                    <Button
+                      variant='light'
+                      size='sm'
+                      className='rounded-full p-2'
+                      isIconOnly
+                      onPress={() => handleReaction(reaction.type)}
+                    >
+                      <span className='text-xl'>{reaction.icon}</span>
+                    </Button>
+                    <span
+                      className={cn(
+                        "absolute -bottom-8 left-1/2 hidden -translate-x-1/2 rounded-md bg-popover px-2 py-1",
+                        "text-xs font-medium text-popover-foreground group-hover:block"
+                      )}
+                    >
+                      {reaction.label}
+                    </span>
+                  </div>
+                ))}
+              </>
+            }
+          >
+            <Button
+              variant={!selectedReaction ? "light" : "faded"}
+              color={!selectedReaction ? "default" : "primary"}
+              isIconOnly={!selectedReaction}
+              size='sm'
+              className='group flex items-center gap-1 rounded-full'
+              onMouseEnter={() => setShowReactions(true)}
+              onMouseLeave={() => setShowReactions(false)}
+            >
+              {selectedReaction ? (
+                <span className='text-lg'>
+                  {reactions.find((r) => r.type === selectedReaction)?.icon}
+                </span>
+              ) : (
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  stroke='currentColor'
+                  className='h-5 w-5 group-hover:text-primary'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'
+                  />
+                </svg>
+              )}
+              {selectedReaction && <span className='text-sm capitalize'>{selectedReaction}</span>}
+            </Button>
+          </Tooltip>
+        </CardFooter>
+      </div>
+    </Card>
+  );
+}
