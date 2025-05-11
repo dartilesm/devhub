@@ -1,12 +1,15 @@
 "use client";
 
 import { createPostComment } from "@/actions/post-comment";
+import { usePostsContext } from "@/hooks/use-posts-context";
+import { PostContextType } from "@/context/post-provider";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import { Avatar, Button, Chip, Spinner, Textarea, Tooltip } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import { Controller, useForm } from "react-hook-form";
 import { CodeIcon, ImageIcon, RocketIcon } from "lucide-react";
+
 interface FormData {
   comment: string;
 }
@@ -21,12 +24,41 @@ interface ThoughtBoxProps {
 export function ThoughtBox({ placeholder = "What's on your mind?", className }: ThoughtBoxProps) {
   const form = useForm<FormData>();
   const { user } = useUser();
+  const { addPost } = usePostsContext();
 
   async function onSubmit(data: FormData) {
-    const { error } = await createPostComment(data);
+    if (!user) return;
 
-    if (error) return;
-    form.reset();
+    // Send to server first
+    const { data: serverPosts, error } = await createPostComment(data);
+    console.log(serverPosts);
+
+    if (error) {
+      // Handle error - show an error message
+      return;
+    }
+
+    // Only add to UI after successful server response
+    if (serverPosts?.[0]) {
+      const serverPost = serverPosts[0];
+      const newPost: PostContextType = {
+        id: serverPost.id,
+        content: serverPost.content,
+        created_at: serverPost.created_at ?? new Date().toISOString(),
+        user_id: user.id,
+        reply_ids: serverPost.reply_ids ?? [],
+        user: {
+          id: user.id,
+          username: user.username ?? "",
+          firstName: user.firstName ?? "",
+          lastName: user.lastName ?? "",
+          imageUrl: user.imageUrl ?? "",
+        },
+      };
+
+      addPost(newPost);
+      form.reset();
+    }
   }
 
   return (

@@ -1,22 +1,23 @@
 import { PostList } from "@/components/post-list";
 import { ThoughtBox } from "@/components/thought-box";
+import { PostContextType } from "@/context/post-provider";
+import { PostsProvider } from "@/context/posts-context";
 import { createServerSupabaseClient } from "@/db/supabase";
 import { clerkClient } from "@clerk/nextjs/server";
-
-async function getPosts() {
+import { PostgrestSingleResponse } from "@supabase/supabase-js";
+async function getPosts(): Promise<PostgrestSingleResponse<PostContextType[]>> {
   const supabaseClient = createServerSupabaseClient();
-  const { data, error } = await supabaseClient.from("posts").select().order("created_at", {
+  const result = await supabaseClient.from("posts").select().order("created_at", {
     ascending: false,
   });
 
   const clerk = await clerkClient();
   const { data: users } = await clerk.users.getUserList({
-    userId: data?.map((post) => post.user_id),
+    userId: result.data?.map((post) => post.user_id),
   });
-  console.log(users.find((user) => user.id === data?.[0].user_id));
 
-  if (data)
-    return data.map((post) => {
+  if (result.data) {
+    result.data = result.data.map((post) => {
       const user = users?.find((user) => user.id === post.user_id);
       return {
         ...post,
@@ -29,18 +30,29 @@ async function getPosts() {
         },
       };
     });
+  }
 
-  console.log({ error });
-  return [];
+  return result;
 }
 
 export async function UserFeed() {
-  const posts = await getPosts();
-  console.log(posts);
+  const { data: initialPosts } = await getPosts();
+
+  if (!initialPosts) {
+    return (
+      <div className='w-full p-4 flex flex-col gap-4'>
+        <ThoughtBox />
+        <span className='text-center text-sm text-muted-foreground'>No posts found</span>
+      </div>
+    );
+  }
+
   return (
-    <div className='w-full p-4 flex flex-col gap-4'>
-      <ThoughtBox />
-      <PostList posts={posts} />
-    </div>
+    <PostsProvider initialPosts={initialPosts}>
+      <div className='w-full p-4 flex flex-col gap-4'>
+        <ThoughtBox />
+        <PostList />
+      </div>
+    </PostsProvider>
   );
 }
