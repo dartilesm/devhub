@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Avatar, Button, Card, CardBody, CardFooter, CardHeader, Tooltip } from "@heroui/react";
 import { Icon } from "@iconify/react";
 
-type Reaction = "recommend" | "funny" | "interesting" | "love" | "celebrate";
+type Reaction = "star" | "coffee" | "approve" | "cache";
 
 interface ReactionType {
   type: Reaction;
@@ -14,11 +14,10 @@ interface ReactionType {
 }
 
 const reactions: ReactionType[] = [
-  { type: "recommend", icon: "👍", label: "Recommend" },
-  { type: "funny", icon: "😄", label: "Funny" },
-  { type: "interesting", icon: "🤔", label: "Interesting" },
-  { type: "love", icon: "❤️", label: "Love" },
-  { type: "celebrate", icon: "🎉", label: "Celebrate" },
+  { type: "star", icon: "🌟", label: "Star (like)" },
+  { type: "coffee", icon: "☕", label: "Give a coffe (support)" },
+  { type: "approve", icon: "✅", label: "Approve (love)" },
+  { type: "cache", icon: "💾", label: "Cache (insightful)" },
 ];
 
 interface PostProps {
@@ -103,15 +102,17 @@ export function Post({
             </div>
 
             {!isFollowing && onFollow && (
-              <Button
-                variant='bordered'
-                color='primary'
-                size='sm'
-                onPress={handleFollow}
-                className='rounded-full'
-              >
-                Follow
-              </Button>
+              <Tooltip content='Watch user (Follow)'>
+                <Button
+                  variant='bordered'
+                  color='primary'
+                  size='sm'
+                  onPress={handleFollow}
+                  className='rounded-full'
+                >
+                  Watch
+                </Button>
+              </Tooltip>
             )}
           </div>
         </CardHeader>
@@ -160,24 +161,24 @@ export function Post({
                   {reactions.find((r) => r.type === selectedReaction)?.icon}
                 </span>
               ) : (
-                <Icon icon='lucide:thumbs-up' className='text-lg text-inherit' />
+                <Icon icon='lucide:star' className='text-lg text-inherit' />
               )}
               {selectedReaction && <span className='text-sm capitalize'>{selectedReaction}</span>}
             </Button>
           </Tooltip>
-          <Tooltip content='Reply'>
+          <Tooltip content='Comment'>
             <Button variant='light' size='sm' className='rounded-full' isIconOnly>
-              <Icon icon='lucide:message-circle' className='text-lg text-inherit' />
+              <Icon icon='lucide:message-square' className='text-lg text-inherit' />
             </Button>
           </Tooltip>
-          <Tooltip content='Repost'>
+          <Tooltip content='Clone (repost)'>
             <Button variant='light' size='sm' className='rounded-full' isIconOnly>
-              <Icon icon='lucide:repeat' className='text-lg text-inherit' />
+              <Icon icon='lucide:git-pull-request-create' className='text-lg text-inherit' />
             </Button>
           </Tooltip>
-          <Tooltip content='Save'>
+          <Tooltip content='Backup (Bookmark)'>
             <Button variant='light' size='sm' className='rounded-full' isIconOnly>
-              <Icon icon='lucide:bookmark' className='text-lg text-inherit' />
+              <Icon icon='lucide:archive' className='text-lg text-inherit' />
             </Button>
           </Tooltip>
           <Tooltip content='More'>
