@@ -2,7 +2,7 @@
 
 import { ThoughtBox } from "@/components/thought-box";
 import { Post } from "@/components/post";
-import { PostThread } from "@/components/post-thread";
+import { PostWrapper } from "@/components/post-wrapper";
 
 export default function Home() {
   function handleFollow(authorId: string) {
@@ -17,7 +17,7 @@ export default function Home() {
     <main className='mx-auto max-w-2xl p-4 flex flex-col gap-4'>
       <ThoughtBox />
 
-      <PostThread>
+      <PostWrapper>
         {/* Main post */}
         <Post
           id='1'
@@ -67,7 +67,23 @@ export default function Home() {
           onFollow={handleFollow}
           onReact={handleReact}
         />
-      </PostThread>
+      </PostWrapper>
+
+      <PostWrapper>
+        <Post
+          id='1'
+          author={{
+            id: "user1",
+            name: "John Doe",
+            username: "johndoe",
+            avatarUrl: "https://github.com/shadcn.png",
+          }}
+          content='Just launched my new project! 🚀 Really excited to share this with everyone. What do you think?'
+          createdAt='2h ago'
+          onFollow={handleFollow}
+          onReact={handleReact}
+        />
+      </PostWrapper>
     </main>
   );
 }
