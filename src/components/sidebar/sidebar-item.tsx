@@ -1,10 +1,11 @@
 import { Icon } from "@iconify/react";
 import { Chip, cn } from "@heroui/react";
 import Link from "next/link";
+import { ReactNode } from "react";
 
 interface SidebarItemProps {
   to: string;
-  icon: string;
+  icon: ReactNode;
   label: string;
   isActive: boolean;
   hasAddButton?: boolean;
@@ -29,15 +30,8 @@ export function SidebarItem({
         }
       )}
     >
-      <div className='flex items-center'>
-        <Icon
-          icon={icon}
-          width={20}
-          height={20}
-          className={cn("mr-3 text-content2-foreground", {
-            "text-content1-foreground": isActive,
-          })}
-        />
+      <div className='flex items-center gap-3'>
+        {icon}
         <span
           className={cn("text-content2-foreground", {
             "text-content1-foreground": isActive,

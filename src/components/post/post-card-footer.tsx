@@ -3,8 +3,13 @@
 import { Button, Tooltip } from "@heroui/react";
 import { useState } from "react";
 import { CardFooter } from "@heroui/react";
-import { Icon } from "@iconify/react";
-
+import {
+  GitPullRequestCreateIcon,
+  MessageSquareIcon,
+  ArchiveIcon,
+  StarIcon,
+  EllipsisIcon,
+} from "lucide-react";
 type Reaction = "star" | "coffee" | "approve" | "cache";
 
 interface ReactionType {
@@ -68,29 +73,29 @@ export function PostFooter() {
               {reactions.find((r) => r.type === selectedReaction)?.icon}
             </span>
           ) : (
-            <Icon icon='lucide:star' className='text-lg text-inherit' />
+            <StarIcon className='text-inherit' size={18} />
           )}
           {selectedReaction && <span className='text-sm capitalize'>{selectedReaction}</span>}
         </Button>
       </Tooltip>
       <Tooltip content='Comment'>
         <Button variant='light' size='sm' className='rounded-full' isIconOnly>
-          <Icon icon='lucide:message-square' className='text-lg text-inherit' />
+          <MessageSquareIcon className='text-inherit' size={18} />
         </Button>
       </Tooltip>
       <Tooltip content='Clone (repost)'>
         <Button variant='light' size='sm' className='rounded-full' isIconOnly>
-          <Icon icon='lucide:git-pull-request-create' className='text-lg text-inherit' />
+          <GitPullRequestCreateIcon className='text-inherit' size={18} />
         </Button>
       </Tooltip>
       <Tooltip content='Backup (Bookmark)'>
         <Button variant='light' size='sm' className='rounded-full' isIconOnly>
-          <Icon icon='lucide:archive' className='text-lg text-inherit' />
+          <ArchiveIcon className='text-inherit' size={18} />
         </Button>
       </Tooltip>
       <Tooltip content='More'>
         <Button variant='light' size='sm' className='rounded-full' isIconOnly>
-          <Icon icon='lucide:ellipsis' className='text-lg text-inherit' />
+          <EllipsisIcon className='text-inherit' size={18} />
         </Button>
       </Tooltip>
     </CardFooter>

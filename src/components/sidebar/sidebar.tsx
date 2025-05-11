@@ -6,7 +6,7 @@ import { UserProfile } from "./user-profile";
 /* import { TeamItem } from "./team-item"; */
 import { SidebarThemeSwitcher } from "@/components/sidebar/sidebar-theme-switcher";
 import { useUser } from "@clerk/nextjs";
-import { Icon } from "@iconify/react";
+import { HomeIcon, SearchIcon, MessageSquareIcon, UserIcon, TriangleIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 export function Sidebar() {
   const pathname = usePathname();
@@ -15,29 +15,29 @@ export function Sidebar() {
     <div className='h-full flex flex-col max-w-64'>
       <div className='p-4 flex items-center gap-2'>
         <div className='w-8 h-8 rounded-full bg-content1 flex items-center justify-center'>
-          <Icon
-            icon='lucide:triangle'
-            className='text-content1-foreground'
-            width={18}
-            height={18}
-          />
+          <TriangleIcon className='text-content1-foreground' size={18} />
         </div>
         <span className='font-medium text-content1-foreground text-lg'>ACME</span>
       </div>
 
       <div className='flex-1 overflow-y-auto justify-center flex flex-col'>
         <SidebarSection title=''>
-          <SidebarItem to='/root' icon='lucide:home' label='Home' isActive={pathname === "/root"} />
-          <SidebarItem to='/explore' icon='lucide:search' label='Query' isActive={false} />
+          <SidebarItem
+            to='/root'
+            icon={<HomeIcon />}
+            label='Home'
+            isActive={pathname === "/root"}
+          />
+          <SidebarItem to='/explore' icon={<SearchIcon />} label='Query' isActive={false} />
           <SidebarItem
             to='/messages'
-            icon='lucide:messages-square'
+            icon={<MessageSquareIcon />}
             label='Messages'
             isActive={false}
           />
           <SidebarItem
             to={`/user/${user?.username}`}
-            icon='lucide:user'
+            icon={<UserIcon />}
             label='Profile'
             isActive={false}
           />

@@ -28,7 +28,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-dvh`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-dvh`}
+        suppressHydrationWarning
+      >
         <ClerkProvider>
           <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
             <ClientProviders>{children}</ClientProviders>

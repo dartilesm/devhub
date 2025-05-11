@@ -2,7 +2,7 @@ import { Sidebar } from "@/components/sidebar/sidebar";
 
 export default function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
   return (
-    <main className='grid grid-cols-[min-content_600px_min-content] gap-4 px-4 mx-auto w-full max-w-7xl'>
+    <main className='grid grid-cols-[1fr_600px_1fr] gap-4 px-4 mx-auto w-full max-w-7xl'>
       <div className='flex flex-col gap-4'>
         <Sidebar />
       </div>

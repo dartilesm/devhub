@@ -1,7 +1,14 @@
 "use server";
 
 import { createServerSupabaseClient } from "@/db/supabase";
-export async function createPostComment({ comment }: { comment: string }) {
+import { PostgrestSingleResponse } from "@supabase/supabase-js";
+import { Tables } from "database.types";
+
+export async function createPostComment({
+  comment,
+}: {
+  comment: string;
+}): Promise<PostgrestSingleResponse<Tables<"posts">[]>> {
   const supabaseClient = createServerSupabaseClient();
 
   const result = await supabaseClient

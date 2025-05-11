@@ -1,16 +1,23 @@
-import { Button, ButtonGroup } from "@heroui/react";
-import { Icon } from "@iconify/react/dist/iconify.js";
+import { ButtonGroup } from "@heroui/react";
+import { Icon } from "@iconify/react";
+import { SunMoonIcon } from "lucide-react";
 import { useTheme } from "next-themes";
+import dynamic from "next/dynamic";
+
+const Button = dynamic(() => import("@heroui/react").then((mod) => mod.Button), {
+  ssr: false,
+});
 
 export function SidebarThemeSwitcher() {
   const { theme, setTheme } = useTheme();
-  console.log(theme);
 
   return (
     <div className='flex items-center justify-between px-4 py-2 mx-2 my-1 rounded-full transition-colors group hover:bg-content1/80'>
-      <div className='flex items-center gap-3'>
-        <Icon icon='lucide:sun-moon' width={20} height={20} className='text-content2-foreground' />
-        <span className='text-content2-foreground'>Theme</span>
+      <div className='flex justify-between w-full'>
+        <div className='flex items-center gap-3'>
+          <SunMoonIcon />
+          <span className='text-content2-foreground'>Theme</span>
+        </div>
         <ButtonGroup variant='flat' size='sm'>
           <Button
             isIconOnly

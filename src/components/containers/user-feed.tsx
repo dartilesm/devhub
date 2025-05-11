@@ -3,9 +3,11 @@ import { ThoughtBox } from "@/components/thought-box";
 import { createServerSupabaseClient } from "@/db/supabase";
 import { clerkClient } from "@clerk/nextjs/server";
 
-export async function getPosts() {
+async function getPosts() {
   const supabaseClient = createServerSupabaseClient();
-  const { data, error } = await supabaseClient.from("posts").select();
+  const { data, error } = await supabaseClient.from("posts").select().order("created_at", {
+    ascending: false,
+  });
 
   const clerk = await clerkClient();
   const { data: users } = await clerk.users.getUserList({
