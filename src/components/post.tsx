@@ -4,6 +4,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Avatar, Button, Card, CardBody, CardFooter, CardHeader, Tooltip } from "@heroui/react";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
 
 type Reaction = "star" | "coffee" | "approve" | "cache";
 
@@ -63,7 +64,13 @@ export function Post({
   }
 
   return (
-    <Card className={cn("relative rounded-none flex flex-row", className)} as='article'>
+    <Card
+      className={cn(
+        "relative rounded-none flex flex-row dark:bg-content1 bg-[transparent] shadow-2xs",
+        className
+      )}
+      as='article'
+    >
       {/* Avatar */}
       <div
         className={cn("flex py-4 pl-4 pr-2 justify-center relative", {
@@ -95,8 +102,10 @@ export function Post({
         <CardHeader className='flex items-center gap-4 pb-2'>
           <div className='flex items-center justify-between w-full'>
             <div className='flex items-center gap-2'>
-              <span className='font-semibold'>{author.name}</span>
-              <span className='text-sm text-muted-foreground'>@{author.username}</span>
+              <Link href={`/user/${author.username}`} className='flex flex-row gap-2 items-center'>
+                <span className='font-semibold'>{author.name}</span>
+                <span className='text-sm text-muted-foreground'>@{author.username}</span>
+              </Link>
               <span className='text-sm text-muted-foreground'>·</span>
               <time className='text-sm text-muted-foreground'>{createdAt}</time>
             </div>
