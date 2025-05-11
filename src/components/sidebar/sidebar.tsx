@@ -1,14 +1,13 @@
 "use client";
 
-import { UserProfile } from "./user-profile";
 import { SidebarItem } from "./sidebar-item";
 import { SidebarSection } from "./sidebar-section";
+import { UserProfile } from "./user-profile";
 /* import { TeamItem } from "./team-item"; */
+import { SidebarThemeSwitcher } from "@/components/sidebar/sidebar-theme-switcher";
+import { useUser } from "@clerk/nextjs";
 import { Icon } from "@iconify/react";
 import { usePathname } from "next/navigation";
-import { useUser } from "@clerk/nextjs";
-import { Button, ButtonGroup } from "@heroui/react";
-import { SidebarThemeSwitcher } from "@/app/components/sidebar/sidebar-theme-switcher";
 export function Sidebar() {
   const pathname = usePathname();
   const { user } = useUser();
@@ -28,7 +27,7 @@ export function Sidebar() {
 
       <div className='flex-1 overflow-y-auto justify-center flex flex-col'>
         <SidebarSection title=''>
-          <SidebarItem to='/' icon='lucide:home' label='Root' isActive={pathname === "/"} />
+          <SidebarItem to='/root' icon='lucide:home' label='Home' isActive={pathname === "/root"} />
           <SidebarItem to='/explore' icon='lucide:search' label='Query' isActive={false} />
           <SidebarItem
             to='/messages'
