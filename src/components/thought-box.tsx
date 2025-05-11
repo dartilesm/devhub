@@ -25,7 +25,8 @@ export function ThoughtBox({ placeholder = "What's on your mind?", className }: 
           aria-describedby='char-count'
           classNames={{
             input: "pb-10 focus-visible:outline-none pl-14",
-            inputWrapper: "p-4",
+            inputWrapper:
+              "p-4 bg-default-300/30 data-[hover=true]:bg-default-300/50 data-[focus=true]:bg-default-300/30",
           }}
           rows={1}
         />
