@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Button, Chip, Textarea, Tooltip } from "@heroui/react";
+import { Avatar, Button, Chip, Textarea, Tooltip } from "@heroui/react";
 import { Icon } from "@iconify/react";
 
 interface ThoughtBoxProps {
@@ -15,13 +15,16 @@ export function ThoughtBox({ placeholder = "What's on your mind?", className }: 
   return (
     <div className={cn("space-y-2", className)}>
       <div className='relative'>
+        <div className='absolute top-4 left-4 flex flex-row gap-2 z-10'>
+          <Avatar isBordered src='https://github.com/shadcn.png' />
+        </div>
         <Textarea
           id='thought-input'
           placeholder={placeholder}
           aria-label='Share your thoughts'
           aria-describedby='char-count'
           classNames={{
-            input: "pb-10 focus-visible:outline-none",
+            input: "pb-10 focus-visible:outline-none pl-14",
             inputWrapper: "p-4",
           }}
           rows={1}
@@ -42,15 +45,16 @@ export function ThoughtBox({ placeholder = "What's on your mind?", className }: 
               <Chip
                 variant='bordered'
                 classNames={{
-                  content: "flex flex-row items-center gap-2 text-muted-foreground",
+                  content: "flex flex-row items-center gap-2 text-muted-foreground text-xs",
                 }}
               >
                 <Icon icon='mdi:markdown' className='text-medium' />
                 Markdown supported
               </Chip>
             </div>
-            <Button variant='solid' color='primary'>
-              Post
+            <Button variant='solid' color='primary' className='rounded-full' size='sm'>
+              Deploy comment
+              <Icon icon='lucide:rocket' className='text-medium' />
             </Button>
           </div>
         </div>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Avatar, Button, Card, CardBody, CardFooter, CardHeader, Tooltip } from "@heroui/react";
+import { Icon } from "@iconify/react";
 
 type Reaction = "recommend" | "funny" | "interesting" | "love" | "celebrate";
 
@@ -52,16 +53,13 @@ export function Post({
   onReact,
   className,
 }: PostProps) {
-  const [showReactions, setShowReactions] = useState(false);
   const [selectedReaction, setSelectedReaction] = useState<Reaction | null>(null);
-
   function handleFollow() {
     onFollow?.(author.id);
   }
 
   function handleReaction(reaction: Reaction) {
     setSelectedReaction(reaction);
-    setShowReactions(false);
     onReact?.(id, reaction);
   }
 
@@ -106,7 +104,7 @@ export function Post({
 
             {!isFollowing && onFollow && (
               <Button
-                variant='solid'
+                variant='bordered'
                 color='primary'
                 size='sm'
                 onPress={handleFollow}
@@ -122,36 +120,33 @@ export function Post({
         <CardBody className='flex-1 py-0'>
           <p className='text-sm'>{content}</p>
         </CardBody>
-        <CardFooter className='z-30'>
+        <CardFooter className='z-30 flex flex-row gap-2 justify-between'>
           {/* Reactions */}
           <Tooltip
             className='relative mt-4 flex flex-row gap-2 rounded-full p-1'
             placement='top-start'
-            content={
-              <>
-                {reactions.map((reaction) => (
-                  <div key={reaction.type} className='group relative'>
-                    <Button
-                      variant='light'
-                      size='sm'
-                      className='rounded-full p-2'
-                      isIconOnly
-                      onPress={() => handleReaction(reaction.type)}
-                    >
-                      <span className='text-xl'>{reaction.icon}</span>
-                    </Button>
-                    <span
-                      className={cn(
-                        "absolute -bottom-8 left-1/2 hidden -translate-x-1/2 rounded-md bg-popover px-2 py-1",
-                        "text-xs font-medium text-popover-foreground group-hover:block"
-                      )}
-                    >
-                      {reaction.label}
-                    </span>
-                  </div>
-                ))}
-              </>
-            }
+            content={reactions.map((reaction) => (
+              <Tooltip key={reaction.type} className='group relative' content={reaction.label}>
+                <Button
+                  variant='light'
+                  size='sm'
+                  className='rounded-full p-2 hover:scale-200 transition-all duration-300'
+                  isIconOnly
+                  onPress={() => handleReaction(reaction.type)}
+                >
+                  <span className='text-xl'>{reaction.icon}</span>
+                </Button>
+
+                {/* <span
+                    className={cn(
+                      "absolute -bottom-8 left-1/2 hidden -translate-x-1/2 rounded-md bg-popover px-2 py-1",
+                      "text-xs font-medium text-popover-foreground group-hover:block"
+                    )}
+                  >
+                    {reaction.label}
+                  </span> */}
+              </Tooltip>
+            ))}
           >
             <Button
               variant={!selectedReaction ? "light" : "faded"}
@@ -159,30 +154,35 @@ export function Post({
               isIconOnly={!selectedReaction}
               size='sm'
               className='group flex items-center gap-1 rounded-full'
-              onMouseEnter={() => setShowReactions(true)}
-              onMouseLeave={() => setShowReactions(false)}
             >
               {selectedReaction ? (
                 <span className='text-lg'>
                   {reactions.find((r) => r.type === selectedReaction)?.icon}
                 </span>
               ) : (
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  stroke='currentColor'
-                  className='h-5 w-5 group-hover:text-primary'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth={2}
-                    d='M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'
-                  />
-                </svg>
+                <Icon icon='lucide:thumbs-up' className='text-lg text-inherit' />
               )}
               {selectedReaction && <span className='text-sm capitalize'>{selectedReaction}</span>}
+            </Button>
+          </Tooltip>
+          <Tooltip content='Reply'>
+            <Button variant='light' size='sm' className='rounded-full' isIconOnly>
+              <Icon icon='lucide:message-circle' className='text-lg text-inherit' />
+            </Button>
+          </Tooltip>
+          <Tooltip content='Repost'>
+            <Button variant='light' size='sm' className='rounded-full' isIconOnly>
+              <Icon icon='lucide:repeat' className='text-lg text-inherit' />
+            </Button>
+          </Tooltip>
+          <Tooltip content='Save'>
+            <Button variant='light' size='sm' className='rounded-full' isIconOnly>
+              <Icon icon='lucide:bookmark' className='text-lg text-inherit' />
+            </Button>
+          </Tooltip>
+          <Tooltip content='More'>
+            <Button variant='light' size='sm' className='rounded-full' isIconOnly>
+              <Icon icon='lucide:ellipsis' className='text-lg text-inherit' />
             </Button>
           </Tooltip>
         </CardFooter>
