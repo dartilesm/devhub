@@ -32,9 +32,7 @@ export default function RootLayout({
           <ClientProviders>
             <main className='grid grid-cols-[auto_700px_auto] gap-4 px-4 mx-auto w-full max-w-7xl'>
               <div className='flex flex-col gap-4'>{/* Left sidebar */}</div>
-              <div className='flex flex-col gap-4 min-h-dvh border-x border-border px-4 pt-4'>
-                {children}
-              </div>
+              <div className='flex flex-col gap-4 min-h-dvh px-4 pt-4'>{children}</div>
               <div className='flex flex-col gap-4'>{/* Right sidebar */}</div>
             </main>
           </ClientProviders>
