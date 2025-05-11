@@ -1,15 +1,25 @@
 "use client";
 
+import { PostWrapper } from "@/components/post/post-wrapper";
+import { User } from "@clerk/nextjs/server";
+import { Tables } from "database.types";
 import { createContext } from "react";
 
-type PostContextType = {
-  id: string;
-};
+export interface PostContextType extends Tables<"posts"> {
+  user: Pick<User, "id" | "firstName" | "lastName" | "username" | "imageUrl">;
+}
 
-export const PostContext = createContext<PostContextType>({
-  id: "",
-});
+export const PostContext = createContext<PostContextType>({} as PostContextType);
 
-export function PostProvider({ children, id }: { children: React.ReactNode; id: string }) {
-  return <PostContext.Provider value={{ id }}>{children}</PostContext.Provider>;
+interface PostProviderProps extends Tables<"posts"> {
+  user: Pick<User, "id" | "firstName" | "lastName" | "username" | "imageUrl">;
+  children: React.ReactNode;
+}
+
+export function PostProvider({ children, ...post }: PostProviderProps) {
+  return (
+    <PostContext.Provider value={post}>
+      <PostWrapper>{children}</PostWrapper>
+    </PostContext.Provider>
+  );
 }
