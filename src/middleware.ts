@@ -1,6 +1,17 @@
-import { clerkMiddleware } from "@clerk/nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-export default clerkMiddleware();
+/**
+ * Route matcher to protect all routes except for the sign-in and sign-up pages
+ */
+const isProtectedRoute = createRouteMatcher(["/((?!sign-in|sign-up).*)"]);
+
+/**
+ * Clerk middleware to handle authentication and authorization
+ * @see https://clerk.com/docs/references/nextjs/clerk-middleware
+ */
+export default clerkMiddleware(async function middleware(auth, req) {
+  if (isProtectedRoute(req)) await auth.protect();
+});
 
 export const config = {
   matcher: [
