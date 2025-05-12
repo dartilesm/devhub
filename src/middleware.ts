@@ -15,9 +15,17 @@ export default clerkMiddleware(async function middleware(auth, req) {
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    // Always run for API routes
-    "/(api|trpc)(.*)",
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api/webhooks (webhook endpoints)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * And except for files with these extensions:
+     * - .html, .css, .js, .jpg, .jpeg, .webp, .png, .gif, .svg, .ttf
+     * - .woff, .woff2, .ico, .csv, .doc, .docx, .xls, .xlsx, .zip
+     * - .webmanifest
+     */
+    "/((?!api/webhooks|_next/static|_next/image|favicon\\.ico|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
   ],
 };
