@@ -1,18 +1,20 @@
 "use client";
 
 import { createPostComment } from "@/actions/post-comment";
-import { usePostsContext } from "@/hooks/use-posts-context";
 import { PostContextType } from "@/context/post-provider";
+import { usePostsContext } from "@/hooks/use-posts-context";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import { Avatar, Button, Chip, Spinner, Textarea, Tooltip } from "@heroui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Icon } from "@iconify/react";
-import { Controller, useForm } from "react-hook-form";
 import { CodeIcon, ImageIcon, RocketIcon } from "lucide-react";
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
 
-interface FormData {
-  comment: string;
-}
+const formSchema = z.object({
+  comment: z.string().min(1),
+});
 
 interface ThoughtBoxProps {
   maxLength?: number;
@@ -22,11 +24,18 @@ interface ThoughtBoxProps {
 }
 
 export function ThoughtBox({ placeholder = "What's on your mind?", className }: ThoughtBoxProps) {
-  const form = useForm<FormData>();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      comment: "",
+    },
+    mode: "onSubmit",
+    reValidateMode: "onSubmit",
+  });
   const { user } = useUser();
   const { addPost } = usePostsContext();
 
-  async function onSubmit(data: FormData) {
+  async function onSubmit(data: z.infer<typeof formSchema>) {
     if (!user) return;
 
     // Send to server first
@@ -35,6 +44,7 @@ export function ThoughtBox({ placeholder = "What's on your mind?", className }: 
 
     if (error) {
       // Handle error - show an error message
+      form.setError("comment", { message: error.message });
       return;
     }
 
@@ -44,9 +54,9 @@ export function ThoughtBox({ placeholder = "What's on your mind?", className }: 
       const newPost: PostContextType = {
         id: serverPost.id,
         content: serverPost.content,
-        created_at: serverPost.created_at ?? new Date().toISOString(),
+        created_at: serverPost.created_at,
         user_id: user.id,
-        reply_ids: serverPost.reply_ids ?? [],
+        reply_ids: serverPost.reply_ids,
         user: {
           id: user.id,
           username: user.username ?? "",
@@ -77,6 +87,7 @@ export function ThoughtBox({ placeholder = "What's on your mind?", className }: 
               placeholder={placeholder}
               aria-label='Share your thoughts'
               aria-describedby='char-count'
+              isInvalid={!!form.formState.errors.comment}
               classNames={{
                 input: "pb-10 focus-visible:outline-none pl-14 resize-none  min-h-[100px]",
                 inputWrapper:
@@ -115,7 +126,7 @@ export function ThoughtBox({ placeholder = "What's on your mind?", className }: 
               color='primary'
               className='rounded-full'
               size='sm'
-              isDisabled={!form.formState.isValid && form.formState.isSubmitting}
+              isDisabled={!form.formState.isValid || form.formState.isSubmitting}
               isLoading={form.formState.isSubmitting}
               spinner={
                 <Spinner
