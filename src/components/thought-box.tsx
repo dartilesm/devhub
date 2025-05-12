@@ -8,11 +8,13 @@ import { useUser } from "@clerk/nextjs";
 import { Avatar, Button, Chip, Spinner, Textarea, Tooltip } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Icon } from "@iconify/react";
+import { PostgrestSingleResponse } from "@supabase/supabase-js";
+import { Tables } from "database.types";
 import { CodeIcon, ImageIcon, RocketIcon } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
-const formSchema = z.object({
+export const thoughtBoxSchema = z.object({
   comment: z.string().min(1),
 });
 
@@ -20,12 +22,18 @@ interface ThoughtBoxProps {
   maxLength?: number;
   placeholder?: string;
   className?: string;
-  onSubmit?: (thought: string) => void;
+  onSubmit?: (
+    data: z.infer<typeof thoughtBoxSchema>
+  ) => Promise<PostgrestSingleResponse<Tables<"replies">[] | Tables<"reposts">[]>>;
 }
 
-export function ThoughtBox({ placeholder = "What's on your mind?", className }: ThoughtBoxProps) {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+export function ThoughtBox({
+  placeholder = "What's on your mind?",
+  className,
+  onSubmit,
+}: ThoughtBoxProps) {
+  const form = useForm<z.infer<typeof thoughtBoxSchema>>({
+    resolver: zodResolver(thoughtBoxSchema),
     defaultValues: {
       comment: "",
     },
@@ -35,8 +43,17 @@ export function ThoughtBox({ placeholder = "What's on your mind?", className }: 
   const { user } = useUser();
   const { addPost } = usePostsContext();
 
-  async function onSubmit(data: z.infer<typeof formSchema>) {
+  async function handleOnSubmit(data: z.infer<typeof thoughtBoxSchema>) {
     if (!user) return;
+    if (onSubmit) {
+      const result = await onSubmit(data);
+      console.log(result);
+      if (result.error) {
+        form.setError("comment", { message: result.error.message });
+        return;
+      }
+      return form.reset();
+    }
 
     // Send to server first
     const { data: serverPosts, error } = await createPostComment(data);
@@ -73,7 +90,7 @@ export function ThoughtBox({ placeholder = "What's on your mind?", className }: 
 
   return (
     <div className={cn("space-y-2", className)}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='relative'>
+      <form onSubmit={form.handleSubmit(handleOnSubmit)} className='relative'>
         <div className='absolute top-4 left-4 flex flex-row gap-2 z-10'>
           <Avatar isBordered src={user?.imageUrl} />
         </div>

@@ -26,7 +26,15 @@ export function PostList() {
             <PostProvider {...post}>
               <PostCard>
                 <PostHeader />
-                <PostContent />
+                <PostContent>
+                  {/* <PostProvider {...post.replies[0]}>
+                    <PostCard>
+                      <PostHeader />
+                      <PostContent />
+                      <PostFooter />
+                    </PostCard>
+                  </PostProvider> */}
+                </PostContent>
                 <PostFooter />
               </PostCard>
             </PostProvider>
