@@ -31,7 +31,15 @@ export type Database = {
           reply_ids?: number[] | null
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "posts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["clerk_user_id"]
+          },
+        ]
       }
       reactions: {
         Row: {
@@ -83,6 +91,13 @@ export type Database = {
             referencedRelation: "reposts"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "reactions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["clerk_user_id"]
+          },
         ]
       }
       replies: {
@@ -125,6 +140,13 @@ export type Database = {
             referencedRelation: "posts"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "replies_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["clerk_user_id"]
+          },
         ]
       }
       reposts: {
@@ -164,6 +186,13 @@ export type Database = {
             referencedRelation: "replies"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "reposts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["clerk_user_id"]
+          },
         ]
       }
       user_followers: {
@@ -179,13 +208,23 @@ export type Database = {
           follower_id?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "user_followers_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["clerk_user_id"]
+          },
+        ]
       }
       users: {
         Row: {
           bio: string | null
+          clerk_user_id: string
           display_name: string
           id: number
+          image_url: string | null
           join_date: string | null
           location: string | null
           username: string
@@ -193,8 +232,10 @@ export type Database = {
         }
         Insert: {
           bio?: string | null
+          clerk_user_id?: string
           display_name: string
           id?: never
+          image_url?: string | null
           join_date?: string | null
           location?: string | null
           username: string
@@ -202,8 +243,10 @@ export type Database = {
         }
         Update: {
           bio?: string | null
+          clerk_user_id?: string
           display_name?: string
           id?: never
+          image_url?: string | null
           join_date?: string | null
           location?: string | null
           username?: string

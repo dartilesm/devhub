@@ -1,18 +1,17 @@
 "use client";
 
 import { PostWrapper } from "@/components/post/post-wrapper";
-import { User } from "@clerk/nextjs/server";
 import { Tables } from "database.types";
 import { createContext } from "react";
 
-export interface PostContextType extends Tables<"posts"> {
-  user: Pick<User, "id" | "firstName" | "lastName" | "username" | "imageUrl">;
+export interface PostContextType extends Partial<Tables<"posts">> {
+  user: Partial<Tables<"users">>;
 }
 
 export const PostContext = createContext<PostContextType>({} as PostContextType);
 
 interface PostProviderProps extends Tables<"posts"> {
-  user: Pick<User, "id" | "firstName" | "lastName" | "username" | "imageUrl">;
+  user: Partial<Tables<"users">>;
   children: React.ReactNode;
 }
 

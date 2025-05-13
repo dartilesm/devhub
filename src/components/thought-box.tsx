@@ -73,17 +73,16 @@ export function ThoughtBox({
         content: serverPost.content,
         created_at: serverPost.created_at,
         user_id: user.id,
-        reply_ids: serverPost.reply_ids,
         user: {
-          id: user.id,
+          clerk_user_id: user.id,
           username: user.username ?? "",
-          firstName: user.firstName ?? "",
-          lastName: user.lastName ?? "",
-          imageUrl: user.imageUrl ?? "",
+          display_name: user.firstName ?? "",
+          image_url: user.imageUrl ?? "",
         },
       };
 
       addPost(newPost);
+      console.log({ newPost });
       form.reset();
     }
   }
