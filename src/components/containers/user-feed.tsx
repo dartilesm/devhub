@@ -3,10 +3,8 @@ import { ThoughtBox } from "@/components/thought-box";
 import { PostContextType } from "@/context/post-provider";
 import { PostsProvider } from "@/context/posts-context";
 import { createServerSupabaseClient } from "@/db/supabase";
-import { clerkClient } from "@clerk/nextjs/server";
-import { PostgrestSingleResponse } from "@supabase/supabase-js";
 
-async function getPosts(): Promise<PostgrestSingleResponse<PostContextType[]>> {
+async function getPosts() {
   const supabaseClient = createServerSupabaseClient();
   const result = await supabaseClient
     .from("posts")
@@ -16,6 +14,13 @@ async function getPosts(): Promise<PostgrestSingleResponse<PostContextType[]>> {
         content,
         created_at,
         user_id,
+        user:users (
+          id,
+          clerk_user_id,
+          username,
+          display_name,
+          image_url
+        ),
         replies (
           id,
           content,
@@ -33,27 +38,6 @@ async function getPosts(): Promise<PostgrestSingleResponse<PostContextType[]>> {
     .limit(10)
     .limit(10, { referencedTable: "replies" });
 
-  const clerk = await clerkClient();
-  const { data: users } = await clerk.users.getUserList({
-    userId: result.data?.map((post) => post.user_id),
-  });
-
-  if (result.data) {
-    result.data = result.data.map((post) => {
-      const user = users?.find((user) => user.id === post.user_id);
-      return {
-        ...post,
-        user: {
-          id: user?.id,
-          username: user?.username,
-          firstName: user?.firstName,
-          lastName: user?.lastName,
-          imageUrl: user?.imageUrl,
-        },
-      };
-    });
-  }
-
   return result;
 }
 
@@ -61,7 +45,7 @@ export async function UserFeed() {
   const { data: initialPosts } = await getPosts();
   console.log(initialPosts);
 
-  if (!initialPosts) {
+  if (!initialPosts?.length) {
     return (
       <PostsProvider initialPosts={[]}>
         <div className='w-full p-4 flex flex-col gap-4'>
@@ -73,7 +57,7 @@ export async function UserFeed() {
   }
 
   return (
-    <PostsProvider initialPosts={initialPosts}>
+    <PostsProvider initialPosts={initialPosts as PostContextType[]}>
       <div className='w-full p-4 flex flex-col gap-4'>
         <ThoughtBox />
         <PostList />
