@@ -1,5 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
-
+import { NextResponse } from "next/server";
 /**
  * Route matcher to protect all routes except for the sign-in and sign-up pages
  */
@@ -11,6 +11,10 @@ const isProtectedRoute = createRouteMatcher(["/((?!sign-in|sign-up).*)"]);
  */
 export default clerkMiddleware(async function middleware(auth, req) {
   if (isProtectedRoute(req)) await auth.protect();
+
+  if (req.nextUrl.pathname === "/") {
+    return NextResponse.redirect(new URL("/root", req.url));
+  }
 });
 
 export const config = {
