@@ -24,9 +24,9 @@ export function SidebarItem({
     <Link
       href={to}
       className={cn(
-        "flex items-center justify-between px-4 py-2 mx-2 my-1 rounded-full transition-colors group hover:bg-content1/80",
+        "flex items-center justify-between px-4 py-2 mx-2 my-1 rounded-full transition-colors group hover:bg-content4/80 dark:hover:bg-content4/60",
         {
-          "bg-content3": isActive,
+          "bg-content3 dark:bg-content3/50": isActive,
         }
       )}
     >
