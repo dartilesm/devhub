@@ -105,8 +105,8 @@ export function ThoughtBox({
               aria-describedby='char-count'
               isInvalid={!!form.formState.errors.comment}
               classNames={{
-                input: "pb-10 focus-visible:outline-none pl-14 resize-none  min-h-[100px]",
-                inputWrapper: "p-4",
+                input: "focus-visible:outline-none  resize-none  min-h-[60px] pl-4",
+                inputWrapper: "p-4 pb-14 pl-14",
               }}
               {...field}
             />
