@@ -14,8 +14,8 @@ export function PostAvatarAndThreadLine() {
     >
       <Avatar
         isBordered
-        src={post.user.imageUrl}
-        alt={post.user.firstName ?? ""}
+        src={post.user.image_url ?? ""}
+        alt={post.user.display_name}
         className='flex-shrink-0 z-20'
       />
       {/* Thread Line Container */}
