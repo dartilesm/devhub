@@ -1,6 +1,7 @@
 "use client";
 
 import { usePostContext } from "@/hooks/use-post-context";
+import { formatDateTime } from "@/lib/format-time";
 import { getRelativeTime } from "@/lib/relative-time";
 import { Button, CardHeader } from "@heroui/react";
 import { UserRoundPlusIcon } from "lucide-react";
@@ -18,7 +19,10 @@ export function PostHeader() {
             <span className='text-sm text-content4-foreground/50'>@{post.user.username}</span>
           </Link>
           <span className='text-sm text-content4-foreground/50'>·</span>
-          <time className='text-sm text-content4-foreground/50'>
+          <time
+            className='text-sm text-content4-foreground/50'
+            title={formatDateTime(post.created_at!)}
+          >
             {getRelativeTime(new Date(post.created_at!))}
           </time>
         </div>

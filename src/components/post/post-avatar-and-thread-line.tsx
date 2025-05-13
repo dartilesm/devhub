@@ -3,6 +3,7 @@
 import { usePostContext } from "@/hooks/use-post-context";
 import { cn } from "@/lib/utils";
 import { Avatar } from "@heroui/react";
+import Link from "next/link";
 
 export function PostAvatarAndThreadLine() {
   const post = usePostContext();
@@ -12,12 +13,14 @@ export function PostAvatarAndThreadLine() {
         /* "max-h-fit": isLastInThread, */
       })}
     >
-      <Avatar
-        isBordered
-        src={post.user.image_url ?? ""}
-        alt={post.user.display_name}
-        className='flex-shrink-0 z-20'
-      />
+      <Link href={`/user/${post.user.username}`}>
+        <Avatar
+          isBordered
+          src={post.user.image_url ?? ""}
+          alt={post.user.display_name}
+          className='flex-shrink-0 z-20'
+        />
+      </Link>
       {/* Thread Line Container */}
       {/* {isThread && (
         <div
