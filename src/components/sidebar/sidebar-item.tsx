@@ -26,7 +26,7 @@ export function SidebarItem({
       className={cn(
         "flex items-center justify-between px-4 py-2 mx-2 my-1 rounded-full transition-colors group hover:bg-content1/80",
         {
-          "bg-content2": isActive,
+          "bg-content3": isActive,
         }
       )}
     >

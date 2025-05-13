@@ -3,10 +3,9 @@
 import { SidebarItem } from "./sidebar-item";
 import { SidebarSection } from "./sidebar-section";
 import { UserProfile } from "./user-profile";
-/* import { TeamItem } from "./team-item"; */
 import { SidebarThemeSwitcher } from "@/components/sidebar/sidebar-theme-switcher";
 import { useUser } from "@clerk/nextjs";
-import { HomeIcon, SearchIcon, MessageSquareIcon, UserIcon, TriangleIcon } from "lucide-react";
+import { HomeIcon, MessageSquareIcon, TelescopeIcon, TriangleIcon, UserIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 export function Sidebar() {
   const pathname = usePathname();
@@ -25,10 +24,10 @@ export function Sidebar() {
           <SidebarItem
             to='/root'
             icon={<HomeIcon />}
-            label='Home'
+            label='Root'
             isActive={pathname === "/root"}
           />
-          <SidebarItem to='/explore' icon={<SearchIcon />} label='Query' isActive={false} />
+          <SidebarItem to='/explore' icon={<TelescopeIcon />} label='Explore' isActive={false} />
           <SidebarItem
             to='/messages'
             icon={<MessageSquareIcon />}
