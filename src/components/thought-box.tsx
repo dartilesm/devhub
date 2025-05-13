@@ -106,8 +106,7 @@ export function ThoughtBox({
               isInvalid={!!form.formState.errors.comment}
               classNames={{
                 input: "pb-10 focus-visible:outline-none pl-14 resize-none  min-h-[100px]",
-                inputWrapper:
-                  "p-4 bg-default-300/30 data-[hover=true]:bg-default-300/50 data-[focus=true]:bg-default-300/30",
+                inputWrapper: "p-4",
               }}
               {...field}
             />
