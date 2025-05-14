@@ -13,22 +13,19 @@ export type Database = {
         Row: {
           content: string
           created_at: string | null
-          id: number
-          reply_ids: number[] | null
+          id: string
           user_id: string
         }
         Insert: {
           content: string
           created_at?: string | null
-          id?: never
-          reply_ids?: number[] | null
+          id?: string
           user_id?: string
         }
         Update: {
           content?: string
           created_at?: string | null
-          id?: never
-          reply_ids?: number[] | null
+          id?: string
           user_id?: string
         }
         Relationships: [
@@ -44,29 +41,29 @@ export type Database = {
       reactions: {
         Row: {
           created_at: string | null
-          id: number
-          post_id: number | null
+          id: string
+          post_id: string | null
           reaction_type: string
-          reply_id: number | null
-          repost_id: number | null
+          reply_id: string | null
+          repost_id: string | null
           user_id: string
         }
         Insert: {
           created_at?: string | null
-          id?: never
-          post_id?: number | null
+          id?: string
+          post_id?: string | null
           reaction_type: string
-          reply_id?: number | null
-          repost_id?: number | null
+          reply_id?: string | null
+          repost_id?: string | null
           user_id?: string
         }
         Update: {
           created_at?: string | null
-          id?: never
-          post_id?: number | null
+          id?: string
+          post_id?: string | null
           reaction_type?: string
-          reply_id?: number | null
-          repost_id?: number | null
+          reply_id?: string | null
+          repost_id?: string | null
           user_id?: string
         }
         Relationships: [
@@ -104,25 +101,25 @@ export type Database = {
         Row: {
           content: string
           created_at: string | null
-          id: number
-          parent_reply_id: number | null
-          post_id: number | null
+          id: string
+          parent_reply_id: string | null
+          post_id: string | null
           user_id: string
         }
         Insert: {
           content: string
           created_at?: string | null
-          id?: never
-          parent_reply_id?: number | null
-          post_id?: number | null
+          id?: string
+          parent_reply_id?: string | null
+          post_id?: string | null
           user_id?: string
         }
         Update: {
           content?: string
           created_at?: string | null
-          id?: never
-          parent_reply_id?: number | null
-          post_id?: number | null
+          id?: string
+          parent_reply_id?: string | null
+          post_id?: string | null
           user_id?: string
         }
         Relationships: [
@@ -152,23 +149,23 @@ export type Database = {
       reposts: {
         Row: {
           created_at: string | null
-          id: number
-          post_id: number | null
-          reply_id: number | null
+          id: string
+          post_id: string | null
+          reply_id: string | null
           user_id: string
         }
         Insert: {
           created_at?: string | null
-          id?: never
-          post_id?: number | null
-          reply_id?: number | null
+          id?: string
+          post_id?: string | null
+          reply_id?: string | null
           user_id?: string
         }
         Update: {
           created_at?: string | null
-          id?: never
-          post_id?: number | null
-          reply_id?: number | null
+          id?: string
+          post_id?: string | null
+          reply_id?: string | null
           user_id?: string
         }
         Relationships: [
