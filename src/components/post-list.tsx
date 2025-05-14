@@ -1,13 +1,8 @@
 "use client";
 
-import { PostProvider } from "@/context/post-provider";
 import { usePostsContext } from "@/hooks/use-posts-context";
-import { PostCard } from "./post/post-card";
-import { PostContent } from "./post/post-card-content";
-import { PostFooter } from "./post/post-card-footer";
-import { PostHeader } from "./post/post-card-header";
 import { AnimatePresence, motion } from "framer-motion";
-
+import { UserPost } from "./post/user-post";
 export function PostList() {
   const { posts } = usePostsContext();
 
@@ -23,24 +18,13 @@ export function PostList() {
             exit={{ opacity: 0, y: 50 }} // Animation values when exiting
             transition={{ duration: 0.3 }} // Animation duration
           >
-            <PostProvider {...post}>
-              <PostCard>
-                <PostHeader />
-                <PostContent>
-                  {/* <PostProvider {...post.replies[0]}>
-                    <PostCard>
-                      <PostHeader />
-                      <PostContent />
-                      <PostFooter />
-                    </PostCard>
-                  </PostProvider> */}
-                </PostContent>
-                <PostFooter />
-              </PostCard>
-            </PostProvider>
+            <UserPost {...post} />
           </motion.div>
         ))}
       </AnimatePresence>
+      {posts.length === 0 && (
+        <span className='text-center text-sm text-muted-foreground'>No posts found</span>
+      )}
     </div>
   );
 }
