@@ -18,7 +18,7 @@ export function PostList() {
             exit={{ opacity: 0, y: 50 }} // Animation values when exiting
             transition={{ duration: 0.3 }} // Animation duration
           >
-            <UserPost {...post} />
+            <UserPost post={post} />
           </motion.div>
         ))}
       </AnimatePresence>

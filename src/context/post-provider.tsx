@@ -6,6 +6,10 @@ import { createContext } from "react";
 export interface PostContextType extends Partial<Tables<"posts">> {
   user?: Partial<Tables<"users">>;
   replies?: PostContextType[];
+
+  isThread?: boolean;
+  isFirstInThread?: boolean;
+  isLastInThread?: boolean;
 }
 
 export const PostContext = createContext<PostContextType>({} as PostContextType);

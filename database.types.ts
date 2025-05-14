@@ -11,24 +11,50 @@ export type Database = {
     Tables: {
       posts: {
         Row: {
-          content: string
+          content: string | null
           created_at: string | null
           id: string
+          parent_post_id: string | null
+          reply_count: number | null
+          repost_count: number | null
+          repost_post_id: string | null
           user_id: string
         }
         Insert: {
-          content: string
+          content?: string | null
           created_at?: string | null
           id?: string
+          parent_post_id?: string | null
+          reply_count?: number | null
+          repost_count?: number | null
+          repost_post_id?: string | null
           user_id?: string
         }
         Update: {
-          content?: string
+          content?: string | null
           created_at?: string | null
           id?: string
+          parent_post_id?: string | null
+          reply_count?: number | null
+          repost_count?: number | null
+          repost_post_id?: string | null
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "posts_parent_post_id_fkey"
+            columns: ["parent_post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "posts_repost_post_id_fkey"
+            columns: ["repost_post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "posts_user_id_fkey"
             columns: ["user_id"]
@@ -44,8 +70,6 @@ export type Database = {
           id: string
           post_id: string | null
           reaction_type: string
-          reply_id: string | null
-          repost_id: string | null
           user_id: string
         }
         Insert: {
@@ -53,8 +77,6 @@ export type Database = {
           id?: string
           post_id?: string | null
           reaction_type: string
-          reply_id?: string | null
-          repost_id?: string | null
           user_id?: string
         }
         Update: {
@@ -62,8 +84,6 @@ export type Database = {
           id?: string
           post_id?: string | null
           reaction_type?: string
-          reply_id?: string | null
-          repost_id?: string | null
           user_id?: string
         }
         Relationships: [
@@ -75,116 +95,7 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "reactions_reply_id_fkey"
-            columns: ["reply_id"]
-            isOneToOne: false
-            referencedRelation: "replies"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "reactions_repost_id_fkey"
-            columns: ["repost_id"]
-            isOneToOne: false
-            referencedRelation: "reposts"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "reactions_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["clerk_user_id"]
-          },
-        ]
-      }
-      replies: {
-        Row: {
-          content: string
-          created_at: string | null
-          id: string
-          parent_reply_id: string | null
-          post_id: string | null
-          user_id: string
-        }
-        Insert: {
-          content: string
-          created_at?: string | null
-          id?: string
-          parent_reply_id?: string | null
-          post_id?: string | null
-          user_id?: string
-        }
-        Update: {
-          content?: string
-          created_at?: string | null
-          id?: string
-          parent_reply_id?: string | null
-          post_id?: string | null
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "replies_parent_reply_id_fkey"
-            columns: ["parent_reply_id"]
-            isOneToOne: false
-            referencedRelation: "replies"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "replies_post_id_fkey"
-            columns: ["post_id"]
-            isOneToOne: false
-            referencedRelation: "posts"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "replies_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["clerk_user_id"]
-          },
-        ]
-      }
-      reposts: {
-        Row: {
-          created_at: string | null
-          id: string
-          post_id: string | null
-          reply_id: string | null
-          user_id: string
-        }
-        Insert: {
-          created_at?: string | null
-          id?: string
-          post_id?: string | null
-          reply_id?: string | null
-          user_id?: string
-        }
-        Update: {
-          created_at?: string | null
-          id?: string
-          post_id?: string | null
-          reply_id?: string | null
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "reposts_post_id_fkey"
-            columns: ["post_id"]
-            isOneToOne: false
-            referencedRelation: "posts"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "reposts_reply_id_fkey"
-            columns: ["reply_id"]
-            isOneToOne: false
-            referencedRelation: "replies"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "reposts_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
@@ -256,7 +167,19 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      fetch_post_with_replies: {
+        Args: { post_id: string }
+        Returns: {
+          fetched_post_id: string
+          content: string
+          created_at: string
+          user_id: string
+          user_username: string
+          user_display_name: string
+          user_image_url: string
+          replies: Json
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

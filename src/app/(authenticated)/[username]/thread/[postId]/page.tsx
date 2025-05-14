@@ -1,50 +1,43 @@
 import { PostList } from "@/components/post-list";
 import { UserPost } from "@/components/post/user-post";
-import { PostProviderProps } from "@/context/post-provider";
 import { PostsProvider } from "@/context/posts-context";
 import { createServerSupabaseClient } from "@/db/supabase";
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
-const selectQuery = `
-        *,
-        user:users (
-          id,
-          clerk_user_id,
-          username,
-          display_name,
-          image_url
-        ),
-        replies (
-          *,
-          user:users (
-            id,
-            clerk_user_id,
-            username,
-            display_name,
-            image_url
-          )
-        )
-      `;
 
 async function getPostData(postId: string) {
   const supabaseClient = createServerSupabaseClient();
-  const postResult = await supabaseClient
-    .from("posts")
-    .select(selectQuery)
-    .eq("id", postId)
-    .single()
-    .overrideTypes<Omit<PostProviderProps, "children">>();
 
-  if (postResult.data) return postResult;
+  const { data: postAncestry, error: postAncestryError } = await supabaseClient.rpc(
+    "get_post_ancestry",
+    {
+      start_id: postId,
+    }
+  );
 
-  const repliesResult = await supabaseClient
-    .from("replies")
-    .select(selectQuery)
-    .eq("id", postId)
-    .single()
-    .overrideTypes<Omit<PostProviderProps, "children">>();
+  if (postAncestryError) {
+    console.error("Error fetching thread:", postAncestryError);
+  } else {
+    console.log("Thread (root to current):", postAncestry);
+  }
 
-  return repliesResult;
+  const { data: directReplies, error: directRepliesError } = await supabaseClient.rpc(
+    "get_direct_replies",
+    { target_id: postId }
+  );
+
+  if (directRepliesError) {
+    console.error("Error fetching direct replies:", directRepliesError);
+  } else {
+    console.log("Direct replies:", directReplies);
+  }
+
+  const result = {
+    postAncestry,
+    directReplies,
+  };
+
+  return result;
 }
 
 interface ThreadPageProps {
@@ -56,8 +49,8 @@ interface ThreadPageProps {
 
 export default async function ThreadPage({ params }: ThreadPageProps) {
   const { postId } = await params;
-  const { data: post } = await getPostData(postId);
-  console.log(post);
+  const { postAncestry, directReplies } = await getPostData(postId);
+
   return (
     <>
       <header className='flex flex-col sm:flex-row items-start sm:items-center mb-6 gap-2'>
@@ -66,9 +59,10 @@ export default async function ThreadPage({ params }: ThreadPageProps) {
         </Link>
         <h1 className='text-2xl font-semibold'>Thread</h1>
       </header>
-      <PostsProvider initialPosts={post?.replies || []}>
-        <UserPost {...post} />
-        {!!post?.replies?.length && <PostList />}
+      <PostsProvider initialPosts={directReplies || []}>
+        <UserPost ancestry={postAncestry} />
+        <span>Replies</span>
+        {!!directReplies?.length && <PostList />}
       </PostsProvider>
     </>
   );

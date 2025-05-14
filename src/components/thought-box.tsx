@@ -24,7 +24,7 @@ interface ThoughtBoxProps {
   className?: string;
   onSubmit?: (
     data: z.infer<typeof thoughtBoxSchema>
-  ) => Promise<PostgrestSingleResponse<Tables<"replies">[] | Tables<"reposts">[]>>;
+  ) => Promise<PostgrestSingleResponse<Tables<"posts">[]>>;
 }
 
 export function ThoughtBox({

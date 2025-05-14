@@ -16,7 +16,7 @@ export function PostCard({ children, className, classNames }: PostCardProps) {
   const router = useRouter();
 
   function handleClick() {
-    router.push(`/@${post.user.username}/thread/${post.id}`);
+    router.push(`/@${post.user?.username}/thread/${post.id}`);
   }
 
   return (

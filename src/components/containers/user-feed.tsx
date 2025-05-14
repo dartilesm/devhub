@@ -10,39 +10,28 @@ async function getPosts() {
     .from("posts")
     .select(
       `
-        id,
-        content,
-        created_at,
-        user_id,
+        *,
         user:users (
           id,
           clerk_user_id,
           username,
           display_name,
           image_url
-        ),
-        replies (
-          id,
-          content,
-          created_at
         )
       `
     )
+    .is("parent_post_id", null)
     .order("created_at", {
       ascending: false,
     })
-    .order("created_at", {
-      ascending: false,
-      referencedTable: "replies",
-    })
-    .limit(10)
-    .limit(10, { referencedTable: "replies" });
+    .limit(10);
 
   return result;
 }
 
 export async function UserFeed() {
   const { data: initialPosts } = await getPosts();
+  console.log(initialPosts);
 
   return (
     <PostsProvider initialPosts={(initialPosts as PostContextType[]) || []}>
