@@ -13,11 +13,11 @@ export function PostAvatarAndThreadLine() {
         /* "max-h-fit": isLastInThread, */
       })}
     >
-      <Link href={`/user/${post.user.username}`}>
+      <Link href={`/@${post.user?.username}`}>
         <Avatar
           isBordered
-          src={post.user.image_url ?? ""}
-          alt={post.user.display_name}
+          src={post.user?.image_url ?? ""}
+          alt={post.user?.display_name ?? ""}
           className='flex-shrink-0 z-20'
         />
       </Link>

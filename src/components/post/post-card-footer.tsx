@@ -1,17 +1,10 @@
 "use client";
 
-import { Button, Tooltip } from "@heroui/react";
-import { useState } from "react";
-import { CardFooter } from "@heroui/react";
-import {
-  GitPullRequestCreateIcon,
-  MessageSquareIcon,
-  ArchiveIcon,
-  StarIcon,
-  EllipsisIcon,
-} from "lucide-react";
-import dynamic from "next/dynamic";
 import { usePostContext } from "@/hooks/use-post-context";
+import { Button, CardFooter, Tooltip } from "@heroui/react";
+import { ArchiveIcon, EllipsisIcon, MessageSquareIcon, Repeat2Icon, StarIcon } from "lucide-react";
+import dynamic from "next/dynamic";
+import { useState } from "react";
 
 type Reaction = "star" | "coffee" | "approve" | "cache";
 
@@ -99,16 +92,16 @@ export function PostFooter() {
           <Button
             variant='light'
             size='sm'
-            className='rounded-full'
-            isIconOnly
+            className='rounded-full flex flex-row gap-2'
             onPress={() => setIsOpen(true)}
           >
             <MessageSquareIcon className='text-inherit' size={18} />
+            <span className='text-sm'>{post?.replies?.length || null}</span>
           </Button>
         </Tooltip>
         <Tooltip content='Clone (repost)'>
           <Button variant='light' size='sm' className='rounded-full' isIconOnly>
-            <GitPullRequestCreateIcon className='text-inherit' size={18} />
+            <Repeat2Icon className='text-inherit' size={22} strokeWidth={1.5} />
           </Button>
         </Tooltip>
         <Tooltip content='Backup (Bookmark)'>
