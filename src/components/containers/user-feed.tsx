@@ -43,21 +43,9 @@ async function getPosts() {
 
 export async function UserFeed() {
   const { data: initialPosts } = await getPosts();
-  console.log(initialPosts);
-
-  if (!initialPosts?.length) {
-    return (
-      <PostsProvider initialPosts={[]}>
-        <div className='w-full p-4 flex flex-col gap-4'>
-          <ThoughtBox />
-          <span className='text-center text-sm text-muted-foreground'>No posts found</span>
-        </div>
-      </PostsProvider>
-    );
-  }
 
   return (
-    <PostsProvider initialPosts={initialPosts as PostContextType[]}>
+    <PostsProvider initialPosts={(initialPosts as PostContextType[]) || []}>
       <div className='w-full p-4 flex flex-col gap-4'>
         <ThoughtBox />
         <PostList />
