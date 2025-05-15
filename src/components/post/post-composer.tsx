@@ -99,8 +99,9 @@ export function PostComposer({
               aria-label='Share your thoughts'
               aria-describedby='char-count'
               isInvalid={!!form.formState.errors.comment}
+              minRows={2}
               classNames={{
-                input: "focus-visible:outline-none  resize-none  min-h-[60px] pl-4",
+                input: "focus-visible:outline-none  resize-none pl-4",
                 inputWrapper: "p-4 pb-14 pl-14",
               }}
               {...field}
@@ -108,7 +109,7 @@ export function PostComposer({
           )}
         />
 
-        <div className='absolute bottom-2 w-full px-2 rounded-medium z-10 format-popup animate-in fade-in slide-in-from-bottom-2 duration-200'>
+        <div className='absolute bottom-2 w-full px-2 rounded-medium z-10 format-popup animate-in fade-in slide-in-from-bottom-2 duration-200 pl-16'>
           <div className='flex justify-between items-center'>
             <div className='flex items-center gap-2'>
               <Tooltip content='Code'>

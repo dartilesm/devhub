@@ -74,9 +74,8 @@ export function PostFooter() {
           <Button
             variant={!selectedReaction ? "light" : "faded"}
             color={!selectedReaction ? "default" : "primary"}
-            isIconOnly={!selectedReaction}
             size='sm'
-            className='group flex items-center gap-1 rounded-full'
+            className='group flex items-center gap-1 rounded-full text-gray-400 hover:text-default-foreground'
           >
             {selectedReaction ? (
               <span className='text-lg'>
@@ -92,7 +91,7 @@ export function PostFooter() {
           <Button
             variant='light'
             size='sm'
-            className='rounded-full flex flex-row gap-2'
+            className='rounded-full flex flex-row gap-2 text-gray-400 hover:text-default-foreground'
             onPress={() => setIsOpen(true)}
           >
             <MessageSquareIcon className='text-inherit' size={18} />
@@ -100,17 +99,29 @@ export function PostFooter() {
           </Button>
         </Tooltip>
         <Tooltip content='Clone (repost)'>
-          <Button variant='light' size='sm' className='rounded-full' isIconOnly>
+          <Button
+            variant='light'
+            size='sm'
+            className='rounded-full text-gray-400 hover:text-default-foreground'
+          >
             <Repeat2Icon className='text-inherit' size={22} strokeWidth={1.5} />
           </Button>
         </Tooltip>
         <Tooltip content='Backup (Bookmark)'>
-          <Button variant='light' size='sm' className='rounded-full' isIconOnly>
+          <Button
+            variant='light'
+            size='sm'
+            className='rounded-full text-gray-400 hover:text-default-foreground'
+          >
             <ArchiveIcon className='text-inherit' size={18} />
           </Button>
         </Tooltip>
         <Tooltip content='More'>
-          <Button variant='light' size='sm' className='rounded-full' isIconOnly>
+          <Button
+            variant='light'
+            size='sm'
+            className='rounded-full text-gray-400 hover:text-default-foreground'
+          >
             <EllipsisIcon className='text-inherit' size={18} />
           </Button>
         </Tooltip>
