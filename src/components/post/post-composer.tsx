@@ -18,20 +18,20 @@ export const thoughtBoxSchema = z.object({
   comment: z.string().min(1),
 });
 
-interface ThoughtBoxProps {
+interface PostComposerProps {
   maxLength?: number;
   placeholder?: string;
   className?: string;
-  onSubmit?: (
-    data: z.infer<typeof thoughtBoxSchema>
-  ) => Promise<PostgrestSingleResponse<Tables<"posts">[]>>;
+  postId?: string;
+  onSubmit?: (data?: z.infer<typeof thoughtBoxSchema>) => void;
 }
 
-export function ThoughtBox({
+export function PostComposer({
   placeholder = "What's on your mind?",
   className,
+  postId,
   onSubmit,
-}: ThoughtBoxProps) {
+}: PostComposerProps) {
   const form = useForm<z.infer<typeof thoughtBoxSchema>>({
     resolver: zodResolver(thoughtBoxSchema),
     defaultValues: {
@@ -45,18 +45,12 @@ export function ThoughtBox({
 
   async function handleOnSubmit(data: z.infer<typeof thoughtBoxSchema>) {
     if (!user) return;
-    if (onSubmit) {
-      const result = await onSubmit(data);
-      console.log(result);
-      if (result.error) {
-        form.setError("comment", { message: result.error.message });
-        return;
-      }
-      return form.reset();
-    }
 
     // Send to server first
-    const { data: serverPosts, error } = await createPostComment(data);
+    const { data: serverPosts, error } = await createPostComment({
+      comment: data.comment,
+      parent_post_id: postId,
+    });
     console.log(serverPosts);
 
     if (error) {
@@ -83,6 +77,7 @@ export function ThoughtBox({
 
       addPost(newPost);
       console.log({ newPost });
+      if (onSubmit) onSubmit();
       form.reset();
     }
   }

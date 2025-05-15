@@ -2,7 +2,9 @@
 
 import { usePostsContext } from "@/hooks/use-posts-context";
 import { AnimatePresence, motion } from "framer-motion";
-import { UserPost } from "./post/user-post";
+import { UserPost } from "./user-post";
+import { PostWrapper } from "@/components/post/post-wrapper";
+
 export function PostList() {
   const { posts } = usePostsContext();
 
@@ -18,7 +20,9 @@ export function PostList() {
             exit={{ opacity: 0, y: 50 }} // Animation values when exiting
             transition={{ duration: 0.3 }} // Animation duration
           >
-            <UserPost post={post} />
+            <PostWrapper>
+              <UserPost post={post} />
+            </PostWrapper>
           </motion.div>
         ))}
       </AnimatePresence>

@@ -1,12 +1,11 @@
 "use client";
 
+import { NestedPost } from "@/types/nested-posts";
 import { Tables } from "database.types";
 import { createContext } from "react";
 
-export interface PostContextType extends Partial<Tables<"posts">> {
+export interface PostContextType extends NestedPost {
   user?: Partial<Tables<"users">>;
-  replies?: PostContextType[];
-
   isThread?: boolean;
   isFirstInThread?: boolean;
   isLastInThread?: boolean;

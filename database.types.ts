@@ -167,17 +167,38 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      fetch_post_with_replies: {
-        Args: { post_id: string }
+      get_direct_replies: {
+        Args: { target_id: string }
         Returns: {
-          fetched_post_id: string
+          id: string
           content: string
           created_at: string
-          user_id: string
-          user_username: string
-          user_display_name: string
-          user_image_url: string
-          replies: Json
+          parent_post_id: string
+          repost_post_id: string
+          user: Json
+        }[]
+      }
+      get_post_ancestry: {
+        Args: { start_id: string }
+        Returns: {
+          id: string
+          content: string
+          created_at: string
+          parent_post_id: string
+          repost_post_id: string
+          user: Json
+        }[]
+      }
+      get_replies_to_depth: {
+        Args: { target_id: string; max_depth: number }
+        Returns: {
+          id: string
+          content: string
+          created_at: string
+          parent_post_id: string
+          repost_post_id: string
+          level: number
+          user: Json
         }[]
       }
     }

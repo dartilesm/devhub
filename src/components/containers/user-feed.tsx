@@ -1,5 +1,5 @@
-import { PostList } from "@/components/post-list";
-import { ThoughtBox } from "@/components/thought-box";
+import { PostList } from "@/components/post/post-list";
+import { PostComposer } from "@/components/post/post-composer";
 import { PostContextType } from "@/context/post-provider";
 import { PostsProvider } from "@/context/posts-context";
 import { createServerSupabaseClient } from "@/db/supabase";
@@ -36,7 +36,7 @@ export async function UserFeed() {
   return (
     <PostsProvider initialPosts={(initialPosts as PostContextType[]) || []}>
       <div className='w-full p-4 flex flex-col gap-4'>
-        <ThoughtBox />
+        <PostComposer />
         <PostList />
       </div>
     </PostsProvider>
