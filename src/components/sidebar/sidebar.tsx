@@ -38,7 +38,7 @@ export function Sidebar() {
             to={`/user/${user?.username}`}
             icon={<UserIcon />}
             label='Profile'
-            isActive={false}
+            isActive={pathname === `/@${user?.username}`}
           />
         </SidebarSection>
 
