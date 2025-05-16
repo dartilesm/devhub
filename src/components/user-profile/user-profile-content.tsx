@@ -1,26 +1,11 @@
 "use client";
 
-import { PostWrapper } from "@/components/post/post-wrapper";
-import { UserPost } from "@/components/post/user-post";
-import { Tabs, Tab } from "@heroui/react";
+import { PostList } from "@/components/post/post-list";
+import { PostsProvider } from "@/context/posts-context";
+import { Tab, Tabs } from "@heroui/react";
+import { Tables } from "database.types";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-
-const mockPosts = [
-  {
-    id: "1",
-    content: "This is a sample post",
-    created_at: new Date().toDateString(),
-    user: {
-      id: "1",
-      name: "John Doe",
-      username: "john_doe",
-      avatar: "https://i.pravatar.cc/150?u=a04258114e29026708c",
-    },
-    level: 1,
-    replies: [],
-  },
-];
 
 const enum UserProfileTabs {
   POSTS = "posts",
@@ -30,7 +15,11 @@ const enum UserProfileTabs {
 
 const tabOrder = [UserProfileTabs.POSTS, UserProfileTabs.MEDIA, UserProfileTabs.LIKES];
 
-export function UserProfileContent() {
+interface UserProfileContentProps {
+  posts: Tables<"posts">[];
+}
+
+export function UserProfileContent({ posts }: UserProfileContentProps) {
   const [activeTab, setActiveTab] = useState<UserProfileTabs>(UserProfileTabs.POSTS);
   const [previousTab, setPreviousTab] = useState<UserProfileTabs>(UserProfileTabs.POSTS);
 
@@ -98,9 +87,9 @@ export function UserProfileContent() {
             className='w-full'
           >
             {activeTab === UserProfileTabs.POSTS && (
-              <PostWrapper>
-                <UserPost post={mockPosts[0]} />
-              </PostWrapper>
+              <PostsProvider initialPosts={posts}>
+                <PostList />
+              </PostsProvider>
             )}
             {activeTab === UserProfileTabs.MEDIA && (
               <p className='text-default-500'>No media posts yet.</p>

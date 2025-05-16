@@ -1,3 +1,5 @@
+"use client";
+
 import { Chip } from "@heroui/react";
 import {
   SiAstro,

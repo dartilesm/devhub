@@ -1,3 +1,5 @@
+"use client";
+
 import { Tables } from "database.types";
 import { createContext } from "react";
 
