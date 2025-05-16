@@ -13,8 +13,8 @@ export async function POST(req: Request) {
       const supabase = createUnauthenticatedSupabaseClient();
 
       const { data, error } = await supabase.from("users").upsert({
-        clerk_user_id: id,
-        username: username,
+        id,
+        username,
         display_name: `${first_name} ${last_name}`,
         image_url: image_url,
       });
@@ -34,10 +34,7 @@ export async function POST(req: Request) {
 
       const supabase = createUnauthenticatedSupabaseClient();
 
-      const { data, error: deleteError } = await supabase
-        .from("users")
-        .delete()
-        .eq("clerk_user_id", id);
+      const { data, error: deleteError } = await supabase.from("users").delete().eq("id", id);
 
       if (deleteError)
         return new Response(JSON.stringify({ error: deleteError.message }), {
