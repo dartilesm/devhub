@@ -13,7 +13,6 @@ async function getPosts() {
         *,
         user:users (
           id,
-          clerk_user_id,
           username,
           display_name,
           image_url
