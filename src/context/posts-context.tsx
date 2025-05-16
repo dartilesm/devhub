@@ -25,6 +25,7 @@ export function PostsProvider({
   const [posts, setPosts] = useState<PostContextType[]>(initialPosts);
 
   function addPost(post: PostContextType) {
+    console.log("Adding post", post, posts);
     setPosts([post, ...posts]);
   }
 

@@ -1,22 +1,24 @@
 "use client";
 
-import React from "react";
+import { useUpdateProfileMutation } from "@/hooks/mutation/use-update-profile-mutation";
 import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
+  Alert,
   Button,
-  Input,
-  Textarea,
+  Card,
   Image,
+  Input,
+  Link,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Textarea,
 } from "@heroui/react";
 import { Icon } from "@iconify/react";
-import { useForm, Controller } from "react-hook-form";
 import { Tables } from "database.types";
-import { useUpdateProfileMutation } from "@/hooks/mutation/use-update-profile-mutation";
-import { UserProfile } from "@clerk/nextjs";
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
 
 interface UserProfileEditModalProps {
   onClose: () => void;
@@ -80,87 +82,105 @@ export function UserProfileEditModal({ onClose, profile, onSave }: UserProfileEd
   };
 
   return (
-    <Modal onClose={onClose} size='2xl' scrollBehavior='inside' defaultOpen backdrop='blur'>
+    <Modal onClose={onClose} size='xl' scrollBehavior='inside' defaultOpen backdrop='blur'>
       <ModalContent>
         {(onModalClose) => (
-          <>
+          <div>
             <form onSubmit={handleSubmit(onSubmit)}>
               <ModalHeader className='flex flex-col gap-1'>Edit Profile</ModalHeader>
-              <ModalBody>
+              <ModalBody className='overflow-hidden'>
                 <div className='space-y-6'>
-                  {/* Avatar */}
-                  <div className='space-y-2'>
-                    <p className='text-small font-medium'>Profile Picture</p>
-                    <div className='flex items-center space-x-4'>
-                      <div className='w-20 h-20 rounded-full overflow-hidden'>
-                        {watch("image_url") ? (
-                          <div className='relative w-full h-full'>
-                            <Image
-                              src={watch("image_url") || ""}
-                              alt='Avatar'
-                              className='w-full h-full object-cover'
-                              removeWrapper
-                            />
-                            <Button
-                              isIconOnly
-                              size='sm'
-                              color='danger'
-                              variant='flat'
-                              className='absolute top-0 right-0'
-                              onPress={() => handleImageUpload("image_url", "")}
-                            >
-                              <Icon icon='lucide:x' width={16} />
-                            </Button>
-                          </div>
-                        ) : (
-                          <ImageUploader
-                            onImageUpload={(url) => handleImageUpload("image_url", url)}
-                            aspectRatio='1:1'
-                            className='w-full h-full bg-default-100 flex items-center justify-center'
-                          >
-                            <div className='flex flex-col items-center justify-center text-default-500'>
-                              <Icon icon='lucide:user' width={16} />
+                  <Alert
+                    color='primary'
+                    description={
+                      <span>
+                        To edit avatar and username, go to{" "}
+                        <Link
+                          href='/account-settings'
+                          className='[font-size:inherit] text-inherit underline'
+                        >
+                          Account Settings
+                        </Link>
+                      </span>
+                    }
+                  />
+                  <Card isDisabled className='rounded-none space-y-6 shadow-none'>
+                    {/* Avatar */}
+                    <div className='space-y-2'>
+                      <p className='text-small font-medium'>Profile Picture</p>
+                      <div className='flex items-center space-x-4'>
+                        <div className='w-20 h-20 rounded-full overflow-hidden'>
+                          {watch("image_url") ? (
+                            <div className='relative w-full h-full'>
+                              <Image
+                                src={watch("image_url") || ""}
+                                alt='Avatar'
+                                className='w-full h-full object-cover'
+                                removeWrapper
+                              />
+                              <Button
+                                isIconOnly
+                                size='sm'
+                                color='danger'
+                                variant='flat'
+                                className='absolute top-0 right-0'
+                                onPress={() => handleImageUpload("image_url", "")}
+                              >
+                                <Icon icon='lucide:x' width={16} />
+                              </Button>
                             </div>
-                          </ImageUploader>
-                        )}
-                      </div>
-                      <div className='flex-1'>
-                        <p className='text-tiny text-default-500'>
-                          Upload a profile picture to make your profile more personalized.
-                        </p>
-                        <p className='text-tiny text-default-500 mt-1'>
-                          Recommended size: 400x400 pixels.
-                        </p>
+                          ) : (
+                            <ImageUploader
+                              onImageUpload={(url) => handleImageUpload("image_url", url)}
+                              aspectRatio='1:1'
+                              className='w-full h-full bg-default-100 flex items-center justify-center'
+                            >
+                              <div className='flex flex-col items-center justify-center text-default-500'>
+                                <Icon icon='lucide:user' width={16} />
+                              </div>
+                            </ImageUploader>
+                          )}
+                        </div>
+                        <div className='flex-1'>
+                          <p className='text-tiny text-default-500'>
+                            Upload a profile picture to make your profile more personalized.
+                          </p>
+                          <p className='text-tiny text-default-500 mt-1'>
+                            Recommended size: 400x400 pixels.
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  {/* Display Name */}
-                  <Controller
-                    name='display_name'
-                    control={control}
-                    rules={{
-                      required: "Display name is required",
-                      maxLength: {
-                        value: 50,
-                        message: "Display name cannot exceed 50 characters",
-                      },
-                    }}
-                    render={({ field }) => (
-                      <Input
-                        label='Display Name'
-                        placeholder='Enter your name'
-                        isRequired
-                        isInvalid={!!errors.display_name}
-                        errorMessage={errors.display_name?.message}
-                        description='This is how your name will appear across the platform'
-                        classNames={{
-                          label: "top-0 pt-[inherit]",
-                        }}
-                        {...field}
-                        value={field.value || ""}
-                      />
-                    )}
-                  />
+                    {/* Display Name */}
+                    <Controller
+                      name='display_name'
+                      control={control}
+                      disabled
+                      rules={{
+                        required: "Display name is required",
+                        maxLength: {
+                          value: 50,
+                          message: "Display name cannot exceed 50 characters",
+                        },
+                      }}
+                      render={({ field }) => (
+                        <Input
+                          label='Display Name'
+                          placeholder='Enter your name'
+                          isRequired
+                          isInvalid={!!errors.display_name}
+                          errorMessage={errors.display_name?.message}
+                          description='This is how your name will appear across the platform'
+                          isDisabled
+                          classNames={{
+                            label: "top-0 pt-[inherit]",
+                          }}
+                          {...field}
+                          value={field.value || ""}
+                        />
+                      )}
+                    />
+                  </Card>
                   {/* Bio */}
                   <Controller
                     name='bio'
@@ -244,8 +264,15 @@ export function UserProfileEditModal({ onClose, profile, onSave }: UserProfileEd
                 </Button>
               </ModalFooter>
             </form>
-            <UserProfile />
-          </>
+            {/* <UserProfile
+              appearance={{
+                elements: {
+                  rootBox: "max-w-full",
+                  cardBox: "max-w-full",
+                },
+              }}
+            /> */}
+          </div>
         )}
       </ModalContent>
     </Modal>

@@ -48,7 +48,6 @@ export function PostComposer({
       },
       onSettled: (response) => {
         if (response?.data) {
-          form.reset();
           const newPost: PostContextType = {
             ...response.data,
             user: {
@@ -60,6 +59,7 @@ export function PostComposer({
 
           addPost(newPost);
           if (onSubmit) onSubmit();
+          form.reset();
           return;
         }
         form.setError("comment", { message: response?.error.message });

@@ -1,6 +1,5 @@
 "use client";
 
-import { Chip } from "@heroui/react";
 import {
   SiAstro,
   SiAstroHex,
@@ -9,7 +8,9 @@ import {
   SiVuedotjs,
   SiVuedotjsHex,
 } from "@icons-pack/react-simple-icons";
+import { MapPinIcon, Link2Icon } from "lucide-react";
 import { useProfileContext } from "@/hooks/use-profile-context";
+import { Link } from "@heroui/react";
 
 export function UserProfileDescription() {
   const profile = useProfileContext();
@@ -31,31 +32,62 @@ export function UserProfileDescription() {
 
       <p className='text-default-700'>{profile.bio}</p>
 
-      <div className='flex gap-8'>
-        <div className='flex flex-col items-center'>
-          <span className='font-bold text-large'>1.2k</span>
-          <span className='text-default-500 text-sm'>Posts</span>
+      <div className='flex flex-col gap-3'>
+        <div className='flex items-center gap-3 flex-wrap text-sm text-default-500'>
+          {profile.location && (
+            <div className='flex items-center gap-1.5 min-w-fit'>
+              <MapPinIcon size={14} className='text-default-400 flex-shrink-0' />
+              <span className='truncate'>{profile.location}</span>
+            </div>
+          )}
+          {profile.website && (
+            <Link
+              href={
+                profile.website.startsWith("http") ? profile.website : `https://${profile.website}`
+              }
+              isExternal
+              showAnchorIcon
+              className='text-sm'
+              size='sm'
+            >
+              <span className='flex items-center gap-1.5'>
+                <Link2Icon size={14} className='text-default-400 flex-shrink-0' />
+                <span className='truncate max-w-[200px]'>
+                  {profile.website.replace(/^https?:\/\//, "")}
+                </span>
+              </span>
+            </Link>
+          )}
         </div>
-        <div className='flex flex-col items-center'>
-          <span className='font-bold text-large'>8.5k</span>
-          <span className='text-default-500 text-sm'>Followers</span>
-        </div>
-        <div className='flex flex-col items-center'>
-          <span className='font-bold text-large'>2.1k</span>
-          <span className='text-default-500 text-sm'>Following</span>
-        </div>
-      </div>
 
-      <div className='flex gap-2'>
-        <Chip size='sm' variant='flat'>
-          🚀 Developer
-        </Chip>
-        <Chip size='sm' variant='flat'>
-          💻 Open Source
-        </Chip>
-        <Chip size='sm' variant='flat'>
-          🌟 Tech Enthusiast
-        </Chip>
+        <div className='flex items-center gap-3 text-sm'>
+          <Link
+            as='button'
+            color='foreground'
+            className='group flex items-center gap-1.5 hover:opacity-80 text-sm'
+          >
+            <span className='font-medium'>1.2k</span>
+            <span className='text-default-400'>posts</span>
+          </Link>
+          <div className='h-3 w-[1px] bg-default-200' />
+          <Link
+            as='button'
+            color='foreground'
+            className='group flex items-center gap-1.5 hover:opacity-80 text-sm'
+          >
+            <span className='font-medium'>8.5k</span>
+            <span className='text-default-400'>followers</span>
+          </Link>
+          <div className='h-3 w-[1px] bg-default-200' />
+          <Link
+            as='button'
+            color='foreground'
+            className='group flex items-center gap-1.5 hover:opacity-80 text-sm'
+          >
+            <span className='font-medium'>2.1k</span>
+            <span className='text-default-400'>following</span>
+          </Link>
+        </div>
       </div>
     </div>
   );

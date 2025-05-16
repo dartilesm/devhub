@@ -27,7 +27,7 @@ export function PostCard({ children, className, classNames }: PostCardProps) {
     <div onClick={handleClick}>
       <Card
         className={cn(
-          "relative flex flex-row dark:bg-content1 bg-[transparent] shadow-2xs",
+          "relative flex flex-row dark:bg-content1 bg-[transparent] shadow-2xs cursor-pointer",
           className
         )}
         classNames={classNames}

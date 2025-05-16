@@ -60,7 +60,7 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
-            referencedColumns: ["clerk_user_id"]
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -99,7 +99,7 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
-            referencedColumns: ["clerk_user_id"]
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -122,16 +122,15 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
-            referencedColumns: ["clerk_user_id"]
+            referencedColumns: ["id"]
           },
         ]
       }
       users: {
         Row: {
           bio: string | null
-          clerk_user_id: string
           display_name: string
-          id: number
+          id: string
           image_url: string | null
           join_date: string | null
           location: string | null
@@ -140,9 +139,8 @@ export type Database = {
         }
         Insert: {
           bio?: string | null
-          clerk_user_id?: string
           display_name: string
-          id?: never
+          id?: string
           image_url?: string | null
           join_date?: string | null
           location?: string | null
@@ -151,9 +149,8 @@ export type Database = {
         }
         Update: {
           bio?: string | null
-          clerk_user_id?: string
           display_name?: string
-          id?: never
+          id?: string
           image_url?: string | null
           join_date?: string | null
           location?: string | null
@@ -198,6 +195,19 @@ export type Database = {
           parent_post_id: string
           repost_post_id: string
           level: number
+          user: Json
+        }[]
+      }
+      get_user_posts_by_username: {
+        Args: { input_username: string }
+        Returns: {
+          id: string
+          content: string
+          created_at: string
+          parent_post_id: string
+          repost_post_id: string
+          reply_count: number
+          repost_count: number
           user: Json
         }[]
       }
