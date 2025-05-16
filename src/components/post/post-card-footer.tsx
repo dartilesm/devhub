@@ -96,7 +96,9 @@ export function PostFooter() {
             onPress={() => setIsOpen(true)}
           >
             <MessageSquareIcon className='text-inherit' size={18} />
-            <span className='text-sm'>{post?.replies?.length || null}</span>
+            {post?.reply_count && post?.reply_count > 0 && (
+              <span className='text-sm'>{post?.reply_count}</span>
+            )}
           </Button>
         </Tooltip>
         <Tooltip content='Clone (repost)'>

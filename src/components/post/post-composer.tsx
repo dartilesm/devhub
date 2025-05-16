@@ -1,15 +1,13 @@
 "use client";
 
-import { createPostComment } from "@/actions/post-comment";
 import { PostContextType } from "@/context/post-provider";
+import { useCreatePostMutation } from "@/hooks/mutation/use-create-post-mutation";
 import { usePostsContext } from "@/hooks/use-posts-context";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import { Avatar, Button, Chip, Spinner, Textarea, Tooltip } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Icon } from "@iconify/react";
-import { PostgrestSingleResponse } from "@supabase/supabase-js";
-import { Tables } from "database.types";
 import { CodeIcon, ImageIcon, RocketIcon } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -23,7 +21,7 @@ interface PostComposerProps {
   placeholder?: string;
   className?: string;
   postId?: string;
-  onSubmit?: (data?: z.infer<typeof thoughtBoxSchema>) => void;
+  onSubmit?: () => void;
 }
 
 export function PostComposer({
@@ -42,44 +40,38 @@ export function PostComposer({
   });
   const { user } = useUser();
   const { addPost } = usePostsContext();
+  const { mutate, isPending } = useCreatePostMutation(
+    {
+      onError: (error) => {
+        form.setError("comment", { message: error.message });
+        console.error(error);
+      },
+      onSettled: (response) => {
+        if (response?.data) {
+          form.reset();
+          const newPost: PostContextType = {
+            ...response.data,
+            user: {
+              username: user?.username ?? "",
+              display_name: user?.firstName ?? "",
+              image_url: user?.imageUrl ?? "",
+            },
+          };
 
-  async function handleOnSubmit(data: z.infer<typeof thoughtBoxSchema>) {
+          addPost(newPost);
+          if (onSubmit) onSubmit();
+          return;
+        }
+        form.setError("comment", { message: response?.error.message });
+        return;
+      },
+    },
+    user
+  );
+
+  function handleOnSubmit(data: z.infer<typeof thoughtBoxSchema>) {
     if (!user) return;
-
-    // Send to server first
-    const { data: serverPosts, error } = await createPostComment({
-      comment: data.comment,
-      parent_post_id: postId,
-    });
-    console.log(serverPosts);
-
-    if (error) {
-      // Handle error - show an error message
-      form.setError("comment", { message: error.message });
-      return;
-    }
-
-    // Only add to UI after successful server response
-    if (serverPosts?.[0]) {
-      const serverPost = serverPosts[0];
-      const newPost: PostContextType = {
-        id: serverPost.id,
-        content: serverPost.content,
-        created_at: serverPost.created_at,
-        user_id: user.id,
-        user: {
-          clerk_user_id: user.id,
-          username: user.username ?? "",
-          display_name: user.firstName ?? "",
-          image_url: user.imageUrl ?? "",
-        },
-      };
-
-      addPost(newPost);
-      console.log({ newPost });
-      if (onSubmit) onSubmit();
-      form.reset();
-    }
+    mutate({ comment: data.comment, parent_post_id: postId });
   }
 
   return (
@@ -137,8 +129,8 @@ export function PostComposer({
               color='primary'
               className='rounded-full'
               size='sm'
-              isDisabled={!form.formState.isValid || form.formState.isSubmitting}
-              isLoading={form.formState.isSubmitting}
+              isDisabled={!form.formState.isValid || isPending}
+              isLoading={isPending}
               spinner={
                 <Spinner
                   classNames={{ label: "text-foreground mt-4" }}
@@ -151,7 +143,7 @@ export function PostComposer({
               type='submit'
             >
               Deploy comment
-              {!form.formState.isSubmitting && <RocketIcon className='text-medium' size={16} />}
+              {!isPending && <RocketIcon className='text-medium' size={16} />}
             </Button>
           </div>
         </div>
