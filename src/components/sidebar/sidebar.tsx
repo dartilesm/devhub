@@ -35,7 +35,7 @@ export function Sidebar() {
             isActive={false}
           />
           <SidebarItem
-            to={`/user/${user?.username}`}
+            to={`/@${user?.username}`}
             icon={<UserIcon />}
             label='Profile'
             isActive={pathname === `/@${user?.username}`}
