@@ -6,7 +6,7 @@ async function getUserProfile(username: string) {
   const result = await supabaseClient.from("users").select("*").eq("username", username).single();
 
   if (result.error) {
-    console.log(result.error);
+    console.log("Error fetching user profile", result.error);
   }
 
   return result;

@@ -13,7 +13,7 @@ async function getUsersPosts(username: string) {
   });
 
   if (result.error) {
-    console.log(result.error);
+    console.log("Error fetching user posts", result.error);
   }
 
   return result;
