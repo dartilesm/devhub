@@ -5,12 +5,12 @@ interface PostCommentModalProps {
   post: PostContextType;
   isOpen: boolean;
   action: "reply" | "clone";
-  onOpenChange: (isOpen: boolean) => void;
+  onOpenChange: () => void;
 }
 
 export function PostCommentModal({ post, action, onOpenChange }: PostCommentModalProps) {
   return (
-    <Modal onOpenChange={onOpenChange} defaultOpen size='xl' backdrop='blur'>
+    <Modal onClose={onOpenChange} defaultOpen size='xl' backdrop='blur'>
       <ModalContent>
         {(onClose) => (
           <>

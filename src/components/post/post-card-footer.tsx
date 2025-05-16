@@ -35,9 +35,10 @@ export function PostFooter() {
     setSelectedReaction(reaction);
   }
 
-  function handleOpenChange(isOpen: boolean) {
+  function handleOnCloseModal() {
     setTimeout(() => {
-      setIsOpen(isOpen);
+      // Wait for the modal to close before setting isOpen to false
+      setIsOpen(false);
     }, 500);
   }
 
@@ -130,7 +131,7 @@ export function PostFooter() {
         <PostCommentModal
           post={post}
           isOpen={isOpen}
-          onOpenChange={handleOpenChange}
+          onOpenChange={handleOnCloseModal}
           action='reply'
         />
       )}
