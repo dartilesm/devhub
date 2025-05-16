@@ -54,7 +54,7 @@ export function UserProfileContent() {
 
   const slideVariants = {
     enter: (direction: "left" | "right") => ({
-      x: direction === "right" ? 100 : -100,
+      x: direction === "left" ? 100 : -100,
       opacity: 0,
     }),
     center: {
@@ -62,7 +62,7 @@ export function UserProfileContent() {
       opacity: 1,
     },
     exit: (direction: "left" | "right") => ({
-      x: direction === "right" ? -100 : 100,
+      x: direction === "left" ? -100 : 100,
       opacity: 0,
     }),
   };
@@ -94,7 +94,7 @@ export function UserProfileContent() {
             initial='enter'
             animate='center'
             exit='exit'
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.1 }}
             className='w-full'
           >
             {activeTab === UserProfileTabs.POSTS && (
