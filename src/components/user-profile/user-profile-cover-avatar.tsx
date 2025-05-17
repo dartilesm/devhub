@@ -8,7 +8,7 @@ import { useProfileContext } from "@/hooks/use-profile-context";
 export function UserProfileCoverAvatar() {
   const profile = useProfileContext();
   return (
-    <div className='relative'>
+    <div>
       <Image
         alt='Profile Cover'
         classNames={{
@@ -19,8 +19,14 @@ export function UserProfileCoverAvatar() {
         isBlurred
         src='https://heroui.com/images/album-cover.png'
       />
-      <div className='absolute -bottom-16 left-1/2 -translate-x-1/2 z-10 flex flex-col'>
-        <Avatar className='w-32 h-32 text-large' src={profile.image_url ?? undefined} isBordered />
+      <div className='relative'>
+        <div className='absolute -bottom-16 left-1/2 -translate-x-1/2 z-10 flex flex-col'>
+          <Avatar
+            className='w-32 h-32 text-large'
+            src={profile.image_url ?? undefined}
+            isBordered
+          />
+        </div>
       </div>
     </div>
   );

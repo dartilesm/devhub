@@ -2,11 +2,10 @@ import { PostComposer } from "@/components/post/post-composer";
 import { PostList } from "@/components/post/post-list";
 import { PostWrapper } from "@/components/post/post-wrapper";
 import { UserPost } from "@/components/post/user-post";
+import { PageHeader } from "@/components/ui/page-header";
 import { PostsProvider } from "@/context/posts-context";
 import { createServerSupabaseClient } from "@/db/supabase";
 import { NestedPost } from "@/types/nested-posts";
-import { ArrowLeftIcon } from "lucide-react";
-import Link from "next/link";
 
 function nestReplies(posts: NestedPost[]) {
   const map = new Map();
@@ -77,23 +76,20 @@ export default async function ThreadPage({ params }: ThreadPageProps) {
 
   return (
     <>
-      <header className='flex flex-col sm:flex-row items-start sm:items-center mb-6 gap-2'>
-        <Link href={`/root`}>
-          <ArrowLeftIcon />
-        </Link>
-        <h1 className='text-2xl font-semibold'>Thread</h1>
-      </header>
-      <PostsProvider initialPosts={directReplies || []}>
-        <PostWrapper>
-          <UserPost ancestry={postAncestry} />
-        </PostWrapper>
-        <PostComposer
-          placeholder={`Reply to @${postAncestry?.at(-1)?.user?.username}`}
-          postId={postId}
-        />
-        <span>Replies</span>
-        {!!directReplies?.length && <PostList />}
-      </PostsProvider>
+      <PageHeader title='Thread' />
+      <div className='flex flex-col gap-4 w-full'>
+        <PostsProvider initialPosts={directReplies || []}>
+          <PostWrapper>
+            <UserPost ancestry={postAncestry} />
+          </PostWrapper>
+          <PostComposer
+            placeholder={`Reply to @${postAncestry?.at(-1)?.user?.username}`}
+            postId={postId}
+          />
+          <span>Replies</span>
+          {!!directReplies?.length && <PostList />}
+        </PostsProvider>
+      </div>
     </>
   );
 }

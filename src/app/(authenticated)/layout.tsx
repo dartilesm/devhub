@@ -6,7 +6,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
       <div className='flex flex-col gap-4 sticky top-0 max-h-dvh'>
         <Sidebar />
       </div>
-      <div className='flex flex-col gap-4 min-h-dvh'>{children}</div>
+      <div className='flex flex-col min-h-dvh'>{children}</div>
       <div className='flex flex-col gap-4 sticky top-0 max-h-dvh'>{/* Right sidebar */}</div>
     </main>
   );
