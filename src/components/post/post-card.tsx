@@ -9,9 +9,10 @@ interface PostCardProps {
   children: React.ReactNode;
   className?: string;
   classNames?: CardProps["classNames"];
+  ref?: React.RefObject<HTMLDivElement>;
 }
 
-export function PostCard({ children, className, classNames }: PostCardProps) {
+export function PostCard({ children, className, classNames, ref }: PostCardProps) {
   const post = usePostContext();
   const router = useRouter();
 
@@ -24,7 +25,7 @@ export function PostCard({ children, className, classNames }: PostCardProps) {
   }
 
   return (
-    <div onClick={handleClick}>
+    <div onClick={handleClick} ref={ref}>
       <Card
         className={cn(
           "relative flex flex-row dark:bg-content1 bg-[transparent] [box-shadow:none] cursor-pointer",

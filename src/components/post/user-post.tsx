@@ -2,51 +2,60 @@ import { PostCard } from "@/components/post/post-card";
 import { PostContent } from "@/components/post/post-card-content";
 import { PostFooter } from "@/components/post/post-card-footer";
 import { PostHeader } from "@/components/post/post-card-header";
+import { UserPostThread } from "@/components/post/user-post-thread";
 import { PostProvider } from "@/context/post-provider";
 import { NestedPost } from "@/types/nested-posts";
 interface UserPostProps {
   ancestry?: UserPostProps["post"][];
   post?: NestedPost;
+  isThread?: boolean;
+  isFirstInThread?: boolean;
+  isLastInThread?: boolean;
+  ref?: React.RefObject<HTMLDivElement>;
+  className?: string;
 }
 
-export function UserPost({ ancestry, post }: UserPostProps) {
+export function UserPost({
+  ancestry,
+  post,
+  isThread,
+  isFirstInThread,
+  isLastInThread,
+  ref,
+  className,
+}: UserPostProps) {
   if (!post && !ancestry) {
     throw new Error("Either post or ancestry must be provided");
   }
 
-  const isFirstAndLastInThread = ancestry?.length === 2;
-  console.log({ isFirstAndLastInThread });
+  const hasLevel = !!post?.level;
+  const isFirstLevel = !!post?.level && post.level === 1;
+  const hasReplies = !!post?.replies?.length;
+
+  const renderAsThread = isThread ?? hasLevel ? !isFirstLevel || hasReplies : false;
+  const firstInThread = isFirstInThread ?? isFirstLevel;
+  const lastInThread = isLastInThread ?? !hasReplies;
 
   return (
     <>
-      {ancestry?.map((ancestor, index) => (
-        <PostProvider
-          key={ancestor?.id}
-          {...ancestor}
-          isThread={ancestry?.length > 1}
-          isFirstInThread={index === 0}
-          isLastInThread={index === ancestry?.length - 1}
-        >
-          <PostCard>
-            <PostHeader />
-            <PostContent />
-            <PostFooter />
-          </PostCard>
-        </PostProvider>
-      ))}
-      {!ancestry && (
+      {ancestry && <UserPostThread posts={ancestry as NestedPost[]} />}
+      {post && (
         <PostProvider
           {...post}
-          isThread={(!!post?.level && post.level > 1) || !!post?.replies?.length}
-          isFirstInThread={!!post?.replies?.length && post.level === 1}
-          isLastInThread={!post?.replies?.length}
+          isThread={renderAsThread}
+          isFirstInThread={firstInThread}
+          isLastInThread={lastInThread}
         >
-          <PostCard>
+          <PostCard ref={ref} className={className}>
             <PostHeader />
             <PostContent />
             <PostFooter />
           </PostCard>
-          {post?.replies && post.replies.map((reply) => <UserPost key={reply.id} post={reply} />)}
+          {post?.replies &&
+            post.replies
+              .filter((reply) => reply.level === (post.level ?? 1) + 1)
+              .slice(0, 1)
+              .map((reply) => <UserPost key={reply.id} post={reply} />)}
         </PostProvider>
       )}
     </>
