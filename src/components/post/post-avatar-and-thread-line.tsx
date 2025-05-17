@@ -6,15 +6,21 @@ import { Avatar } from "@heroui/react";
 import Link from "next/link";
 
 export function PostAvatarAndThreadLine() {
-  const { isThread, isFirstInThread, isLastInThread, ...post } = usePostContext();
+  const { isThread, isFirstInThread, isLastInThread, isThreadPagePost, user } = usePostContext();
   return (
-    <div className={cn("flex py-4 pl-4 pr-2 justify-center relative", {})}>
-      <Link href={`/@${post.user?.username}`}>
+    <div
+      className={cn("flex py-4 pl-4 pr-2 justify-center relative", {
+        "pl-4.5": isThreadPagePost,
+      })}
+    >
+      <Link href={`/@${user?.username}`}>
         <Avatar
           isBordered
-          src={post.user?.image_url ?? ""}
-          alt={post.user?.display_name ?? ""}
-          className='flex-shrink-0 z-20'
+          src={user?.image_url ?? ""}
+          alt={user?.display_name ?? ""}
+          className={cn("flex-shrink-0 z-20", {
+            "size-9": !isThreadPagePost,
+          })}
         />
       </Link>
       {/* Thread Line Container */}

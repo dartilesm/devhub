@@ -13,7 +13,7 @@ interface PostCardProps {
 }
 
 export function PostCard({ children, className, classNames, ref }: PostCardProps) {
-  const post = usePostContext();
+  const { isThreadPagePost, ...post } = usePostContext();
   const router = useRouter();
 
   function handleClick(event: React.MouseEvent<HTMLDivElement>) {
@@ -36,7 +36,7 @@ export function PostCard({ children, className, classNames, ref }: PostCardProps
         role='article'
         as='article'
       >
-        <PostAvatarAndThreadLine />
+        {!isThreadPagePost && <PostAvatarAndThreadLine />}
         <div className='w-full'>{children}</div>
       </Card>
     </div>

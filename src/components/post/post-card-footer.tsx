@@ -1,7 +1,7 @@
 "use client";
 
 import { usePostContext } from "@/hooks/use-post-context";
-import { Button, CardFooter, Tooltip } from "@heroui/react";
+import { Button, CardFooter, cn, Tooltip } from "@heroui/react";
 import { ArchiveIcon, EllipsisIcon, MessageSquareIcon, Repeat2Icon, StarIcon } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useState } from "react";
@@ -44,7 +44,7 @@ export function PostFooter() {
 
   return (
     <>
-      <CardFooter className='z-30 flex flex-row gap-2 justify-between'>
+      <CardFooter className={cn("z-30 flex flex-row gap-2 justify-between")}>
         {/* Reactions */}
         <Tooltip
           className='relative mt-4 flex flex-row gap-2 rounded-full p-1'

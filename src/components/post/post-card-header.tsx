@@ -1,30 +1,46 @@
 "use client";
 
+import { PostAvatarAndThreadLine } from "@/components/post/post-avatar-and-thread-line";
 import { usePostContext } from "@/hooks/use-post-context";
 import { formatDateTime } from "@/lib/format-time";
 import { getRelativeTime } from "@/lib/relative-time";
+import { cn } from "@/lib/utils";
 import { Button, CardHeader } from "@heroui/react";
 import { UserRoundPlusIcon } from "lucide-react";
 import Link from "next/link";
 
 export function PostHeader() {
-  const post = usePostContext();
+  const { isThreadPagePost, user, created_at } = usePostContext();
 
   return (
-    <CardHeader className='flex items-center gap-4 pb-2 flex-1'>
+    <CardHeader
+      className={cn("flex items-center gap-4 pb-2 flex-1", {
+        "py-0 pr-8.5": isThreadPagePost,
+      })}
+    >
       <div className='flex items-center justify-between w-full'>
         <div className='flex items-center gap-1.5'>
-          <Link href={`/@${post.user?.username}`} className='flex flex-row gap-2 items-center'>
-            <span className='font-semibold'>{post.user?.display_name}</span>
-            <span className='text-sm text-content4-foreground/50'>@{post.user?.username}</span>
-          </Link>
-          <span className='text-sm text-content4-foreground/50'>·</span>
-          <time
-            className='text-sm text-content4-foreground/50'
-            title={formatDateTime(post.created_at!)}
+          {isThreadPagePost && <PostAvatarAndThreadLine />}
+          <Link
+            href={`/@${user?.username}`}
+            className={cn("flex flex-row gap-2 items-center", {
+              "flex-col gap-0 items-start": isThreadPagePost,
+            })}
           >
-            {getRelativeTime(new Date(post.created_at!))}
-          </time>
+            <span className='font-semibold'>{user?.display_name}</span>
+            <span className='text-sm text-content4-foreground/50'>@{user?.username}</span>
+          </Link>
+          {!isThreadPagePost && (
+            <>
+              <span className='text-sm text-content4-foreground/50'>·</span>
+              <time
+                className='text-sm text-content4-foreground/50'
+                title={formatDateTime(created_at!)}
+              >
+                {getRelativeTime(new Date(created_at!))}
+              </time>
+            </>
+          )}
         </div>
 
         {/* {!isFollowing && onFollow && (
