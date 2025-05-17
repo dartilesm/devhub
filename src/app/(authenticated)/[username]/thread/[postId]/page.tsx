@@ -44,10 +44,9 @@ async function getPostData(postId: string) {
     console.log("Thread (root to current):", postAncestry);
   }
 
-  const { data: directReplies, error: directRepliesError } = await supabaseClient.rpc(
-    "get_replies_to_depth",
-    { target_id: postId, max_depth: 2 }
-  );
+  const { data: directReplies, error: directRepliesError } = await supabaseClient
+    .rpc("get_replies_to_depth", { target_id: postId, max_depth: 2 })
+    .order("created_at", { ascending: false });
 
   if (directRepliesError) {
     console.error("Error fetching direct replies:", directRepliesError);
@@ -79,15 +78,17 @@ export default async function ThreadPage({ params }: ThreadPageProps) {
       <PageHeader title='Thread' />
       <div className='flex flex-col gap-4 w-full'>
         <PostsProvider initialPosts={directReplies || []}>
-          <PostWrapper>
+          <PostWrapper isAncestry>
             <UserPost ancestry={postAncestry} />
           </PostWrapper>
           <PostComposer
             placeholder={`Reply to @${postAncestry?.at(-1)?.user?.username}`}
             postId={postId}
           />
-          <span>Replies</span>
-          {!!directReplies?.length && <PostList />}
+          <div className='flex flex-col gap-4 min-h-[100dvh]'>
+            <span>Replies</span>
+            {!!directReplies?.length && <PostList />}
+          </div>
         </PostsProvider>
       </div>
     </>
