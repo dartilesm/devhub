@@ -4,7 +4,7 @@ import { PostList } from "@/components/post/post-list";
 import { PostsProvider } from "@/context/posts-context";
 import { Tab, Tabs } from "@heroui/react";
 import { Tables } from "database.types";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 
 const enum UserProfileTabs {

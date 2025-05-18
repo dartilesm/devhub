@@ -1,7 +1,7 @@
 "use client";
 
 import { usePostsContext } from "@/hooks/use-posts-context";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { UserPost } from "./user-post";
 import { PostWrapper } from "@/components/post/post-wrapper";
 

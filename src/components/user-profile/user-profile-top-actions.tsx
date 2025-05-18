@@ -3,7 +3,7 @@
 import { useProfileContext } from "@/hooks/use-profile-context";
 import { useUser } from "@clerk/nextjs";
 import { Button, Tooltip } from "@heroui/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { CheckIcon, Link2Icon, UserRoundPlusIcon } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useState } from "react";
