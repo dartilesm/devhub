@@ -5,6 +5,8 @@ import { Button, CardFooter, cn, Tooltip } from "@heroui/react";
 import { ArchiveIcon, EllipsisIcon, MessageSquareIcon, Repeat2Icon, StarIcon } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import { useToggleReactionMutation } from "@/hooks/mutation/use-toggle-reaction-mutation";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Reaction = "star" | "coffee" | "approve" | "cache";
 
@@ -30,9 +32,27 @@ export function PostFooter() {
   const post = usePostContext();
   const [selectedReaction, setSelectedReaction] = useState<Reaction | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const queryClient = useQueryClient();
 
+  const toggleReactionMutation = useToggleReactionMutation({
+    onSuccess: () => {
+      // Invalidate and refetch the post data to update reactions
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+  });
+
+  /**
+   * Handles toggling a reaction on a post
+   * @param reaction - The type of reaction to toggle
+   */
   function handleReaction(reaction: Reaction) {
-    setSelectedReaction(reaction);
+    if (!post?.id) return;
+
+    setSelectedReaction((prev) => (prev === reaction ? null : reaction));
+    toggleReactionMutation.mutate({
+      post_id: post.id,
+      reaction_type: reaction,
+    });
   }
 
   function handleOnCloseModal() {
@@ -56,6 +76,7 @@ export function PostFooter() {
                 size='sm'
                 className='rounded-full p-2 hover:scale-200 transition-all duration-300'
                 isIconOnly
+                isLoading={toggleReactionMutation.isPending}
                 onPress={() => handleReaction(reaction.type)}
               >
                 <span className='text-xl'>{reaction.icon}</span>
@@ -76,6 +97,7 @@ export function PostFooter() {
             variant={!selectedReaction ? "light" : "faded"}
             color={!selectedReaction ? "default" : "primary"}
             size='sm'
+            isLoading={toggleReactionMutation.isPending}
             className='group flex items-center gap-1 rounded-full text-gray-400 hover:text-default-foreground'
           >
             {selectedReaction ? (
