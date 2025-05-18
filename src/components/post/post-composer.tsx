@@ -116,6 +116,7 @@ export function PostComposer({
               </Tooltip>
               <Chip
                 variant='bordered'
+                className='hidden md:flex'
                 classNames={{
                   content: "flex flex-row items-center gap-2 text-muted-foreground text-xs",
                 }}
@@ -127,7 +128,6 @@ export function PostComposer({
             <Button
               variant='solid'
               color='primary'
-              className='rounded-full'
               size='sm'
               isDisabled={!form.formState.isValid || isPending}
               isLoading={isPending}
