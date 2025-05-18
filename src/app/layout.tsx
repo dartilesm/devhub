@@ -1,6 +1,7 @@
 import { MockAuthProvider } from "@/context/mock-auth-provider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 
 import { ClientProviders } from "@/app/client-providers";
 import "@/app/globals.css";
@@ -37,6 +38,7 @@ export default function RootLayout({
             <ClientProviders>{children}</ClientProviders>
           </ThemeProvider>
         </MockAuthProvider>
+        <Analytics />
       </body>
     </html>
   );
