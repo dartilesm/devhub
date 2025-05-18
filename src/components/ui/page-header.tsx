@@ -3,7 +3,7 @@
 import { Button, Link } from "@heroui/react";
 import { ArrowLeftIcon } from "lucide-react";
 import { ReactNode } from "react";
-import { useRouter } from "next/navigation";
+
 type PageHeaderProps = {
   /**
    * The main title to display in the header
