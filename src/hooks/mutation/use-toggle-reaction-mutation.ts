@@ -11,7 +11,7 @@ export function useToggleReactionMutation(
     Awaited<ReturnType<typeof toggleReaction>>,
     Error,
     ToggleReactionData
-  >
+  > = {}
 ) {
   const mutation = useMutation({
     ...useMutationProps,

@@ -1,12 +1,11 @@
 "use client";
 
+import { useToggleReactionMutation } from "@/hooks/mutation/use-toggle-reaction-mutation";
 import { usePostContext } from "@/hooks/use-post-context";
 import { Button, CardFooter, cn, Tooltip } from "@heroui/react";
 import { ArchiveIcon, EllipsisIcon, MessageSquareIcon, Repeat2Icon, StarIcon } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import { useToggleReactionMutation } from "@/hooks/mutation/use-toggle-reaction-mutation";
-import { useQueryClient } from "@tanstack/react-query";
 
 type Reaction = "star" | "coffee" | "approve" | "cache";
 
@@ -19,8 +18,8 @@ interface ReactionType {
 const reactions: ReactionType[] = [
   { type: "star", icon: "🌟", label: "Star (like)" },
   { type: "coffee", icon: "☕", label: "Give a coffe (support)" },
-  { type: "approve", icon: "✅", label: "Approve (love)" },
-  { type: "cache", icon: "💾", label: "Cache (insightful)" },
+  { type: "approve", icon: "✔︎", label: "Approve (love)" },
+  { type: "cache", icon: "🧠", label: "Cache (insightful)" },
 ];
 
 const PostCommentModal = dynamic(
@@ -32,20 +31,16 @@ export function PostFooter() {
   const post = usePostContext();
   const [selectedReaction, setSelectedReaction] = useState<Reaction | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const queryClient = useQueryClient();
+  const [isReactionsTooltipOpen, setIsReactionsTooltipOpen] = useState(false);
 
-  const toggleReactionMutation = useToggleReactionMutation({
-    onSuccess: () => {
-      // Invalidate and refetch the post data to update reactions
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
-    },
-  });
+  const toggleReactionMutation = useToggleReactionMutation();
 
   /**
    * Handles toggling a reaction on a post
    * @param reaction - The type of reaction to toggle
    */
   function handleReaction(reaction: Reaction) {
+    setIsReactionsTooltipOpen(false);
     if (!post?.id) return;
 
     setSelectedReaction((prev) => (prev === reaction ? null : reaction));
@@ -70,13 +65,21 @@ export function PostFooter() {
           className='relative mt-4 flex flex-row gap-2 rounded-full p-1'
           placement='top-start'
           content={reactions.map((reaction) => (
-            <Tooltip key={reaction.type} className='group relative' content={reaction.label}>
+            <Tooltip
+              key={reaction.type}
+              className='group relative'
+              content={reaction.label}
+              onOpenChange={(open) => {
+                if (open) {
+                  setIsReactionsTooltipOpen(true);
+                }
+              }}
+            >
               <Button
                 variant='light'
                 size='sm'
                 className='rounded-full p-2 hover:scale-200 transition-all duration-300'
                 isIconOnly
-                isLoading={toggleReactionMutation.isPending}
                 onPress={() => handleReaction(reaction.type)}
               >
                 <span className='text-xl'>{reaction.icon}</span>
@@ -92,12 +95,13 @@ export function PostFooter() {
           </span> */}
             </Tooltip>
           ))}
+          isOpen={isReactionsTooltipOpen}
+          onOpenChange={setIsReactionsTooltipOpen}
         >
           <Button
             variant={!selectedReaction ? "light" : "faded"}
             color={!selectedReaction ? "default" : "primary"}
             size='sm'
-            isLoading={toggleReactionMutation.isPending}
             className='group flex items-center gap-1 rounded-full text-gray-400 hover:text-default-foreground'
           >
             {selectedReaction ? (

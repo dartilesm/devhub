@@ -11,6 +11,9 @@ export type Database = {
     Tables: {
       posts: {
         Row: {
+          approve_count: number | null
+          cache_count: number | null
+          coffee_count: number | null
           content: string | null
           created_at: string | null
           id: string
@@ -18,9 +21,13 @@ export type Database = {
           reply_count: number | null
           repost_count: number | null
           repost_post_id: string | null
+          star_count: number | null
           user_id: string
         }
         Insert: {
+          approve_count?: number | null
+          cache_count?: number | null
+          coffee_count?: number | null
           content?: string | null
           created_at?: string | null
           id?: string
@@ -28,9 +35,13 @@ export type Database = {
           reply_count?: number | null
           repost_count?: number | null
           repost_post_id?: string | null
+          star_count?: number | null
           user_id?: string
         }
         Update: {
+          approve_count?: number | null
+          cache_count?: number | null
+          coffee_count?: number | null
           content?: string | null
           created_at?: string | null
           id?: string
@@ -38,6 +49,7 @@ export type Database = {
           reply_count?: number | null
           repost_count?: number | null
           repost_post_id?: string | null
+          star_count?: number | null
           user_id?: string
         }
         Relationships: [
@@ -210,6 +222,10 @@ export type Database = {
           repost_count: number
           user: Json
         }[]
+      }
+      toggle_reaction: {
+        Args: { p_post_id: string; p_reaction_type: string }
+        Returns: undefined
       }
     }
     Enums: {
