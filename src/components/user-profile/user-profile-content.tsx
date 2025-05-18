@@ -90,8 +90,6 @@ export function UserProfileContent({ posts }: UserProfileContentProps) {
             {activeTab === UserProfileTabs.POSTS && (
               <PostsProvider initialPosts={posts}>
                 <PostList />
-                <PostList />
-                <PostList />
               </PostsProvider>
             )}
             {activeTab === UserProfileTabs.MEDIA && (
