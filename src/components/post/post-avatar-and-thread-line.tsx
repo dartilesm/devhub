@@ -1,8 +1,9 @@
 "use client";
 
+import { UserProfilePopoverCard } from "@/components/user-profile/user-profile-popover-card";
 import { usePostContext } from "@/hooks/use-post-context";
 import { cn } from "@/lib/utils";
-import { Avatar } from "@heroui/react";
+import { Avatar, Tooltip } from "@heroui/react";
 import Link from "next/link";
 
 export function PostAvatarAndThreadLine() {
@@ -14,14 +15,16 @@ export function PostAvatarAndThreadLine() {
       })}
     >
       <Link href={`/@${user?.username}`}>
-        <Avatar
-          isBordered
-          src={user?.image_url ?? ""}
-          alt={user?.display_name ?? ""}
-          className={cn("flex-shrink-0 z-20", {
-            "size-9": !isThreadPagePost,
-          })}
-        />
+        <Tooltip content={<UserProfilePopoverCard user={user!} />}>
+          <Avatar
+            isBordered
+            src={user?.image_url ?? ""}
+            alt={user?.display_name ?? ""}
+            className={cn("flex-shrink-0 z-20", {
+              "size-9": !isThreadPagePost,
+            })}
+          />
+        </Tooltip>
       </Link>
       {/* Thread Line Container */}
       {isThread && (

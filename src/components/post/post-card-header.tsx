@@ -1,11 +1,12 @@
 "use client";
 
 import { PostAvatarAndThreadLine } from "@/components/post/post-avatar-and-thread-line";
+import { UserProfilePopoverCard } from "@/components/user-profile/user-profile-popover-card";
 import { usePostContext } from "@/hooks/use-post-context";
 import { formatDateTime } from "@/lib/format-time";
 import { getRelativeTime } from "@/lib/relative-time";
 import { cn } from "@/lib/utils";
-import { Button, CardHeader } from "@heroui/react";
+import { Button, CardHeader, Tooltip } from "@heroui/react";
 import { UserRoundPlusIcon } from "lucide-react";
 import Link from "next/link";
 
@@ -21,15 +22,17 @@ export function PostHeader() {
       <div className='flex items-center justify-between w-full'>
         <div className='flex items-center gap-1.5'>
           {isThreadPagePost && <PostAvatarAndThreadLine />}
-          <Link
-            href={`/@${user?.username}`}
-            className={cn("flex flex-row gap-2 items-center", {
-              "flex-col gap-0 items-start": isThreadPagePost,
-            })}
-          >
-            <span className='font-semibold'>{user?.display_name}</span>
-            <span className='text-sm text-content4-foreground/50'>@{user?.username}</span>
-          </Link>
+          <Tooltip content={<UserProfilePopoverCard user={user!} />}>
+            <Link
+              href={`/@${user?.username}`}
+              className={cn("flex flex-row gap-2 items-center", {
+                "flex-col gap-0 items-start": isThreadPagePost,
+              })}
+            >
+              <span className='font-semibold'>{user?.display_name}</span>
+              <span className='text-sm text-content4-foreground/50'>@{user?.username}</span>
+            </Link>
+          </Tooltip>
           {!isThreadPagePost && (
             <>
               <span className='text-sm text-content4-foreground/50'>·</span>

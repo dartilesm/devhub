@@ -64,7 +64,7 @@ export function UserProfileContent({ posts }: UserProfileContentProps) {
         aria-label='Profile sections'
         variant='underlined'
         color='primary'
-        className='sticky top-16 z-30 bg-background'
+        className='sticky top-16 z-30 backdrop-blur-xl bg-background/70'
         classNames={{
           tabList: "w-full",
         }}
