@@ -1,3 +1,5 @@
+import { UserFeedLoading } from "@/components/loading/user-feed.loading";
+
 export default function RootLoading() {
-  return <div>RootLoading</div>;
+  return <UserFeedLoading />;
 }
