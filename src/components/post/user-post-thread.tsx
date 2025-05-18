@@ -41,11 +41,14 @@ export function UserPostThread({ posts }: UserPostThreadProps) {
           isFirstInThread={isFirstAndLastPost || index === 0}
           isLastInThread={isFirstAndLastPost || index === posts.length - 1}
           post={post}
-          className={cn("dark:border-content2 border", {
-            "max-w-[calc(100%-2rem)] mx-auto dark:bg-content2/70 rounded-none border-t-0":
-              index < posts.length - 1,
-            "rounded-t-xl border-t border-x border-b-0": index === 0,
-          })}
+          className={cn(
+            "dark:border-content2 border border-content3 bg-default-200/20 dark:bg-content1",
+            {
+              "max-w-[calc(100%-2rem)] mx-auto dark:bg-content2/70 rounded-none border-t-0":
+                index < posts.length - 1,
+              "rounded-t-xl border-t border-x border-b-0": index === 0,
+            }
+          )}
         />
       ))}
     </div>

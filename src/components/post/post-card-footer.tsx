@@ -28,7 +28,7 @@ const PostCommentModal = dynamic(
 );
 
 export function PostFooter() {
-  const post = usePostContext();
+  const { isThreadPagePost, ...post } = usePostContext();
   const [selectedReaction, setSelectedReaction] = useState<Reaction | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isReactionsTooltipOpen, setIsReactionsTooltipOpen] = useState(false);
@@ -59,7 +59,11 @@ export function PostFooter() {
 
   return (
     <>
-      <CardFooter className={cn("z-30 flex flex-row gap-2 justify-between")}>
+      <CardFooter
+        className={cn("z-30 flex flex-row gap-2 justify-between", {
+          "px-8.5": isThreadPagePost,
+        })}
+      >
         {/* Reactions */}
         <Tooltip
           className='relative mt-4 flex flex-row gap-2 rounded-full p-1'
