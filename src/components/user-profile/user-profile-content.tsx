@@ -59,11 +59,12 @@ export function UserProfileContent({ posts }: UserProfileContentProps) {
   const direction = getSlideDirection(activeTab, previousTab);
 
   return (
-    <>
+    <div className='flex flex-col gap-2'>
       <Tabs
         aria-label='Profile sections'
-        variant='bordered'
+        variant='underlined'
         color='primary'
+        className='sticky top-16 z-30 bg-background'
         classNames={{
           tabList: "w-full",
         }}
@@ -89,6 +90,8 @@ export function UserProfileContent({ posts }: UserProfileContentProps) {
             {activeTab === UserProfileTabs.POSTS && (
               <PostsProvider initialPosts={posts}>
                 <PostList />
+                <PostList />
+                <PostList />
               </PostsProvider>
             )}
             {activeTab === UserProfileTabs.MEDIA && (
@@ -100,6 +103,6 @@ export function UserProfileContent({ posts }: UserProfileContentProps) {
           </motion.div>
         </AnimatePresence>
       </div>
-    </>
+    </div>
   );
 }
