@@ -12,7 +12,11 @@ async function getUserProfile(username: string) {
   return result;
 }
 
-export default async function UserPage({ params }: { params: { username: string } }) {
+interface UserPageProps {
+  params: Promise<{ username: string }>;
+}
+
+export default async function UserPage({ params }: UserPageProps) {
   const { username } = await params;
   const formattedUsername = decodeURIComponent(username);
   const userProfile = await getUserProfile(formattedUsername.replace("@", ""));
