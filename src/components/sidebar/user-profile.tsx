@@ -1,9 +1,9 @@
 import React from "react";
 import { Avatar } from "@heroui/react";
-import { useUser } from "@clerk/nextjs";
+import { useMockUser } from "@/context/mock-auth-provider";
 
 export function UserProfile() {
-  const { user } = useUser();
+  const { user } = useMockUser();
   return (
     <div className='p-4 flex items-center space-x-3'>
       <Avatar src={user?.imageUrl} size='md' radius='full' className='border-2 border-content3' />

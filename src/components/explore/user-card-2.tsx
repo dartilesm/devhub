@@ -14,7 +14,7 @@ interface UserCardProps {
  */
 export function UserCard2({ user }: UserCardProps) {
   return (
-    <Card className='relative rounded-xl overflow-hidden bg-gradient-to-br from-[#3360f5] via-[#033478] to-[#3c0fb0] text-white max-w-52 shrink-0'>
+    <Card className='relative rounded-xl overflow-hidden bg-gradient-to-br from-[#5377ed] via-[#164f9e] to-[#034285d6] text-white max-w-52 shrink-0'>
       {/* Content */}
       <div className='p-6 flex flex-col items-center'>
         {/* Avatar */}

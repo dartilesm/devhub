@@ -1,7 +1,7 @@
 "use client";
 
 import { useProfileContext } from "@/hooks/use-profile-context";
-import { useUser } from "@clerk/nextjs";
+import { useMockUser } from "@/context/mock-auth-provider";
 import { Button, Tooltip } from "@heroui/react";
 import { AnimatePresence, motion } from "motion/react";
 import { CheckIcon, Link2Icon, UserRoundPlusIcon } from "lucide-react";
@@ -14,7 +14,7 @@ const UserProfileEditModal = dynamic(
 );
 
 export function UserProfileTopActions() {
-  const { user } = useUser();
+  const { user } = useMockUser();
   const profile = useProfileContext();
   const [isCopied, setIsCopied] = useState(false);
   const [isEditing, setIsEditing] = useState(false);

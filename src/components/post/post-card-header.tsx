@@ -7,7 +7,6 @@ import { formatDateTime } from "@/lib/format-time";
 import { getRelativeTime } from "@/lib/relative-time";
 import { cn } from "@/lib/utils";
 import { Button, CardHeader, Tooltip } from "@heroui/react";
-import { UserRoundPlusIcon } from "lucide-react";
 import Link from "next/link";
 
 export function PostHeader() {
@@ -48,15 +47,8 @@ export function PostHeader() {
 
         {/* {!isFollowing && onFollow && (
         )} */}
-        <Button
-          variant='bordered'
-          color='primary'
-          size='sm'
-          /* onPress={handleFollow} */
-          className='rounded-full'
-        >
+        <Button variant='flat' color='primary' size='sm'>
           Follow
-          <UserRoundPlusIcon size={14} />
         </Button>
       </div>
     </CardHeader>

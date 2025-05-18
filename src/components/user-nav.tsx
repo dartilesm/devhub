@@ -1,16 +1,9 @@
-import { UserButton } from "@clerk/nextjs";
+import { MockUserButton } from "./mock-auth/mock-user-button";
 
 export function UserNav() {
   return (
     <div className='flex items-center gap-4'>
-      <UserButton
-        afterSignOutUrl='/'
-        appearance={{
-          elements: {
-            avatarBox: "h-10 w-10",
-          },
-        }}
-      />
+      <MockUserButton />
     </div>
   );
 }

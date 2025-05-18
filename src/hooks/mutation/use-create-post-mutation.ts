@@ -1,5 +1,5 @@
 import { createPostComment, CreatePostCommentProps } from "@/actions/post-comment";
-import { useUser } from "@clerk/nextjs";
+import { useMockUser } from "@/context/mock-auth-provider";
 import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 
 export function useCreatePostMutation(
@@ -8,7 +8,7 @@ export function useCreatePostMutation(
     Error,
     CreatePostCommentProps
   >,
-  user: ReturnType<typeof useUser>["user"]
+  user: ReturnType<typeof useMockUser>["user"]
 ) {
   const mutation = useMutation({
     ...useMutationProps,

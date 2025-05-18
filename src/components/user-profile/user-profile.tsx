@@ -4,28 +4,20 @@ import { UserProfileDescription } from "@/components/user-profile/user-profile-d
 import { UserProfileTopActions } from "@/components/user-profile/user-profile-top-actions";
 import { PageHeader } from "@/components/ui/page-header";
 import { ProfileProvider } from "@/context/profile-provider";
-import { createServerSupabaseClient } from "@/db/supabase";
+import { mockPostService } from "@/mocks/service";
 import { Tables } from "database.types";
 
 async function getUsersPosts(username: string) {
-  const supabaseClient = createServerSupabaseClient();
-  const result = await supabaseClient.rpc("get_user_posts_by_username", {
-    input_username: username,
-  });
-
-  if (result.error) {
-    console.log("Error fetching user posts", result.error);
-  }
-
+  const result = await mockPostService.getPostsByUsername(username);
   return result;
 }
 
-type UserProfileProps = {
+interface UserProfileProps {
   profile: Tables<"users">;
-};
+}
 
 export async function UserProfile({ profile }: UserProfileProps) {
-  const posts = await getUsersPosts(profile.username);
+  const userPosts = await getUsersPosts(profile.username);
 
   return (
     <ProfileProvider profile={profile}>
@@ -35,7 +27,7 @@ export async function UserProfile({ profile }: UserProfileProps) {
         <UserProfileTopActions />
         <div className='flex flex-col gap-2'>
           <UserProfileDescription />
-          <UserProfileContent posts={posts.data ?? []} />
+          <UserProfileContent posts={userPosts.data} />
         </div>
       </div>
     </ProfileProvider>

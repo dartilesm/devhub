@@ -1,39 +1,18 @@
 import { PostList } from "@/components/post/post-list";
 import { PostComposer } from "@/components/post/post-composer";
-import { PostContextType } from "@/context/post-provider";
 import { PostsProvider } from "@/context/posts-context";
-import { createServerSupabaseClient } from "@/db/supabase";
+import { mockPostService } from "@/mocks/service";
 
 async function getPosts() {
-  const supabaseClient = createServerSupabaseClient();
-  const result = await supabaseClient
-    .from("posts")
-    .select(
-      `
-        *,
-        user:users (
-          id,
-          username,
-          display_name,
-          image_url
-        )
-      `
-    )
-    .is("parent_post_id", null)
-    .order("created_at", {
-      ascending: false,
-    })
-    .limit(10);
-
+  const result = await mockPostService.getPosts();
   return result;
 }
 
 export async function UserFeed() {
-  const { data: initialPosts } = await getPosts();
-  console.log(initialPosts);
+  const posts = await getPosts();
 
   return (
-    <PostsProvider initialPosts={(initialPosts as PostContextType[]) || []}>
+    <PostsProvider initialPosts={posts.data}>
       <div className='w-full p-4 flex flex-col gap-4'>
         <PostComposer />
         <PostList />

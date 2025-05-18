@@ -4,7 +4,7 @@ import { PostContextType } from "@/context/post-provider";
 import { useCreatePostMutation } from "@/hooks/mutation/use-create-post-mutation";
 import { usePostsContext } from "@/hooks/use-posts-context";
 import { cn } from "@/lib/utils";
-import { useUser } from "@clerk/nextjs";
+import { useMockUser } from "@/context/mock-auth-provider";
 import { Avatar, Button, Chip, Spinner, Textarea, Tooltip } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Icon } from "@iconify/react";
@@ -38,7 +38,7 @@ export function PostComposer({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
   });
-  const { user } = useUser();
+  const { user } = useMockUser();
   const { addPost } = usePostsContext();
   const { mutate, isPending } = useCreatePostMutation(
     {
@@ -62,7 +62,7 @@ export function PostComposer({
           form.reset();
           return;
         }
-        form.setError("comment", { message: response?.error.message });
+        form.setError("comment", { message: (response?.error as unknown as Error).message });
         return;
       },
     },

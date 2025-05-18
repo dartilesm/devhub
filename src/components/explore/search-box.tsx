@@ -3,7 +3,7 @@
 import { Icon } from "@iconify/react";
 import { Input } from "@heroui/react";
 import { useCallback, useState } from "react";
-import { useDebounce } from "@/hooks/use-debounce";
+import { AnyFunction, useDebounce } from "@/hooks/use-debounce";
 
 interface SearchBoxProps {
   onSearch: (term: string) => void;
@@ -12,7 +12,7 @@ interface SearchBoxProps {
 
 export function SearchBox({ onSearch, placeholder = "Search..." }: SearchBoxProps) {
   const [searchTerm, setSearchTerm] = useState("");
-  const debouncedSearch = useDebounce(onSearch, 300);
+  const debouncedSearch = useDebounce(onSearch as AnyFunction, 300);
 
   const handleSearch = useCallback(
     (value: string) => {

@@ -1,4 +1,4 @@
-import { ClerkProvider } from "@clerk/nextjs";
+import { MockAuthProvider } from "@/context/mock-auth-provider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
@@ -32,11 +32,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-dvh`}
         suppressHydrationWarning
       >
-        <ClerkProvider>
+        <MockAuthProvider>
           <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
             <ClientProviders>{children}</ClientProviders>
           </ThemeProvider>
-        </ClerkProvider>
+        </MockAuthProvider>
       </body>
     </html>
   );

@@ -4,12 +4,13 @@ import { SidebarItem } from "./sidebar-item";
 import { SidebarSection } from "./sidebar-section";
 import { UserProfile } from "./user-profile";
 import { SidebarThemeSwitcher } from "@/components/sidebar/sidebar-theme-switcher";
-import { useUser } from "@clerk/nextjs";
+import { useMockUser } from "@/context/mock-auth-provider";
 import { HomeIcon, MessageSquareIcon, TelescopeIcon, TriangleIcon, UserIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
+
 export function Sidebar() {
   const pathname = usePathname();
-  const { user } = useUser();
+  const { user } = useMockUser();
   return (
     <div className='h-full flex flex-col max-w-64'>
       <div className='p-4 flex items-center gap-2'>
@@ -27,7 +28,12 @@ export function Sidebar() {
             label='Root'
             isActive={pathname === "/root"}
           />
-          <SidebarItem to='/explore' icon={<TelescopeIcon />} label='Explore' isActive={false} />
+          <SidebarItem
+            to='/explore'
+            icon={<TelescopeIcon />}
+            label='Explore'
+            isActive={pathname === "/explore"}
+          />
           <SidebarItem
             to='/messages'
             icon={<MessageSquareIcon />}
