@@ -15,7 +15,7 @@ export function PostAvatarAndThreadLine() {
       })}
     >
       <Link href={`/@${user?.username}`}>
-        <Tooltip content={<UserProfilePopoverCard user={user!} />}>
+        <Tooltip content={<UserProfilePopoverCard user={user!} />} delay={1000}>
           <Avatar
             isBordered
             src={user?.image_url ?? ""}

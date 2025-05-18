@@ -22,7 +22,7 @@ export function PostHeader() {
       <div className='flex items-center justify-between w-full'>
         <div className='flex items-center gap-1.5'>
           {isThreadPagePost && <PostAvatarAndThreadLine />}
-          <Tooltip content={<UserProfilePopoverCard user={user!} />}>
+          <Tooltip content={<UserProfilePopoverCard user={user!} />} delay={1000}>
             <Link
               href={`/@${user?.username}`}
               className={cn("flex flex-row gap-2 items-center", {
