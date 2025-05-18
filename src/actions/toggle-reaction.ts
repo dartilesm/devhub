@@ -14,33 +14,16 @@ export async function toggleReaction({
   reaction_type,
 }: ToggleReactionData): Promise<PostgrestSingleResponse<Tables<"reactions">>> {
   const supabaseClient = createServerSupabaseClient();
+  console.log("[toggleReaction] Starting reaction toggle:", { post_id, reaction_type });
 
-  // First check if the reaction already exists
-  const { data: existingReaction } = await supabaseClient
-    .from("reactions")
-    .select()
-    .eq("post_id", post_id)
-    .eq("reaction_type", reaction_type)
-    .single();
-
-  if (existingReaction) {
-    // If reaction exists, remove it
-    return supabaseClient
-      .from("reactions")
-      .delete()
-      .eq("post_id", post_id)
-      .eq("reaction_type", reaction_type)
-      .select()
-      .single();
-  }
-
-  // If reaction doesn't exist, create it
-  return supabaseClient
-    .from("reactions")
-    .insert({
-      post_id,
-      reaction_type,
+  const toggleReaction = await supabaseClient
+    .rpc("toggle_reaction", {
+      input_post_id: post_id,
+      input_reaction_type: reaction_type,
     })
     .select()
     .single();
+
+  console.log("[toggleReaction] Toggle result:", toggleReaction);
+  return toggleReaction;
 }
