@@ -44,7 +44,6 @@ export async function SuggestionsSection() {
             More
           </a>
         </div>
-        <p>© 2024 DevHub</p>
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ export function Sidebar() {
         <div className='w-8 h-8 rounded-full bg-content1 flex items-center justify-center'>
           <TriangleIcon className='text-content1-foreground' size={18} />
         </div>
-        <span className='font-medium text-content1-foreground text-lg'>Devhub</span>
+        <span className='font-medium text-content1-foreground text-lg'>ByteBuzz</span>
       </div>
 
       <div className='flex-1 overflow-y-auto justify-center flex flex-col'>

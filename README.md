@@ -1,3 +1,7 @@
+# ByteBuzz
+
+ByteBuzz is a social platform for developers and tech enthusiasts to share code snippets, tech news, and programming memes.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

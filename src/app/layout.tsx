@@ -17,8 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DevHub",
-  description: "A modern development platform",
+  title: "ByteBuzz",
+  description:
+    "ByteBuzz is a social platform for developers and tech enthusiasts to share code snippets, tech news, and programming memes.",
 };
 
 export default function RootLayout({
