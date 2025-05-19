@@ -1,8 +1,8 @@
 "use client";
 
+import { FollowButton } from "@/components/ui/follow-button";
 import { ExploreUser } from "@/types/explore";
-import { Avatar, Button, Card } from "@heroui/react";
-import { UserPlusIcon } from "lucide-react";
+import { Avatar, Card } from "@heroui/react";
 import Link from "next/link";
 
 interface UserCardProps {
@@ -56,9 +56,7 @@ export function UserCard2({ user }: UserCardProps) {
         </div>
 
         {/* Follow button */}
-        <Button color='primary' variant='flat' startContent={<UserPlusIcon size={16} />}>
-          Follow
-        </Button>
+        <FollowButton targetUserId={user.id} />
 
         {/* Stats */}
         {/* <div className='flex flex-col justify-center mt-4 text-xs text-white/70'>

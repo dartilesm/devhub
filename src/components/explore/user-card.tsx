@@ -1,9 +1,9 @@
 "use client";
 
 import { PostWrapper } from "@/components/post/post-wrapper";
+import { FollowButton } from "@/components/ui/follow-button";
 import { ExploreUser } from "@/types/explore";
-import { Avatar, Button, Card } from "@heroui/react";
-import { UserRoundPlusIcon } from "lucide-react";
+import { Avatar, Card } from "@heroui/react";
 import Link from "next/link";
 
 interface UserCardProps {
@@ -24,15 +24,7 @@ export function UserCard({ user }: UserCardProps) {
                 <h3 className='font-semibold text-foreground truncate'>{user.display_name}</h3>
                 <p className='text-sm text-default-500 truncate'>@{user.username}</p>
               </Link>
-              <Button
-                color='primary'
-                variant='flat'
-                size='sm'
-                className='min-w-24'
-                startContent={<UserRoundPlusIcon size={14} />}
-              >
-                Follow
-              </Button>
+              <FollowButton targetUserId={user.id} />
             </div>
             {user.bio && <p className='text-xs text-default-500 mt-1 line-clamp-2'>{user.bio}</p>}
           </div>

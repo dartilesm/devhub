@@ -66,16 +66,7 @@ export function UserProfileDescription() {
             color='foreground'
             className='group flex items-center gap-1.5 hover:opacity-80 text-sm'
           >
-            <span className='font-medium'>1.2k</span>
-            <span className='text-default-400'>posts</span>
-          </Link>
-          <div className='h-3 w-[1px] bg-default-200' />
-          <Link
-            as='button'
-            color='foreground'
-            className='group flex items-center gap-1.5 hover:opacity-80 text-sm'
-          >
-            <span className='font-medium'>8.5k</span>
+            <span className='font-medium'>{profile.follower_count}</span>
             <span className='text-default-400'>followers</span>
           </Link>
           <div className='h-3 w-[1px] bg-default-200' />
@@ -84,7 +75,7 @@ export function UserProfileDescription() {
             color='foreground'
             className='group flex items-center gap-1.5 hover:opacity-80 text-sm'
           >
-            <span className='font-medium'>2.1k</span>
+            <span className='font-medium'>{profile.following_count}</span>
             <span className='text-default-400'>following</span>
           </Link>
         </div>

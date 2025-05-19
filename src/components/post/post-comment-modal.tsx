@@ -10,7 +10,7 @@ interface PostCommentModalProps {
 
 export function PostCommentModal({ post, action, onOpenChange }: PostCommentModalProps) {
   return (
-    <Modal onClose={onOpenChange} defaultOpen size='xl' backdrop='blur'>
+    <Modal onClose={onOpenChange} defaultOpen size='xl' backdrop='blur' className='custom-class'>
       <ModalContent>
         {(onClose) => (
           <>

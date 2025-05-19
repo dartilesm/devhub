@@ -1,20 +1,14 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
-import { Avatar, Button, Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
+import { FollowButton } from "@/components/ui/follow-button";
+import { Avatar, Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
 import { Tables } from "database.types";
-import { UserRoundPlusIcon } from "lucide-react";
-import { useState } from "react";
 
 interface UserProfilePopoverCardProps {
   user: Partial<Tables<"users">>;
 }
 
 export function UserProfilePopoverCard({ user }: UserProfilePopoverCardProps) {
-  const [isFollowed, setIsFollowed] = useState(false);
-  const { user: currentUser } = useUser();
-  console.log({ currentUser, user });
-
   return (
     <Card className='max-w-[300px] border-none bg-transparent' shadow='none'>
       <CardHeader className='justify-between flex flex-row gap-4'>
@@ -27,18 +21,7 @@ export function UserProfilePopoverCard({ user }: UserProfilePopoverCardProps) {
             <h5 className='text-small tracking-tight text-default-500'>@{user.username}</h5>
           </div>
         </div>
-        {currentUser?.id !== user.id && (
-          <Button
-            className={isFollowed ? "bg-transparent text-foreground border-default-200" : ""}
-            color='primary'
-            size='sm'
-            variant='flat'
-            startContent={<UserRoundPlusIcon size={14} />}
-            onPress={() => setIsFollowed(!isFollowed)}
-          >
-            {isFollowed ? "Unfollow" : "Follow"}
-          </Button>
-        )}
+        <FollowButton targetUserId={user.id ?? ""} />
       </CardHeader>
       <CardBody className='px-3 py-0'>
         <p className='text-small pl-px text-default-500'>{user.bio}</p>

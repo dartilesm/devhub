@@ -1,10 +1,11 @@
 "use client";
 
+import { FollowButton } from "@/components/ui/follow-button";
 import { useProfileContext } from "@/hooks/use-profile-context";
 import { useUser } from "@clerk/nextjs";
 import { Button, Tooltip } from "@heroui/react";
+import { CheckIcon, Link2Icon, PencilIcon } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { CheckIcon, Link2Icon, UserRoundPlusIcon } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 
@@ -28,6 +29,7 @@ export function UserProfileTopActions() {
       setIsCopied(false);
     }, 2000);
   }
+
   function toggleEditProfileModal() {
     if (isCurrentUser)
       setTimeout(() => {
@@ -64,10 +66,17 @@ export function UserProfileTopActions() {
             </AnimatePresence>
           </Button>
         </Tooltip>
-        <Button color='primary' variant='solid' onPress={toggleEditProfileModal}>
-          {!isCurrentUser && <UserRoundPlusIcon size={16} />}
-          {isCurrentUser ? "Edit Profile" : "Follow"}
-        </Button>
+        {!isCurrentUser && <FollowButton targetUserId={profile.id} size='md' />}
+        {isCurrentUser && (
+          <Button
+            variant='flat'
+            color='primary'
+            onPress={toggleEditProfileModal}
+            startContent={<PencilIcon size={16} />}
+          >
+            Edit profile
+          </Button>
+        )}
       </div>
       {isEditing && (
         <UserProfileEditModal

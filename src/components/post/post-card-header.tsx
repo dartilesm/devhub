@@ -6,8 +6,7 @@ import { usePostContext } from "@/hooks/use-post-context";
 import { formatDateTime } from "@/lib/format-time";
 import { getRelativeTime } from "@/lib/relative-time";
 import { cn } from "@/lib/utils";
-import { Button, CardHeader, Tooltip } from "@heroui/react";
-import { UserRoundPlusIcon } from "lucide-react";
+import { CardHeader, Tooltip } from "@heroui/react";
 import Link from "next/link";
 
 export function PostHeader() {
@@ -45,17 +44,6 @@ export function PostHeader() {
             </>
           )}
         </div>
-
-        {/* {!isFollowing && onFollow && (
-        )} */}
-        <Button
-          variant='flat'
-          color='primary'
-          size='sm'
-          startContent={<UserRoundPlusIcon size={14} />}
-        >
-          Follow
-        </Button>
       </div>
     </CardHeader>
   );

@@ -117,14 +117,17 @@ export type Database = {
       }
       user_followers: {
         Row: {
+          created_at: string | null
           follower_id: string
           user_id: string
         }
         Insert: {
+          created_at?: string | null
           follower_id?: string
-          user_id?: string
+          user_id: string
         }
         Update: {
+          created_at?: string | null
           follower_id?: string
           user_id?: string
         }
@@ -142,6 +145,8 @@ export type Database = {
         Row: {
           bio: string | null
           display_name: string
+          follower_count: number | null
+          following_count: number | null
           id: string
           image_url: string | null
           join_date: string | null
@@ -152,6 +157,8 @@ export type Database = {
         Insert: {
           bio?: string | null
           display_name: string
+          follower_count?: number | null
+          following_count?: number | null
           id?: string
           image_url?: string | null
           join_date?: string | null
@@ -162,6 +169,8 @@ export type Database = {
         Update: {
           bio?: string | null
           display_name?: string
+          follower_count?: number | null
+          following_count?: number | null
           id?: string
           image_url?: string | null
           join_date?: string | null
@@ -223,9 +232,25 @@ export type Database = {
           user: Json
         }[]
       }
+      toggle_follow: {
+        Args: { target_user_id: string }
+        Returns: boolean
+      }
       toggle_reaction: {
-        Args: { p_post_id: string; p_reaction_type: string }
-        Returns: undefined
+        Args:
+          | { input_post_id: string; input_reaction_type: string }
+          | {
+              input_post_id: string
+              input_user_id: string
+              input_reaction_type: string
+            }
+        Returns: {
+          created_at: string | null
+          id: string
+          post_id: string | null
+          reaction_type: string
+          user_id: string
+        }
       }
     }
     Enums: {
