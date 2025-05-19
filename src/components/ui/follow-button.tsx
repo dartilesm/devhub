@@ -52,7 +52,7 @@ export function FollowButton({ targetUserId, size = "sm" }: FollowButtonProps) {
     >
       {!isLoading && isFollowed && <UserRoundMinusIcon size={14} />}
       {!isLoading && !isFollowed && <UserRoundPlusIcon size={14} />}
-      {isLoading ? <Spinner size='sm' /> : isFollowed ? "Unfollow" : "Follow"}
+      {isLoading ? <Spinner size='sm' variant='dots' /> : isFollowed ? "Unfollow" : "Follow"}
     </Button>
   );
 }
