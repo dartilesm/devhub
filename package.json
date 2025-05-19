@@ -34,6 +34,7 @@
     "@icons-pack/react-simple-icons": "12.8.0",
     "@supabase/supabase-js": "2.49.4",
     "@tanstack/react-query": "5.75.7",
+    "@uidotdev/usehooks": "2.4.1",
     "lucide-react": "0.509.0",
     "motion": "12.12.1",
     "next": "15.3.2",

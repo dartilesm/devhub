@@ -3,7 +3,7 @@
 import { Icon } from "@iconify/react";
 import { Input } from "@heroui/react";
 import { useCallback, useState } from "react";
-import { useDebounce } from "@/hooks/use-debounce";
+import { useDebounce } from "@uidotdev/usehooks";
 
 interface SearchBoxProps {
   onSearch: (term: string) => void;
