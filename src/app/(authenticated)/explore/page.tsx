@@ -7,6 +7,7 @@ import { UserPost } from "@/components/post/user-post";
 import { PageHeader } from "@/components/ui/page-header";
 import { PostsProvider } from "@/context/posts-context";
 import { exploreMockData } from "@/lib/mock/explore-data";
+import { Alert } from "@heroui/react";
 import { useState } from "react";
 
 export default function ExplorePage() {
@@ -26,6 +27,11 @@ export default function ExplorePage() {
       <PageHeader title='Explore'>
         <SearchBox onSearch={setSearchTerm} placeholder='Search users or posts...' />
       </PageHeader>
+      <Alert
+        color='warning'
+        title='Mocked page'
+        description='This is a demo showcasing the explore page, it is not showing real data.'
+      />
       <div className='w-full max-w-[1024px] mx-auto px-4 py-6 flex flex-col gap-8'>
         {/* Users Section */}
         <section className='space-y-4'>

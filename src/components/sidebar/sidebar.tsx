@@ -27,12 +27,17 @@ export function Sidebar() {
             label='Root'
             isActive={pathname === "/root"}
           />
-          <SidebarItem to='/explore' icon={<TelescopeIcon />} label='Explore' isActive={false} />
+          <SidebarItem
+            to='/explore'
+            icon={<TelescopeIcon />}
+            label='Explore'
+            isActive={pathname === "/explore"}
+          />
           <SidebarItem
             to='/messages'
             icon={<MessageSquareIcon />}
             label='Messages'
-            isActive={false}
+            isActive={pathname === "/messages"}
           />
           <SidebarItem
             to={`/@${user?.username}`}

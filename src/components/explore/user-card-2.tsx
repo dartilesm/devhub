@@ -14,7 +14,7 @@ interface UserCardProps {
  */
 export function UserCard2({ user }: UserCardProps) {
   return (
-    <Card className='relative rounded-xl overflow-hidden bg-gradient-to-br from-[#3360f5] via-[#033478] to-[#3c0fb0] text-white max-w-52 shrink-0'>
+    <Card className='relative rounded-xl overflow-hidden max-w-52 shrink-0'>
       {/* Content */}
       <div className='p-6 flex flex-col items-center'>
         {/* Avatar */}
@@ -29,14 +29,14 @@ export function UserCard2({ user }: UserCardProps) {
               <h3 className='font-semibold text-md hover:underline truncate max-w-2xs'>
                 {user.display_name}
               </h3>
-              <span className='text-white/80 '>(@{user.username})</span>
+              <span className=''>(@{user.username})</span>
             </div>
           </Link>
-          {/* {user.bio && <p className='text-sm text-white/60 mt-1 line-clamp-2'>{user.bio}</p>} */}
+          {/* {user.bio && <p className='text-sm mt-1 line-clamp-2'>{user.bio}</p>} */}
         </div>
 
         {/* Mutual Connections */}
-        <div className='flex items-center gap-2 text-xs text-white/70 mb-4'>
+        <div className='flex items-center gap-2 text-xs mb-4'>
           <div className='flex -space-x-2'>
             {[1, 2].map((i) => (
               <div
@@ -59,7 +59,7 @@ export function UserCard2({ user }: UserCardProps) {
         <FollowButton targetUserId={user.id} />
 
         {/* Stats */}
-        {/* <div className='flex flex-col justify-center mt-4 text-xs text-white/70'>
+        {/* <div className='flex flex-col justify-center mt-4 text-xs'>
           <p>
             <span className='font-semibold text-white'>{user.followers_count}</span> followers
           </p>
