@@ -8,6 +8,7 @@ import { PageHeader } from "@/components/ui/page-header";
 import { PostsProvider } from "@/context/posts-context";
 import { exploreMockData } from "@/lib/mock/explore-data";
 import { Alert } from "@heroui/react";
+import { Tables } from "database.types";
 import { useState } from "react";
 
 export default function ExplorePage() {
@@ -16,8 +17,8 @@ export default function ExplorePage() {
   const filteredUsers = exploreMockData.users.filter((user) => {
     const searchLower = searchTerm.toLowerCase();
     return (
-      user.username.toLowerCase().includes(searchLower) ||
-      user.display_name.toLowerCase().includes(searchLower) ||
+      user.username?.toLowerCase().includes(searchLower) ||
+      user.display_name?.toLowerCase().includes(searchLower) ||
       user.bio?.toLowerCase().includes(searchLower)
     );
   });
@@ -38,7 +39,7 @@ export default function ExplorePage() {
           <h2 className='text-lg font-medium'>Users</h2>
           <div className='flex gap-4 flex-row overflow-x-auto pb-4'>
             {filteredUsers.map((user) => (
-              <UserCard2 key={user.id} user={user} />
+              <UserCard2 key={user.id} user={user as Tables<"users">} />
             ))}
             {filteredUsers.length === 0 && (
               <p className='text-center text-default-500'>No users found</p>

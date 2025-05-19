@@ -20,7 +20,7 @@ export async function SuggestionsSection() {
   return (
     <div className='space-y-4'>
       {/* Suggestions Card */}
-      {users.length > 0 && <UserToFollowList users={users} />}
+      {users?.length > 0 && <UserToFollowList users={users} />}
 
       {/* Promoted Content */}
       <PromotedAd />

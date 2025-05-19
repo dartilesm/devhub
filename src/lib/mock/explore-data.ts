@@ -1,6 +1,13 @@
-import { ExploreMockData } from "@/types/explore";
+import { Tables } from "database.types";
 
-export const exploreMockData: ExploreMockData = {
+type MockData = {
+  users: Partial<Tables<"users">>[];
+  posts: (Partial<Tables<"posts">> & {
+    user: Partial<Tables<"users">>;
+  })[];
+};
+
+export const exploreMockData: MockData = {
   users: [
     {
       id: "1",
@@ -8,7 +15,7 @@ export const exploreMockData: ExploreMockData = {
       display_name: "John Doe",
       image_url: "https://i.pravatar.cc/150?u=johndoe",
       bio: "Software Engineer | Open Source Enthusiast",
-      followers_count: 1200,
+      follower_count: 1200,
       following_count: 800,
     },
     {
@@ -17,7 +24,7 @@ export const exploreMockData: ExploreMockData = {
       display_name: "Jane Doe",
       image_url: "https://i.pravatar.cc/150?u=janedoe",
       bio: "UI/UX Designer | Creative Mind",
-      followers_count: 2300,
+      follower_count: 2300,
       following_count: 1100,
     },
     {
@@ -26,7 +33,7 @@ export const exploreMockData: ExploreMockData = {
       display_name: "Tech Explorer",
       image_url: "https://i.pravatar.cc/150?u=techie",
       bio: "Tech Blogger | AI Enthusiast",
-      followers_count: 5600,
+      follower_count: 5600,
       following_count: 2100,
     },
   ],

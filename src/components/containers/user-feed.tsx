@@ -29,8 +29,9 @@ async function getPosts() {
 }
 
 export async function UserFeed() {
-  const { data: initialPosts } = await getPosts();
-  console.log(initialPosts);
+  const { data: initialPosts, error } = await getPosts();
+
+  if (error) return <span>Ops! Error loading posts</span>;
 
   return (
     <PostsProvider initialPosts={(initialPosts as PostContextType[]) || []}>

@@ -1,12 +1,12 @@
 "use client";
 
 import { FollowButton } from "@/components/ui/follow-button";
-import { ExploreUser } from "@/types/explore";
+import { Tables } from "database.types";
 import { Avatar, Card } from "@heroui/react";
 import Link from "next/link";
 
 interface UserCardProps {
-  user: ExploreUser;
+  user: Tables<"users">;
 }
 
 /**
@@ -19,7 +19,12 @@ export function UserCard2({ user }: UserCardProps) {
       <div className='p-6 flex flex-col items-center'>
         {/* Avatar */}
         <Link href={`/@${user.username}`} className='block mb-3'>
-          <Avatar src={user.image_url} alt={user.display_name} className='size-20' isBordered />
+          <Avatar
+            src={user.image_url || undefined}
+            alt={user.display_name}
+            className='size-20'
+            isBordered
+          />
         </Link>
 
         {/* User info */}
