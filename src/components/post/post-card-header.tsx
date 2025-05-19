@@ -49,14 +49,12 @@ export function PostHeader() {
         {/* {!isFollowing && onFollow && (
         )} */}
         <Button
-          variant='bordered'
+          variant='flat'
           color='primary'
           size='sm'
-          /* onPress={handleFollow} */
-          className='rounded-full'
+          startContent={<UserRoundPlusIcon size={14} />}
         >
           Follow
-          <UserRoundPlusIcon size={14} />
         </Button>
       </div>
     </CardHeader>

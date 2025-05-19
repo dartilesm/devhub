@@ -56,11 +56,7 @@ export function UserCard2({ user }: UserCardProps) {
         </div>
 
         {/* Follow button */}
-        <Button
-          color='primary'
-          className='w-full text-white'
-          startContent={<UserPlusIcon size={16} />}
-        >
+        <Button color='primary' variant='flat' startContent={<UserPlusIcon size={16} />}>
           Follow
         </Button>
 

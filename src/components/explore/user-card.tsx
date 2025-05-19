@@ -3,6 +3,7 @@
 import { PostWrapper } from "@/components/post/post-wrapper";
 import { ExploreUser } from "@/types/explore";
 import { Avatar, Button, Card } from "@heroui/react";
+import { UserRoundPlusIcon } from "lucide-react";
 import Link from "next/link";
 
 interface UserCardProps {
@@ -23,7 +24,13 @@ export function UserCard({ user }: UserCardProps) {
                 <h3 className='font-semibold text-foreground truncate'>{user.display_name}</h3>
                 <p className='text-sm text-default-500 truncate'>@{user.username}</p>
               </Link>
-              <Button color='primary' variant='flat' size='sm' className='min-w-24'>
+              <Button
+                color='primary'
+                variant='flat'
+                size='sm'
+                className='min-w-24'
+                startContent={<UserRoundPlusIcon size={14} />}
+              >
                 Follow
               </Button>
             </div>

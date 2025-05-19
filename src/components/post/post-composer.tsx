@@ -127,7 +127,6 @@ export function PostComposer({
             <Button
               variant='solid'
               color='primary'
-              className='rounded-full'
               size='sm'
               isDisabled={!form.formState.isValid || isPending}
               isLoading={isPending}

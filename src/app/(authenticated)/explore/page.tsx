@@ -1,14 +1,13 @@
 "use client";
 
 import { SearchBox } from "@/components/explore/search-box";
-import { UserCard } from "@/components/explore/user-card";
-import { UserPost } from "@/components/post/user-post";
+import { UserCard2 } from "@/components/explore/user-card-2";
 import { PostWrapper } from "@/components/post/post-wrapper";
+import { UserPost } from "@/components/post/user-post";
 import { PageHeader } from "@/components/ui/page-header";
+import { PostsProvider } from "@/context/posts-context";
 import { exploreMockData } from "@/lib/mock/explore-data";
 import { useState } from "react";
-import { PostsProvider } from "@/context/posts-context";
-import { UserCard2 } from "@/components/explore/user-card-2";
 
 export default function ExplorePage() {
   const [searchTerm, setSearchTerm] = useState("");

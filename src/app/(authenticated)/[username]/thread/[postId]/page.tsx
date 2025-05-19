@@ -86,7 +86,7 @@ export default async function ThreadPage({ params }: ThreadPageProps) {
             postId={postId}
           />
           <div className='flex flex-col gap-4 min-h-[100dvh]'>
-            <span>Replies</span>
+            <h2 className='text-lg font-medium'>Replies</h2>
             {!!directReplies?.length && <PostList />}
           </div>
         </PostsProvider>
