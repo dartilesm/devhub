@@ -1,8 +1,11 @@
+"use client";
+
 import { ReplyToPost } from "@/components/reply-to-post";
-import { PostContextType } from "@/context/post-provider";
+import { NestedPost } from "@/types/nested-posts";
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
+
 interface PostCommentModalProps {
-  post: PostContextType;
+  post: NestedPost;
   isOpen: boolean;
   action: "reply" | "clone";
   onOpenChange: () => void;
@@ -10,7 +13,7 @@ interface PostCommentModalProps {
 
 export function PostCommentModal({ post, action, onOpenChange }: PostCommentModalProps) {
   return (
-    <Modal onClose={onOpenChange} defaultOpen size='xl' backdrop='blur' className='custom-class'>
+    <Modal onClose={onOpenChange} defaultOpen size='xl' backdrop='blur'>
       <ModalContent>
         {(onClose) => (
           <>

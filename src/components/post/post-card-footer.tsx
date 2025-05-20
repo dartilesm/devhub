@@ -4,7 +4,6 @@ import { useToggleReactionMutation } from "@/hooks/mutation/use-toggle-reaction-
 import { usePostContext } from "@/hooks/use-post-context";
 import { Button, CardFooter, cn, Tooltip } from "@heroui/react";
 import { ArchiveIcon, EllipsisIcon, MessageSquareIcon, Repeat2Icon, StarIcon } from "lucide-react";
-import dynamic from "next/dynamic";
 import { useState } from "react";
 
 type Reaction = "star" | "coffee" | "approve" | "cache";
@@ -22,15 +21,9 @@ const reactions: ReactionType[] = [
   { type: "cache", icon: "🧠", label: "Cache (insightful)" },
 ];
 
-const PostCommentModal = dynamic(
-  () => import("./post-comment-modal").then((mod) => mod.PostCommentModal),
-  { ssr: false }
-);
-
 export function PostFooter() {
-  const { isThreadPagePost, ...post } = usePostContext();
+  const { isThreadPagePost, togglePostModal, ...post } = usePostContext();
   const [selectedReaction, setSelectedReaction] = useState<Reaction | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
   const [isReactionsTooltipOpen, setIsReactionsTooltipOpen] = useState(false);
 
   const toggleReactionMutation = useToggleReactionMutation();
@@ -48,13 +41,6 @@ export function PostFooter() {
       post_id: post.id,
       reaction_type: reaction,
     });
-  }
-
-  function handleOnCloseModal() {
-    setTimeout(() => {
-      // Wait for the modal to close before setting isOpen to false
-      setIsOpen(false);
-    }, 500);
   }
 
   return (
@@ -123,7 +109,7 @@ export function PostFooter() {
             variant='light'
             size='sm'
             className='rounded-full flex flex-row gap-2 text-gray-400 hover:text-default-foreground'
-            onPress={() => setIsOpen(true)}
+            onPress={() => togglePostModal(true)}
           >
             <MessageSquareIcon className='text-inherit' size={18} />
             {post?.reply_count && post?.reply_count > 0 && (
@@ -159,14 +145,6 @@ export function PostFooter() {
           </Button>
         </Tooltip>
       </CardFooter>
-      {isOpen && (
-        <PostCommentModal
-          post={post}
-          isOpen={isOpen}
-          onOpenChange={handleOnCloseModal}
-          action='reply'
-        />
-      )}
     </>
   );
 }
