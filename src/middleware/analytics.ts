@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const HOST_NAME = process.env.VERCEL_PROJECT_PRODUCTION_URL || "bytebuzz.dev";
 
@@ -53,6 +53,8 @@ export async function handleAnalytics(req: NextRequest) {
       console.log({ response: responseData });
     } catch (error) {
       console.error({ error });
+    } finally {
+      return NextResponse.next();
     }
   }
 }

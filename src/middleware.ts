@@ -15,11 +15,11 @@ const isProtectedRoute = createRouteMatcher(["/((?!sign-in|sign-up).*)"]);
 export default clerkMiddleware(async function middleware(auth, req: NextMiddlewareRequestParam) {
   if (isProtectedRoute(req)) await auth.protect();
 
-  handleAnalytics(req);
-
   if (req.nextUrl.pathname === "/") {
     return NextResponse.redirect(new URL("/root", req.url));
   }
+
+  return handleAnalytics(req);
 });
 
 export const config = {
