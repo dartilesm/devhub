@@ -33,6 +33,15 @@ export async function handleAnalytics(req: NextRequest) {
   const userAgent = getHeader("user-agent");
   const url = req.nextUrl.toString();
 
+  console.log({
+    prefetch: req,
+    url: req.nextUrl,
+    purpose: getHeader("purpose"),
+    purpose2: req.headers.get("purpose"),
+    "x-middleware-prefetch": getHeader("x-middleware-prefetch"),
+    "x-middleware-prefetch2": req.headers.get("x-middleware-prefetch"),
+  });
+
   if (!userAgent?.includes("vercel") && url.includes(HOST_NAME)) {
     const data = {
       url,
