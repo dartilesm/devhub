@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 
-const HOST_NAME = process.env.VERCEL_PROJECT_PRODUCTION_URL || "localhost";
+const HOST_NAME = process.env.VERCEL_PROJECT_PRODUCTION_URL || "bytebuzz.dev";
 
 /**
  * Handles analytics logging and posting to external API for each request.
