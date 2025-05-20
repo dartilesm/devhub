@@ -7,7 +7,15 @@ import { Avatar, Tooltip } from "@heroui/react";
 import Link from "next/link";
 
 export function PostAvatarAndThreadLine() {
-  const { isThread, isFirstInThread, isLastInThread, isThreadPagePost, user } = usePostContext();
+  const {
+    isThread,
+    isFirstInThread,
+    isLastInThread,
+    isThreadPagePost,
+    post = {},
+  } = usePostContext();
+  const { user } = post;
+
   return (
     <div
       className={cn("flex py-4 pl-4 pr-2 justify-center relative", {

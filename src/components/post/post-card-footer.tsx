@@ -22,7 +22,7 @@ const reactions: ReactionType[] = [
 ];
 
 export function PostFooter() {
-  const { isThreadPagePost, togglePostModal, ...post } = usePostContext();
+  const { isThreadPagePost, togglePostModal, post } = usePostContext();
   const [selectedReaction, setSelectedReaction] = useState<Reaction | null>(null);
   const [isReactionsTooltipOpen, setIsReactionsTooltipOpen] = useState(false);
 

@@ -13,7 +13,7 @@ interface PostCardProps {
 }
 
 export function PostCard({ children, className, classNames, ref }: PostCardProps) {
-  const { isThreadPagePost, ...post } = usePostContext();
+  const { isThreadPagePost, post } = usePostContext();
   const router = useRouter();
 
   function handleClick(event: React.MouseEvent<HTMLDivElement>) {

@@ -25,7 +25,6 @@ export function PostsProvider({
   const [posts, setPosts] = useState<NestedPost[]>(initialPosts);
 
   function addPost(post: NestedPost) {
-    console.log("Adding post", post, posts);
     setPosts([post, ...posts]);
   }
 
