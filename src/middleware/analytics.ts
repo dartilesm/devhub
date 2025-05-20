@@ -1,7 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
+import { headers } from "next/headers";
 
 const HOST_NAME = process.env.VERCEL_PROJECT_PRODUCTION_URL || "bytebuzz.dev";
 
+export async function getIp() {
+  const headersList = await headers();
+  const forwardedFor = headersList.get("x-forwarded-for");
+  const realIp = headersList.get("x-real-ip");
+
+  console.log({ forwardedFor, realIp });
+
+  if (forwardedFor) {
+    return forwardedFor.split(",")[0].trim();
+  }
+
+  if (realIp) return realIp.trim();
+
+  return null; // or '0.0.0.0', depends
+}
 /**
  * Handles analytics logging and posting to external API for each request.
  * @param req - The Next.js middleware request object
@@ -19,13 +35,10 @@ export async function handleAnalytics(req: NextRequest) {
   const userAgent = getHeader("user-agent");
   const url = req.nextUrl.toString();
 
-  // Get IP from x-forwarded-for header (middleware edge runtime does not provide req.ip)
-  const ip = getHeader("x-forwarded-for")?.split(",")[0]?.trim();
-
   if (!userAgent?.includes("vercel") && url.includes(HOST_NAME)) {
     const data = {
       url,
-      ip,
+      ip: await getIp(),
       user_agent: userAgent || "",
       accept_language: getHeader("accept-language"),
       sec_ch_ua: getHeader("sec-ch-ua"),
