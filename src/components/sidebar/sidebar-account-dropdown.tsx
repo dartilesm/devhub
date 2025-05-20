@@ -11,11 +11,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@heroui/react";
-import { Icon } from "@iconify/react";
 import { LogOutIcon, SettingsIcon, SunMoonIcon } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { SidebarItemProps } from "./sidebar-item";
-import Link from "next/link";
 
 type SidebarAccountDropdownProps = Pick<SidebarItemProps, "isActive" | "label">;
 
