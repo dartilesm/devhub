@@ -104,25 +104,16 @@ export function PostComposer({
         <div className='absolute bottom-2 w-full px-2 rounded-medium z-10 format-popup animate-in fade-in slide-in-from-bottom-2 duration-200 pl-16'>
           <div className='flex justify-between items-center'>
             <div className='flex items-center gap-2'>
-              <Tooltip content='Code'>
+              <Tooltip content='Code (coming soon)'>
                 <Button isIconOnly size='sm' aria-label='Code text' variant='light'>
                   <CodeIcon className='text-medium' size={16} />
                 </Button>
               </Tooltip>
-              <Tooltip content='Image'>
+              <Tooltip content='Image (coming soon)'>
                 <Button isIconOnly size='sm' aria-label='Code text' variant='light'>
                   <ImageIcon className='text-medium' size={16} />
                 </Button>
               </Tooltip>
-              <Chip
-                variant='bordered'
-                classNames={{
-                  content: "flex flex-row items-center gap-2 text-muted-foreground text-xs",
-                }}
-              >
-                <Icon icon='mdi:markdown' className='text-medium' />
-                Markdown supported
-              </Chip>
             </div>
             <Button
               variant='solid'
