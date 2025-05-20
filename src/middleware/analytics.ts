@@ -39,13 +39,12 @@ export async function handleAnalytics(req: NextRequest) {
     };
 
     // Log the analytics data
-    console.log({ url: `${process.env.PIRSCH_API_URL}/hit`, token: process.env.PIRSCH_ACCESS_KEY });
+    console.log({ data });
     try {
       const response = await fetch(`${process.env.PIRSCH_API_URL}/hit`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${process.env.PIRSCH_ACCESS_KEY}`,
-          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
