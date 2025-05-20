@@ -1,5 +1,8 @@
+import { handleAnalytics } from "@/middleware/analytics";
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+import { NextMiddlewareRequestParam } from "node_modules/@clerk/nextjs/dist/types/server/types";
+
 /**
  * Route matcher to protect all routes except for the sign-in and sign-up pages
  */
@@ -9,8 +12,10 @@ const isProtectedRoute = createRouteMatcher(["/((?!sign-in|sign-up).*)"]);
  * Clerk middleware to handle authentication and authorization
  * @see https://clerk.com/docs/references/nextjs/clerk-middleware
  */
-export default clerkMiddleware(async function middleware(auth, req) {
+export default clerkMiddleware(async function middleware(auth, req: NextMiddlewareRequestParam) {
   if (isProtectedRoute(req)) await auth.protect();
+
+  handleAnalytics(req);
 
   if (req.nextUrl.pathname === "/") {
     return NextResponse.redirect(new URL("/root", req.url));
