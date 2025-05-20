@@ -1,5 +1,7 @@
 import { NextRequest } from "next/server";
 
+const HOST_NAME = process.env.VERCEL_PROJECT_PRODUCTION_URL || "bytebuzz.dev";
+
 /**
  * Handles analytics logging and posting to external API for each request.
  * @param req - The Next.js middleware request object
@@ -16,12 +18,11 @@ export async function handleAnalytics(req: NextRequest) {
 
   const userAgent = getHeader("user-agent");
   const url = req.nextUrl.toString();
-  const hostName = process.env.HOST_NAME;
 
   // Get IP from x-forwarded-for header (middleware edge runtime does not provide req.ip)
   const ip = getHeader("x-forwarded-for")?.split(",")[0]?.trim();
 
-  if (!userAgent?.includes("vercel") && hostName && url.includes(hostName)) {
+  if (!userAgent?.includes("vercel") && url.includes(HOST_NAME)) {
     const data = {
       url,
       ip,
