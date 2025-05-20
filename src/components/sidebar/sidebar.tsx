@@ -2,7 +2,6 @@
 
 import { SidebarAccountDropdown } from "@/components/sidebar/sidebar-account-dropdown";
 import { useUser } from "@clerk/nextjs";
-import { SiGithub } from "@icons-pack/react-simple-icons";
 import {
   BugIcon,
   ExternalLinkIcon,

@@ -1,7 +1,7 @@
 "use client";
 
 import { SidebarThemeSwitcher } from "@/components/sidebar/sidebar-theme-switcher";
-import { useUser } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
 import {
   Avatar,
   Button,
@@ -12,7 +12,7 @@ import {
   PopoverTrigger,
 } from "@heroui/react";
 import { Icon } from "@iconify/react";
-import { SettingsIcon, SunMoonIcon } from "lucide-react";
+import { LogOutIcon, SettingsIcon, SunMoonIcon } from "lucide-react";
 import { useState } from "react";
 import { SidebarItemProps } from "./sidebar-item";
 import Link from "next/link";
@@ -22,6 +22,7 @@ type SidebarAccountDropdownProps = Pick<SidebarItemProps, "isActive" | "label">;
 export function SidebarAccountDropdown({ isActive, label }: SidebarAccountDropdownProps) {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const { user } = useUser();
+  const { signOut } = useAuth();
   return (
     <Popover isOpen={isPopoverOpen} onOpenChange={setIsPopoverOpen} placement='right-start'>
       <PopoverTrigger>
@@ -80,7 +81,8 @@ export function SidebarAccountDropdown({ isActive, label }: SidebarAccountDropdo
             className='w-full justify-start mt-2'
             color='danger'
             variant='flat'
-            startContent={<Icon icon='lucide:log-out' width={18} />}
+            startContent={<LogOutIcon size={18} />}
+            onPress={() => signOut()}
           >
             Sign out
           </Button>
