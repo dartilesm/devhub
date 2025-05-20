@@ -3,7 +3,15 @@
 import { SidebarAccountDropdown } from "@/components/sidebar/sidebar-account-dropdown";
 import { useUser } from "@clerk/nextjs";
 import { SiGithub } from "@icons-pack/react-simple-icons";
-import { HomeIcon, MessageSquareIcon, TelescopeIcon, TriangleIcon, UserIcon } from "lucide-react";
+import {
+  BugIcon,
+  ExternalLinkIcon,
+  HomeIcon,
+  MessageSquareIcon,
+  TelescopeIcon,
+  TriangleIcon,
+  UserIcon,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 import { SidebarItem } from "./sidebar-item";
 import { SidebarSection } from "./sidebar-section";
@@ -75,9 +83,13 @@ export function Sidebar() {
 
       <div className='mt-auto py-4'>
         <SidebarItem
-          to='https://github.com/dartilesm/devhub'
-          icon={<SiGithub size={24} />}
-          label='Contribute'
+          to='https://github.com/dartilesm/devhub/issues'
+          icon={<BugIcon size={24} className='text-default-500' />}
+          label={
+            <span className='text-default-500 flex items-center justify-between w-full'>
+              Bug Report <ExternalLinkIcon size={16} className='text-default-500' />
+            </span>
+          }
           isExternal
         />
         <SidebarAccountDropdown isActive={false} label={user?.fullName ?? ""} />
