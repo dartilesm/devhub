@@ -36,16 +36,23 @@ export async function handleAnalytics(req: NextRequest) {
   const url = req.nextUrl.toString();
 
   if (!userAgent?.includes("vercel") && url.includes(HOST_NAME)) {
-    console.log({ hostname: HOST_NAME });
     const data = {
       url,
       ip: await getIp(),
-      accept_language: getHeader("accept-language"),
       user_agent: userAgent || "",
+      accept_language: getHeader("accept-language"),
+      sec_ch_ua: getHeader("sec-ch-ua"),
+      sec_ch_ua_mobile: getHeader("sec-ch-ua-mobile"),
+      sec_ch_ua_platform: getHeader("sec-ch-ua-platform"),
+      sec_ch_ua_platform_version: getHeader("sec-ch-ua-platform-version"),
+      sec_ch_width: getHeader("sec-ch-width"),
+      sec_ch_viewport_width: getHeader("sec-ch-viewport-width"),
+      referrer: getHeader("referer"),
+      tags: {},
     };
 
     // Log the analytics data
-    console.log({ data });
+    console.log({ ...data, hostname: HOST_NAME });
     try {
       const response = await fetch(`${process.env.PIRSCH_API_URL}/hit`, {
         method: "POST",
@@ -55,8 +62,7 @@ export async function handleAnalytics(req: NextRequest) {
         },
         body: JSON.stringify(data),
       });
-      const responseData = await response.text();
-      console.log({ response: responseData });
+      console.log({ response });
     } catch (error) {
       console.error({ error });
     } finally {
