@@ -1,10 +1,23 @@
 # ByteBuzz
 
-ByteBuzz is a social platform for developers and tech enthusiasts to share code snippets, tech news, and programming memes.
+ByteBuzz is a modern social platform designed for developers and tech enthusiasts to share code snippets, tech news, programming memes, and connect with like-minded peers. Built with Next.js, TypeScript, and a robust UI/UX powered by TailwindCSS and HeroUI, ByteBuzz offers a seamless, accessible, and engaging experience for the tech community.
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 🛠️ Tech Stack
 
-## Getting Started
+- **Frontend**: Next.js, React 19, TypeScript, TailwindCSS, HeroUI, Lucide Icons
+- **Backend**: Supabase (Postgres, Auth, Storage, Realtime)
+- **Authentication**: Clerk
+- **State Management**: React Context, React Query
+- **Other**: Zod (validation), Motion (animations), modern accessibility best practices
+
+## 🌟 Example Use Cases
+
+- Share your latest project, code snippet, or tech meme with the community.
+- Discover trending posts and connect with other developers.
+- Edit your profile to showcase your skills, location, and personal website.
+- Follow interesting users and grow your network.
+
+## 🖥️ Getting Started
 
 First, run the development server:
 
@@ -18,23 +31,12 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📸 Screenshots
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> Add screenshots of the main feed, user profile, explore page, and post composer here.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+ByteBuzz is open to contributions and feedback! Join the community and help shape the future of developer social platforms.
