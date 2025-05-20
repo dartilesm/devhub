@@ -82,7 +82,7 @@ export function Sidebar() {
 
       <div className='mt-auto py-4'>
         <SidebarItem
-          to='https://github.com/dartilesm/devhub/issues'
+          to='https://github.com/dartilesm/bytebuzz/issues'
           icon={<BugIcon size={24} className='text-default-500' />}
           label={
             <span className='text-default-500 flex items-center justify-between w-full'>
