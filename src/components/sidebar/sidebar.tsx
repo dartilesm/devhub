@@ -7,6 +7,9 @@ import { SidebarThemeSwitcher } from "@/components/sidebar/sidebar-theme-switche
 import { useUser } from "@clerk/nextjs";
 import { HomeIcon, MessageSquareIcon, TelescopeIcon, TriangleIcon, UserIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { Icon } from "@iconify/react";
+import { SiGithub } from "@icons-pack/react-simple-icons";
+
 export function Sidebar() {
   const pathname = usePathname();
   const { user } = useUser();
@@ -68,6 +71,12 @@ export function Sidebar() {
       </div>
 
       <div className='mt-auto'>
+        <SidebarItem
+          to='https://github.com/dartilesm/devhub'
+          icon={<SiGithub size={24} />}
+          label='Contribute'
+          isActive={false}
+        />
         <SidebarThemeSwitcher />
         <UserProfile />
       </div>
