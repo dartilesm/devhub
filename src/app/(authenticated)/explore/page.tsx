@@ -15,7 +15,7 @@ export default function ExplorePage() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredUsers = exploreMockData.users.filter((user) => {
-    const searchLower = searchTerm.toLowerCase();
+    const searchLower = searchTerm?.toLowerCase() || "";
     return (
       user.username?.toLowerCase().includes(searchLower) ||
       user.display_name?.toLowerCase().includes(searchLower) ||
