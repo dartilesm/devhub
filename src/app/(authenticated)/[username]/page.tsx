@@ -1,5 +1,6 @@
 import { UserProfile } from "@/components/user-profile/user-profile";
 import { createServerSupabaseClient } from "@/db/supabase";
+import { notFound } from "next/navigation";
 
 async function getUserProfile(username: string) {
   const supabaseClient = createServerSupabaseClient();
@@ -19,7 +20,11 @@ interface UserPageProps {
 export default async function UserPage({ params }: UserPageProps) {
   const { username } = await params;
   const formattedUsername = decodeURIComponent(username);
-  const userProfile = await getUserProfile(formattedUsername.replace("@", ""));
+  const { data: userProfile, error } = await getUserProfile(formattedUsername.replace("@", ""));
 
-  return <UserProfile profile={userProfile.data} />;
+  if (!userProfile || error) {
+    notFound();
+  }
+
+  return <UserProfile profile={userProfile} />;
 }
