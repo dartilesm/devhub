@@ -1,9 +1,9 @@
 "use client";
 
-import { PostContextType } from "@/context/post-provider";
 import { useCreatePostMutation } from "@/hooks/mutation/use-create-post-mutation";
 import { usePostsContext } from "@/hooks/use-posts-context";
 import { cn } from "@/lib/utils";
+import { NestedPost } from "@/types/nested-posts";
 import { useUser } from "@clerk/nextjs";
 import { Avatar, Button, Spinner, Textarea, Tooltip } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -47,7 +47,7 @@ export function PostComposer({
       },
       onSettled: (response) => {
         if (response?.data) {
-          const newPost: PostContextType = {
+          const newPost: NestedPost = {
             ...response.data,
             user: {
               username: user?.username ?? "",

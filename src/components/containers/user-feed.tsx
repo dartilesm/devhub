@@ -1,6 +1,5 @@
-import { PostList } from "@/components/post/post-list";
 import { PostComposer } from "@/components/post/post-composer";
-import { PostContextType } from "@/context/post-provider";
+import { PostList } from "@/components/post/post-list";
 import { PostsProvider } from "@/context/posts-context";
 import { createServerSupabaseClient } from "@/db/supabase";
 
@@ -34,7 +33,7 @@ export async function UserFeed() {
   if (error) return <span>Ops! Error loading posts</span>;
 
   return (
-    <PostsProvider initialPosts={(initialPosts as PostContextType[]) || []}>
+    <PostsProvider initialPosts={initialPosts || []}>
       <div className='w-full p-4 flex flex-col gap-4'>
         <PostComposer />
         <PostList />

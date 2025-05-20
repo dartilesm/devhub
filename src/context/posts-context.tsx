@@ -1,12 +1,12 @@
 "use client";
 
+import { NestedPost } from "@/types/nested-posts";
 import { createContext, useState } from "react";
-import { PostContextType } from "./post-provider";
 
 interface PostsContextType {
-  posts: PostContextType[];
-  addPost: (post: PostContextType) => void;
-  setPosts: (posts: PostContextType[]) => void;
+  posts: NestedPost[];
+  addPost: (post: NestedPost) => void;
+  setPosts: (posts: NestedPost[]) => void;
 }
 
 export const PostsContext = createContext<PostsContextType | null>(null);
@@ -20,11 +20,11 @@ export function PostsProvider({
   initialPosts,
 }: {
   children: React.ReactNode;
-  initialPosts: PostContextType[];
+  initialPosts: NestedPost[];
 }) {
-  const [posts, setPosts] = useState<PostContextType[]>(initialPosts);
+  const [posts, setPosts] = useState<NestedPost[]>(initialPosts);
 
-  function addPost(post: PostContextType) {
+  function addPost(post: NestedPost) {
     console.log("Adding post", post, posts);
     setPosts([post, ...posts]);
   }

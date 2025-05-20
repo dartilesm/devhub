@@ -2,12 +2,11 @@
 
 import { PostCommentModal } from "@/components/post/post-comment-modal";
 import { NestedPost } from "@/types/nested-posts";
-import { Tables } from "database.types";
 import { useParams } from "next/navigation";
 import { createContext, useState } from "react";
 
-export interface PostContextType extends NestedPost {
-  user?: Partial<Tables<"users">>;
+export interface PostContextType {
+  post: NestedPost;
   isThread?: boolean;
   isFirstInThread?: boolean;
   isLastInThread?: boolean;
@@ -24,13 +23,23 @@ export interface PostContextType extends NestedPost {
 
 export const PostContext = createContext<PostContextType>({} as PostContextType);
 
-export interface PostProviderProps extends PostContextType {
+export interface PostProviderProps {
   children: React.ReactNode;
+  post: NestedPost;
   isModal?: boolean;
-  togglePostModal: never;
+  isThread?: boolean;
+  isFirstInThread?: boolean;
+  isLastInThread?: boolean;
 }
 
-export function PostProvider({ children, isModal = false, ...post }: PostProviderProps) {
+export function PostProvider({
+  children,
+  isModal = false,
+  post,
+  isThread,
+  isFirstInThread,
+  isLastInThread,
+}: PostProviderProps) {
   const { postId } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [action, setAction] = useState<"reply" | "clone">("reply");
@@ -43,8 +52,11 @@ export function PostProvider({ children, isModal = false, ...post }: PostProvide
   return (
     <PostContext.Provider
       value={{
-        ...post,
+        post,
         isModal,
+        isThread,
+        isFirstInThread,
+        isLastInThread,
         isThreadPagePost: !isModal && post.id === postId,
         togglePostModal,
       }}

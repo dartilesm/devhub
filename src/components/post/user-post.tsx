@@ -43,7 +43,7 @@ export function UserPost({
       {ancestry && <UserPostThread posts={ancestry as NestedPost[]} />}
       {post && (
         <PostProvider
-          {...post}
+          post={post}
           isThread={renderAsThread}
           isFirstInThread={firstInThread}
           isLastInThread={lastInThread}
