@@ -1,25 +1,28 @@
 "use client";
 
-import { SidebarItem } from "./sidebar-item";
-import { SidebarSection } from "./sidebar-section";
-import { UserProfile } from "./user-profile";
-import { SidebarThemeSwitcher } from "@/components/sidebar/sidebar-theme-switcher";
+import { SidebarAccountDropdown } from "@/components/sidebar/sidebar-account-dropdown";
 import { useUser } from "@clerk/nextjs";
+import { SiGithub } from "@icons-pack/react-simple-icons";
 import { HomeIcon, MessageSquareIcon, TelescopeIcon, TriangleIcon, UserIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { Icon } from "@iconify/react";
-import { SiGithub } from "@icons-pack/react-simple-icons";
+import { SidebarItem } from "./sidebar-item";
+import { SidebarSection } from "./sidebar-section";
 
 export function Sidebar() {
   const pathname = usePathname();
   const { user } = useUser();
+  // Collapsed if below xl (using Tailwind only)
+  // max-xl = below 1280px, xl = 1280px and up
   return (
-    <div className='h-full flex flex-col max-w-64'>
+    <div className='h-full flex flex-col max-xl:max-w-[56px] xl:min-w-56 transition-all duration-200 relative'>
       <div className='p-4 flex items-center gap-2'>
         <div className='w-8 h-8 rounded-full bg-content1 flex items-center justify-center'>
           <TriangleIcon className='text-content1-foreground' size={18} />
         </div>
-        <span className='font-medium text-content1-foreground text-lg'>ByteBuzz</span>
+        {/* Hide label below xl */}
+        <span className='font-medium text-content1-foreground text-lg max-xl:hidden xl:inline'>
+          ByteBuzz
+        </span>
       </div>
 
       <div className='flex-1 overflow-y-auto justify-center flex flex-col'>
@@ -70,15 +73,14 @@ export function Sidebar() {
         </SidebarSection> */}
       </div>
 
-      <div className='mt-auto'>
+      <div className='mt-auto py-4'>
         <SidebarItem
           to='https://github.com/dartilesm/devhub'
           icon={<SiGithub size={24} />}
           label='Contribute'
-          isActive={false}
+          isExternal
         />
-        <SidebarThemeSwitcher />
-        <UserProfile />
+        <SidebarAccountDropdown isActive={false} label={user?.fullName ?? ""} />
       </div>
     </div>
   );
