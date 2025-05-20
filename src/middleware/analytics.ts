@@ -36,6 +36,7 @@ export async function handleAnalytics(req: NextRequest) {
   const url = req.nextUrl.toString();
 
   if (!userAgent?.includes("vercel") && url.includes(HOST_NAME)) {
+    console.log({ hostname: HOST_NAME });
     const data = {
       url,
       ip: await getIp(),
