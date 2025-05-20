@@ -1,7 +1,14 @@
-import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
+import { NextRequest } from "next/server";
+import { Pirsch } from "pirsch-sdk";
 
 const HOST_NAME = process.env.VERCEL_PROJECT_PRODUCTION_URL || "bytebuzz.dev";
+
+const pirschClient = new Pirsch({
+  hostname: "bytebuzz.dev",
+  clientId: process.env.PIRSCH_CLIENT_ID!,
+  clientSecret: process.env.PIRSCH_CLIENT_SECRET!,
+});
 
 export async function getIp() {
   const headersList = await headers();
@@ -16,8 +23,9 @@ export async function getIp() {
 
   if (realIp) return realIp.trim();
 
-  return null; // or '0.0.0.0', depends
+  return "";
 }
+
 /**
  * Handles analytics logging and posting to external API for each request.
  * @param req - The Next.js middleware request object
@@ -53,20 +61,10 @@ export async function handleAnalytics(req: NextRequest) {
 
     // Log the analytics data
     console.log({ data });
-    try {
-      const response = await fetch(`${process.env.PIRSCH_API_URL}/hit`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.PIRSCH_ACCESS_KEY}`,
-        },
-        body: JSON.stringify(data),
-      });
-      const responseData = await response.text();
-      console.log({ response: responseData });
-    } catch (error) {
-      console.error({ error });
-    } finally {
-      return NextResponse.next();
-    }
+
+    // Send page view to Pirsch
+    const pageViewResponse = await pirschClient.hit(data);
+
+    console.log({ pageViewResponse });
   }
 }
