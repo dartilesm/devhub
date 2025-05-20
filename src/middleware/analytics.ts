@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 
-const HOST_NAME = process.env.VERCEL_PROJECT_PRODUCTION_URL || "bytebuzz.dev";
+const HOST_NAME = process.env.VERCEL_PROJECT_PRODUCTION_URL || "localhost";
 
 /**
  * Handles analytics logging and posting to external API for each request.
@@ -39,8 +39,7 @@ export async function handleAnalytics(req: NextRequest) {
     };
 
     // Log the analytics data
-    console.log({ data });
-
+    console.log({ url: `${process.env.PIRSCH_API_URL}/hit`, token: process.env.PIRSCH_ACCESS_KEY });
     try {
       const response = await fetch(`${process.env.PIRSCH_API_URL}/hit`, {
         method: "POST",
@@ -50,7 +49,8 @@ export async function handleAnalytics(req: NextRequest) {
         },
         body: JSON.stringify(data),
       });
-      console.log({ response_status: response.status });
+      const responseData = await response.text();
+      console.log({ response: responseData });
     } catch (error) {
       console.error({ error });
     }
