@@ -8,7 +8,9 @@ interface PostContentProps {
 }
 
 export function PostContent({ children }: PostContentProps) {
-  const { isThreadPagePost, content } = usePostContext();
+  const { isThreadPagePost, post = {} } = usePostContext();
+  const { content } = post;
+
   return (
     <CardBody
       className={cn("flex-1 py-0", {

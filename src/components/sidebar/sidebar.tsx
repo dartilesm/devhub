@@ -1,22 +1,35 @@
 "use client";
 
+import { SidebarAccountDropdown } from "@/components/sidebar/sidebar-account-dropdown";
+import { useUser } from "@clerk/nextjs";
+import {
+  BugIcon,
+  ExternalLinkIcon,
+  HomeIcon,
+  MessageSquareIcon,
+  TelescopeIcon,
+  TriangleIcon,
+  UserIcon,
+} from "lucide-react";
+import { usePathname } from "next/navigation";
 import { SidebarItem } from "./sidebar-item";
 import { SidebarSection } from "./sidebar-section";
-import { UserProfile } from "./user-profile";
-import { SidebarThemeSwitcher } from "@/components/sidebar/sidebar-theme-switcher";
-import { useUser } from "@clerk/nextjs";
-import { HomeIcon, MessageSquareIcon, TelescopeIcon, TriangleIcon, UserIcon } from "lucide-react";
-import { usePathname } from "next/navigation";
+
 export function Sidebar() {
   const pathname = usePathname();
   const { user } = useUser();
+  // Collapsed if below xl (using Tailwind only)
+  // max-xl = below 1280px, xl = 1280px and up
   return (
-    <div className='h-full flex flex-col max-w-64'>
+    <div className='h-full flex flex-col max-xl:max-w-[56px] xl:min-w-56 transition-all duration-200 relative'>
       <div className='p-4 flex items-center gap-2'>
         <div className='w-8 h-8 rounded-full bg-content1 flex items-center justify-center'>
           <TriangleIcon className='text-content1-foreground' size={18} />
         </div>
-        <span className='font-medium text-content1-foreground text-lg'>ByteBuzz</span>
+        {/* Hide label below xl */}
+        <span className='font-medium text-content1-foreground text-lg max-xl:hidden xl:inline'>
+          ByteBuzz
+        </span>
       </div>
 
       <div className='flex-1 overflow-y-auto justify-center flex flex-col'>
@@ -67,9 +80,18 @@ export function Sidebar() {
         </SidebarSection> */}
       </div>
 
-      <div className='mt-auto'>
-        <SidebarThemeSwitcher />
-        <UserProfile />
+      <div className='mt-auto py-4'>
+        <SidebarItem
+          to='https://github.com/dartilesm/bytebuzz/issues'
+          icon={<BugIcon size={24} className='text-default-500' />}
+          label={
+            <span className='text-default-500 flex items-center justify-between w-full'>
+              Bug Report <ExternalLinkIcon size={16} className='text-default-500' />
+            </span>
+          }
+          isExternal
+        />
+        <SidebarAccountDropdown isActive={false} label={user?.fullName ?? ""} />
       </div>
     </div>
   );

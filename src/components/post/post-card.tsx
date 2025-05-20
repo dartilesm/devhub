@@ -4,7 +4,7 @@ import { PostAvatarAndThreadLine } from "@/components/post/post-avatar-and-threa
 import { usePostContext } from "@/hooks/use-post-context";
 import { cn } from "@/lib/utils";
 import { Card, CardProps } from "@heroui/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 interface PostCardProps {
   children: React.ReactNode;
   className?: string;
@@ -13,22 +13,28 @@ interface PostCardProps {
 }
 
 export function PostCard({ children, className, classNames, ref }: PostCardProps) {
-  const { isThreadPagePost, ...post } = usePostContext();
+  const { isThreadPagePost, post, isModal } = usePostContext();
   const router = useRouter();
+  const pathname = usePathname();
 
   function handleClick(event: React.MouseEvent<HTMLDivElement>) {
     // Check if the clicked element or its parents is an anchor tag
     const isAnchorElement = (event.target as HTMLElement).closest("a");
-    if (isAnchorElement) return;
+    if (isAnchorElement || isModal) return;
 
-    router.push(`/@${post.user?.username}/thread/${post.id}`);
+    const pushPath = `/@${post.user?.username}/thread/${post.id}`;
+
+    if (pathname !== pushPath) router.push(pushPath);
   }
 
   return (
     <div onClick={handleClick} ref={ref}>
       <Card
         className={cn(
-          "relative flex flex-row dark:bg-content1 bg-[transparent] [box-shadow:none] cursor-pointer",
+          "relative flex flex-row dark:bg-content1 bg-[transparent] [box-shadow:none]",
+          {
+            "cursor-pointer": !isModal,
+          },
           className
         )}
         classNames={classNames}

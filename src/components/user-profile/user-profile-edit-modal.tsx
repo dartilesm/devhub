@@ -7,7 +7,6 @@ import {
   Card,
   Image,
   Input,
-  Link,
   Modal,
   ModalBody,
   ModalContent,
@@ -17,6 +16,7 @@ import {
 } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import { Tables } from "database.types";
+import Link from "next/link";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 

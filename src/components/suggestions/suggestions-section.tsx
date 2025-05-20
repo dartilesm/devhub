@@ -18,7 +18,7 @@ async function getRandomUnfollowedUsers() {
 export async function SuggestionsSection() {
   const { data: users } = await getRandomUnfollowedUsers();
   return (
-    <div className='space-y-4'>
+    <div className='space-y-4 max-w-80'>
       {/* Suggestions Card */}
       {users?.length > 0 && <UserToFollowList users={users} />}
 

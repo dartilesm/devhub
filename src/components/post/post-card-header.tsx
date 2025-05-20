@@ -10,7 +10,8 @@ import { CardHeader, Tooltip } from "@heroui/react";
 import Link from "next/link";
 
 export function PostHeader() {
-  const { isThreadPagePost, user, created_at } = usePostContext();
+  const { isThreadPagePost, post = {} } = usePostContext();
+  const { user, created_at } = post;
 
   return (
     <CardHeader
