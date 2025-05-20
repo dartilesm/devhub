@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 
-const HOST_NAME = process.env.VERCEL_PROJECT_PRODUCTION_URL || "localhost";
+const HOST_NAME = process.env.VERCEL_PROJECT_PRODUCTION_URL || "bytebuzz.dev";
 
 export async function getIp() {
   const headersList = await headers();
   const forwardedFor = headersList.get("x-forwarded-for");
   const realIp = headersList.get("x-real-ip");
-
-  console.log({ forwardedFor, realIp });
 
   if (forwardedFor) {
     return forwardedFor.split(",")[0].trim();
@@ -16,7 +14,7 @@ export async function getIp() {
 
   if (realIp) return realIp.trim();
 
-  return null; // or '0.0.0.0', depends
+  return null;
 }
 /**
  * Handles analytics logging and posting to external API for each request.
