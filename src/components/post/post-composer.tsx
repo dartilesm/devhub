@@ -5,9 +5,8 @@ import { useCreatePostMutation } from "@/hooks/mutation/use-create-post-mutation
 import { usePostsContext } from "@/hooks/use-posts-context";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
-import { Avatar, Button, Chip, Spinner, Textarea, Tooltip } from "@heroui/react";
+import { Avatar, Button, Spinner, Textarea, Tooltip } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Icon } from "@iconify/react";
 import { CodeIcon, ImageIcon, RocketIcon } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
