@@ -1,7 +1,21 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { headers } from "next/headers";
 
 const HOST_NAME = process.env.VERCEL_PROJECT_PRODUCTION_URL || "localhost";
 
+export async function getIp() {
+  const headersList = await headers();
+  const forwardedFor = headersList.get("x-forwarded-for");
+  const realIp = headersList.get("x-real-ip");
+
+  if (forwardedFor) {
+    return forwardedFor.split(",")[0].trim();
+  }
+
+  if (realIp) return realIp.trim();
+
+  return null;
+}
 /**
  * Handles analytics logging and posting to external API for each request.
  * @param req - The Next.js middleware request object
@@ -19,13 +33,11 @@ export async function handleAnalytics(req: NextRequest) {
   const userAgent = getHeader("user-agent");
   const url = req.nextUrl.toString();
 
-  // Get IP from x-forwarded-for header (middleware edge runtime does not provide req.ip)
-  const ip = getHeader("x-forwarded-for")?.split(",")[0]?.trim();
-
+  // TODO: Find a way to exclude prefetch requests
   if (!userAgent?.includes("vercel") && url.includes(HOST_NAME)) {
     const data = {
       url,
-      ip,
+      ip: await getIp(),
       user_agent: userAgent || "",
       accept_language: getHeader("accept-language"),
       sec_ch_ua: getHeader("sec-ch-ua"),
@@ -39,20 +51,21 @@ export async function handleAnalytics(req: NextRequest) {
     };
 
     // Log the analytics data
-    console.log({ url: `${process.env.PIRSCH_API_URL}/hit`, token: process.env.PIRSCH_ACCESS_KEY });
+    console.log({ ...data, hostname: HOST_NAME });
     try {
       const response = await fetch(`${process.env.PIRSCH_API_URL}/hit`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${process.env.PIRSCH_ACCESS_KEY}`,
           "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.PIRSCH_ACCESS_KEY}`,
         },
         body: JSON.stringify(data),
       });
-      const responseData = await response.text();
-      console.log({ response: responseData });
+      console.log({ response });
     } catch (error) {
       console.error({ error });
+    } finally {
+      return NextResponse.next();
     }
   }
 }
