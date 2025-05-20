@@ -30,11 +30,12 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
+     * - favicon.png (favicon file)
      * And except for files with these extensions:
      * - .html, .css, .js, .jpg, .jpeg, .webp, .png, .gif, .svg, .ttf
      * - .woff, .woff2, .ico, .csv, .doc, .docx, .xls, .xlsx, .zip
      * - .webmanifest
      */
-    "/((?!api/webhooks|_next/static|_next/image|favicon\\.ico|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    "/((?!api/webhooks|_next/static|_next/image|favicon\\.ico|favicon\\.png|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
   ],
 };
