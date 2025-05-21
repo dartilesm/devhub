@@ -22,7 +22,7 @@ export function PostAvatarAndThreadLine() {
         "pl-4.5": isThreadPagePost,
       })}
     >
-      <Link href={`/@${user?.username}`}>
+      <Link href={`/@${user?.username}`} className='h-fit'>
         <Tooltip content={<UserProfilePopoverCard user={user!} />} delay={1000}>
           <Avatar
             isBordered
