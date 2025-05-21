@@ -1,0 +1,79 @@
+name: "🐞 Bug Report"
+description: "Yikes! Something broke? Let's squash that bug together."
+title: "[🐞 Bug]: "
+labels: ["bug", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Thanks for reporting a bug on ByteBuzz!**  
+        Help us hunt it down by filling out this form with as much detail as you can.
+
+  - type: textarea
+    id: bug-steps
+    attributes:
+      label: How can we reproduce the bug?
+      description: Step-by-step instructions to reproduce the issue.
+      placeholder: |
+        1. Go to the homepage
+        2. Click on "Deploy Comment"
+        3. Type something and hit submit
+        4. See the error
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug-expected
+    attributes:
+      label: What did you expect to happen?
+      placeholder: "The comment should appear under the post"
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug-actual
+    attributes:
+      label: What actually happened?
+      placeholder: "Got a 500 error with message 'user not found'"
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug-screenshot
+    attributes:
+      label: Screenshots or screen recordings
+      description: If applicable, drag and drop a screenshot or screen recording here.
+
+  - type: input
+    id: browser
+    attributes:
+      label: What browser are you using?
+      placeholder: "e.g. Chrome 124, Safari 17, Firefox 118"
+    validations:
+      required: true
+
+  - type: input
+    id: device
+    attributes:
+      label: What device/OS are you on?
+      placeholder: "e.g. macOS 14.3, Windows 11, iPhone 15 Pro iOS 17"
+
+  - type: input
+    id: bytebuzz-username
+    attributes:
+      label: Your @username (if known)
+      description: Found in the sidebar on your profile.
+      placeholder: "@devwizard"
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console or network errors
+      description: Copy/paste any relevant console or network tab errors.
+      render: shell
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Any extra context?
+      placeholder: "Happens only when I comment on someone else's post and I'm logged in via GitHub."
