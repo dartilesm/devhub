@@ -51,7 +51,7 @@ export function PostComposer({
             ...response.data,
             user: {
               username: user?.username ?? "",
-              display_name: user?.firstName ?? "",
+              display_name: `${user?.firstName || ""} ${user?.lastName || ""}`,
               image_url: user?.imageUrl ?? "",
             },
           };
