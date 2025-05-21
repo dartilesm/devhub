@@ -1,0 +1,48 @@
+name: "🚀 Feature Request"
+description: "Got a game-changing idea? Launch it here and let's take ByteBuzz to the next level!"
+title: "[🚀 Feature]: "
+labels: ["enhancement", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Thanks for helping improve ByteBuzz!**  
+        Got a feature in mind that could boost the experience? Tell us everything below.
+
+  - type: textarea
+    id: feature-summary
+    attributes:
+      label: What's your idea?
+      description: A quick summary of the feature you'd like to see.
+      placeholder: "I'd love to see a way to pin my favorite posts to my profile!"
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Why would this be useful?
+      description: How would this feature improve the app or solve a problem?
+      placeholder: "It would help highlight my most helpful or funny posts."
+    validations:
+      required: true
+
+  - type: textarea
+    id: potential-implementation
+    attributes:
+      label: Any ideas for how it could work?
+      description: Share your thoughts on how the feature could be implemented (optional).
+      placeholder: "Maybe a 'Pin Post' option in the three-dot menu?"
+
+  - type: input
+    id: bytebuzz-username
+    attributes:
+      label: Your @username (if known)
+      description: Found in the sidebar on your profile.
+      placeholder: "@devwizard"
+
+  - type: textarea
+    id: extra-notes
+    attributes:
+      label: Anything else?
+      placeholder: "Got mockups, inspiration links, or a vision board? Drop it here!"
