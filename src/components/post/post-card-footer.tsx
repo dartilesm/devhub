@@ -121,7 +121,7 @@ export function PostFooter() {
                 )}
               </Button>
             </Tooltip>
-            <Tooltip content='Clone (repost)'>
+            <Tooltip content='Repost (coming soon)'>
               <Button
                 variant='light'
                 size='sm'
@@ -130,7 +130,7 @@ export function PostFooter() {
                 <Repeat2Icon className='text-inherit' size={22} strokeWidth={1.5} />
               </Button>
             </Tooltip>
-            <Tooltip content='Backup (Bookmark)'>
+            <Tooltip content='Backup (coming soon)'>
               <Button
                 variant='light'
                 size='sm'
@@ -139,7 +139,7 @@ export function PostFooter() {
                 <ArchiveIcon className='text-inherit' size={18} />
               </Button>
             </Tooltip>
-            <Tooltip content='More'>
+            <Tooltip content='More (coming soon)'>
               <Button
                 variant='light'
                 size='sm'
