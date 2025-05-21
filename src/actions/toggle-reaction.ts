@@ -6,7 +6,7 @@ import { Tables } from "database.types";
 
 export interface ToggleReactionData {
   post_id: string;
-  reaction_type: "star" | "coffee" | "approve" | "cache";
+  reaction_type: Tables<"reactions">["reaction_type"];
 }
 
 export async function toggleReaction({

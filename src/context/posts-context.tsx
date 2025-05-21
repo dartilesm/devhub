@@ -1,6 +1,7 @@
 "use client";
 
 import { NestedPost } from "@/types/nested-posts";
+import { addToast, Button, Link } from "@heroui/react";
 import { createContext, useState } from "react";
 
 interface PostsContextType {
@@ -25,6 +26,24 @@ export function PostsProvider({
   const [posts, setPosts] = useState<NestedPost[]>(initialPosts);
 
   function addPost(post: NestedPost) {
+    console.log("Adding post", post, posts);
+    addToast({
+      title: "Post added",
+      description: "Your post has been added successfully",
+      variant: "flat",
+      color: "success",
+      endContent: (
+        <Button
+          as={Link}
+          href={`/@${post.user?.username}/thread/${post.id}`}
+          variant='flat'
+          color='success'
+          size='sm'
+        >
+          View
+        </Button>
+      ),
+    });
     setPosts([post, ...posts]);
   }
 

@@ -205,6 +205,22 @@ export type Database = {
           parent_post_id: string
           repost_post_id: string
           user: Json
+          reaction: Json
+        }[]
+      }
+      get_random_unfollowed_users: {
+        Args: { count: number }
+        Returns: {
+          bio: string | null
+          display_name: string
+          follower_count: number | null
+          following_count: number | null
+          id: string
+          image_url: string | null
+          join_date: string | null
+          location: string | null
+          username: string
+          website: string | null
         }[]
       }
       get_replies_to_depth: {
@@ -217,6 +233,21 @@ export type Database = {
           repost_post_id: string
           level: number
           user: Json
+          reaction: Json
+        }[]
+      }
+      get_user_feed: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          content: string
+          created_at: string
+          parent_post_id: string
+          repost_post_id: string
+          reply_count: number
+          repost_count: number
+          user: Json
+          reaction: Json
         }[]
       }
       get_user_posts_by_username: {
@@ -230,6 +261,7 @@ export type Database = {
           reply_count: number
           repost_count: number
           user: Json
+          reaction: Json
         }[]
       }
       toggle_follow: {
