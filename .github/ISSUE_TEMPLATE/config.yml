@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: ByteBuzz Community Hub
+    url: https://github.com/dartilesm/bytebuzz/discussions
+    about: Got questions, ideas, or want to chat with fellow devs? Join the conversation here!
