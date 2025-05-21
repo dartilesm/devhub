@@ -6,19 +6,7 @@ import { createServerSupabaseClient } from "@/db/supabase";
 async function getPosts() {
   const supabaseClient = createServerSupabaseClient();
   const result = await supabaseClient
-    .from("posts")
-    .select(
-      `
-        *,
-        user:users (
-          id,
-          username,
-          display_name,
-          image_url
-        )
-      `
-    )
-    .is("parent_post_id", null)
+    .rpc("get_user_feed")
     .order("created_at", {
       ascending: false,
     })

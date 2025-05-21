@@ -3,18 +3,17 @@
 import { useToggleReactionMutation } from "@/hooks/mutation/use-toggle-reaction-mutation";
 import { usePostContext } from "@/hooks/use-post-context";
 import { Button, CardFooter, cn, Tooltip } from "@heroui/react";
+import { Tables } from "database.types";
 import { ArchiveIcon, EllipsisIcon, MessageSquareIcon, Repeat2Icon, StarIcon } from "lucide-react";
 import { useState } from "react";
 
-type Reaction = "star" | "coffee" | "approve" | "cache";
-
-interface ReactionType {
-  type: Reaction;
+interface Reaction {
+  type: Tables<"reactions">["reaction_type"];
   icon: string;
   label: string;
 }
 
-const reactions: ReactionType[] = [
+const reactions: Reaction[] = [
   { type: "star", icon: "🌟", label: "Star (like)" },
   { type: "coffee", icon: "☕", label: "Give a coffe (support)" },
   { type: "approve", icon: "✔︎", label: "Approve (love)" },
@@ -23,7 +22,9 @@ const reactions: ReactionType[] = [
 
 export function PostFooter() {
   const { isThreadPagePost, togglePostModal, post, isModal } = usePostContext();
-  const [selectedReaction, setSelectedReaction] = useState<Reaction | null>(null);
+  const [selectedReaction, setSelectedReaction] = useState<Reaction["type"] | null>(
+    post.reaction?.reaction_type ?? null
+  );
   const [isReactionsTooltipOpen, setIsReactionsTooltipOpen] = useState(false);
 
   const toggleReactionMutation = useToggleReactionMutation();
@@ -32,7 +33,7 @@ export function PostFooter() {
    * Handles toggling a reaction on a post
    * @param reaction - The type of reaction to toggle
    */
-  function handleReaction(reaction: Reaction) {
+  function handleReaction(reaction: Reaction["type"]) {
     setIsReactionsTooltipOpen(false);
     if (!post?.id) return;
 
@@ -42,8 +43,6 @@ export function PostFooter() {
       reaction_type: reaction,
     });
   }
-
-  console.log({ isModal });
 
   return (
     <>
@@ -78,15 +77,6 @@ export function PostFooter() {
                   >
                     <span className='text-xl'>{reaction.icon}</span>
                   </Button>
-
-                  {/* <span
-            className={cn(
-              "absolute -bottom-8 left-1/2 hidden -translate-x-1/2 rounded-md bg-popover px-2 py-1",
-              "text-xs font-medium text-popover-foreground group-hover:block"
-            )}
-          >
-            {reaction.label}
-          </span> */}
                 </Tooltip>
               ))}
               isOpen={isReactionsTooltipOpen}
