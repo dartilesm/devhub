@@ -12,19 +12,19 @@ function nestReplies(posts: NestedPost[]) {
   const map = new Map();
   const roots: NestedPost[] = [];
 
-  posts.forEach((post) => {
+  for (const post of posts) {
     post.replies = [];
     map.set(post.id, post);
-  });
+  }
 
-  posts.forEach((post) => {
+  for (const post of posts) {
     if (post.parent_post_id && map.has(post.parent_post_id)) {
       const parent = map.get(post.parent_post_id);
       parent.replies.push(post);
     } else {
       roots.push(post);
     }
-  });
+  }
 
   return roots;
 }

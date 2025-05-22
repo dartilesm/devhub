@@ -7,13 +7,7 @@ import { Avatar, Tooltip } from "@heroui/react";
 import Link from "next/link";
 
 export function PostAvatarAndThreadLine() {
-  const {
-    isThread,
-    isFirstInThread,
-    isLastInThread,
-    isThreadPagePost,
-    post = {},
-  } = usePostContext();
+  const { isThread, isFirstInThread, isLastInThread, isThreadPagePost, post } = usePostContext();
   const { user } = post;
 
   return (
@@ -23,7 +17,7 @@ export function PostAvatarAndThreadLine() {
       })}
     >
       <Link href={`/@${user?.username}`} className="h-fit">
-        <Tooltip content={<UserProfilePopoverCard user={user!} />} delay={1000}>
+        <Tooltip content={<UserProfilePopoverCard user={user} />} delay={1000}>
           <Avatar
             isBordered
             src={user?.image_url ?? ""}

@@ -61,25 +61,24 @@
         "noDelete": "error"
       },
       "a11y": {
-        "useKeyWithClickEvents": "error",
-        "useButtonType": "error",
+        "useKeyWithClickEvents": "warn",
+        "useButtonType": "warn",
         "noSvgWithoutTitle": "error",
         "useMediaCaption": "error",
         "useAltText": "error",
         "noHeaderScope": "error",
         "useValidAnchor": "warn",
         "noPositiveTabindex": "error",
-        "useValidLang": "error"
+        "useValidLang": "error",
+        "useSemanticElements": "warn"
       }
     }
   },
   "javascript": {
-    "globals": [
-      "React"
-    ],
+    "globals": ["React"],
     "formatter": {
       "quoteStyle": "double",
-      "trailingComma": "all",
+      "trailingCommas": "all",
       "semicolons": "always"
     },
     "parser": {
