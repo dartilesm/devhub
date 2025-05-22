@@ -1,6 +1,7 @@
 import { UserProfile } from "@clerk/nextjs";
-
-function UserProfilePage() {
+import { handleAnalytics } from "@/middleware/analytics";
+export default function UserProfilePage() {
+  handleAnalytics();
   return (
     <UserProfile
       appearance={{
@@ -14,5 +15,3 @@ function UserProfilePage() {
     />
   );
 }
-
-export default UserProfilePage;

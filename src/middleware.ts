@@ -1,4 +1,3 @@
-import { handleAnalytics } from "@/middleware/analytics";
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { NextMiddlewareRequestParam } from "node_modules/@clerk/nextjs/dist/types/server/types";
@@ -19,7 +18,15 @@ export default clerkMiddleware(async function middleware(auth, req: NextMiddlewa
     return NextResponse.redirect(new URL("/root", req.url));
   }
 
-  return handleAnalytics(req);
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set("x-current-path", req.nextUrl.pathname);
+
+  /* return handleAnalytics(req); */
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 });
 
 export const config = {

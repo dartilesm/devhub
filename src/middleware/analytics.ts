@@ -1,4 +1,3 @@
-import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 
 const HOST_NAME = process.env.VERCEL_PROJECT_PRODUCTION_URL || "localhost";
@@ -20,18 +19,21 @@ export async function getIp() {
  * Handles analytics logging and posting to external API for each request.
  * @param req - The Next.js middleware request object
  */
-export async function handleAnalytics(req: NextRequest) {
+export async function handleAnalytics() {
   /**
    * Extracts the value of a header from the request.
    * @param name - The header name
    * @returns The header value or undefined
    */
-  function getHeader(name: string): string | undefined {
-    return req.headers.get(name) || undefined;
+  async function getHeader(name: string): Promise<string | undefined> {
+    const headerList = await headers();
+    return headerList.get(name) || undefined;
   }
 
-  const userAgent = getHeader("user-agent");
-  const url = req.nextUrl.toString();
+  const userAgent = await getHeader("user-agent");
+  const pathname = await getHeader("x-current-path");
+  const url = `https://${HOST_NAME}${pathname}`;
+  console.log({ headers: await headers() });
 
   // TODO: Find a way to exclude prefetch requests
   if (!userAgent?.includes("vercel") && url.includes(HOST_NAME)) {
@@ -39,14 +41,14 @@ export async function handleAnalytics(req: NextRequest) {
       url,
       ip: await getIp(),
       user_agent: userAgent || "",
-      accept_language: getHeader("accept-language"),
-      sec_ch_ua: getHeader("sec-ch-ua"),
-      sec_ch_ua_mobile: getHeader("sec-ch-ua-mobile"),
-      sec_ch_ua_platform: getHeader("sec-ch-ua-platform"),
-      sec_ch_ua_platform_version: getHeader("sec-ch-ua-platform-version"),
-      sec_ch_width: getHeader("sec-ch-width"),
-      sec_ch_viewport_width: getHeader("sec-ch-viewport-width"),
-      referrer: getHeader("referer"),
+      accept_language: await getHeader("accept-language"),
+      sec_ch_ua: await getHeader("sec-ch-ua"),
+      sec_ch_ua_mobile: await getHeader("sec-ch-ua-mobile"),
+      sec_ch_ua_platform: await getHeader("sec-ch-ua-platform"),
+      sec_ch_ua_platform_version: await getHeader("sec-ch-ua-platform-version"),
+      sec_ch_width: await getHeader("sec-ch-width"),
+      sec_ch_viewport_width: await getHeader("sec-ch-viewport-width"),
+      referrer: await getHeader("referer"),
       tags: {},
     };
 
@@ -64,8 +66,6 @@ export async function handleAnalytics(req: NextRequest) {
       console.log({ response });
     } catch (error) {
       console.error({ error });
-    } finally {
-      return NextResponse.next();
     }
   }
 }
