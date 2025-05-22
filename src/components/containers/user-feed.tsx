@@ -11,7 +11,7 @@ async function getPosts() {
     .order("created_at", {
       ascending: false,
     })
-    .limit(10);
+    .limit(100);
 
   return result;
 }
