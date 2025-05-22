@@ -1,7 +1,7 @@
 import { UserProfile } from "@/components/user-profile/user-profile";
 import { createServerSupabaseClient } from "@/db/supabase";
 import { notFound } from "next/navigation";
-
+import { withAnalytics } from "@/lib/with-analytics";
 async function getUserProfile(username: string) {
   const supabaseClient = createServerSupabaseClient();
   const result = await supabaseClient.from("users").select("*").eq("username", username).single();
@@ -17,7 +17,7 @@ interface UserPageProps {
   params: Promise<{ username: string }>;
 }
 
-export default async function UserPage({ params }: UserPageProps) {
+async function UserPage({ params }: UserPageProps) {
   const { username } = await params;
   const formattedUsername = decodeURIComponent(username);
   const { data: userProfile, error } = await getUserProfile(formattedUsername.replace("@", ""));
@@ -28,3 +28,5 @@ export default async function UserPage({ params }: UserPageProps) {
 
   return <UserProfile profile={userProfile} />;
 }
+
+export default withAnalytics(UserPage, { event: "page-view" });
