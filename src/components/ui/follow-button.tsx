@@ -8,9 +8,10 @@ import { useEffect, useState } from "react";
 interface FollowButtonProps {
   targetUserId: string;
   size?: "sm" | "md" | "lg";
+  className?: string;
 }
 
-export function FollowButton({ targetUserId, size = "sm" }: FollowButtonProps) {
+export function FollowButton({ targetUserId, size = "sm", className }: FollowButtonProps) {
   const { data: isFollowing, isLoading } = useIsFollowing(targetUserId);
   const toggleFollowMutation = useToggleFollowMutation();
 
@@ -49,6 +50,7 @@ export function FollowButton({ targetUserId, size = "sm" }: FollowButtonProps) {
       onPress={handleFollowToggle}
       aria-label={isLoading ? "Loading follow status" : isFollowed ? "Unfollow" : "Follow"}
       disabled={isLoading}
+      className={className}
     >
       {!isLoading && isFollowed && <UserRoundMinusIcon size={14} />}
       {!isLoading && !isFollowed && <UserRoundPlusIcon size={14} />}
