@@ -1,6 +1,6 @@
 import { createUnauthenticatedSupabaseClient } from "@/db/supabase";
 import { verifyWebhook } from "@clerk/nextjs/webhooks";
-import { RequestLike } from "node_modules/@clerk/nextjs/dist/types/server/types";
+import type { RequestLike } from "node_modules/@clerk/nextjs/dist/types/server/types";
 export async function POST(req: Request) {
   try {
     const evt = await verifyWebhook(req as RequestLike);

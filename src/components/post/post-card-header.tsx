@@ -19,8 +19,8 @@ export function PostHeader() {
         "py-0 pr-8.5": isThreadPagePost,
       })}
     >
-      <div className='flex items-center justify-between w-full'>
-        <div className='flex items-center gap-1.5'>
+      <div className="flex items-center justify-between w-full">
+        <div className="flex items-center gap-1.5">
           {isThreadPagePost && <PostAvatarAndThreadLine />}
           <Tooltip content={<UserProfilePopoverCard user={user!} />} delay={1000}>
             <Link
@@ -29,15 +29,15 @@ export function PostHeader() {
                 "flex-col gap-0 items-start": isThreadPagePost,
               })}
             >
-              <span className='font-semibold'>{user?.display_name}</span>
-              <span className='text-sm text-content4-foreground/50'>@{user?.username}</span>
+              <span className="font-semibold">{user?.display_name}</span>
+              <span className="text-sm text-content4-foreground/50">@{user?.username}</span>
             </Link>
           </Tooltip>
           {!isThreadPagePost && (
             <>
-              <span className='text-sm text-content4-foreground/50'>·</span>
+              <span className="text-sm text-content4-foreground/50">·</span>
               <time
-                className='text-sm text-content4-foreground/50'
+                className="text-sm text-content4-foreground/50"
                 title={formatDateTime(created_at!)}
               >
                 {getRelativeTime(new Date(created_at!))}

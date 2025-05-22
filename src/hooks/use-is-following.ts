@@ -14,7 +14,7 @@ function fetchIsFollowing(targetUserId: string): Promise<{ isFollowing: boolean 
         throw new Error(error.error || "Failed to fetch follow status");
       }
       return res.json();
-    }
+    },
   );
 }
 

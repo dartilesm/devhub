@@ -1,13 +1,13 @@
 "use server";
 
 import { createServerSupabaseClient } from "@/db/supabase";
-import { PostgrestSingleResponse } from "@supabase/supabase-js";
-import { Tables } from "database.types";
+import type { PostgrestSingleResponse } from "@supabase/supabase-js";
+import type { Tables } from "database.types";
 
 export type UpdateProfileData = Partial<Tables<"users">>;
 
 export async function updateProfile(
-  data: UpdateProfileData
+  data: UpdateProfileData,
 ): Promise<PostgrestSingleResponse<Tables<"users">>> {
   if (!data.username) {
     throw new Error("Username is required");
@@ -27,6 +27,5 @@ export async function updateProfile(
     .eq("username", data.username)
     .select()
     .single();
-  console.log({ result, data });
   return result;
 }

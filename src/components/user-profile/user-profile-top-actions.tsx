@@ -11,7 +11,7 @@ import { useState } from "react";
 
 const UserProfileEditModal = dynamic(
   () => import("./user-profile-edit-modal").then((mod) => mod.UserProfileEditModal),
-  { ssr: false }
+  { ssr: false },
 );
 
 export function UserProfileTopActions() {
@@ -43,17 +43,17 @@ export function UserProfileTopActions() {
   }
 
   return (
-    <div className='flex justify-end'>
-      <div className='flex flex-row gap-1.5 items-center'>
+    <div className="flex justify-end">
+      <div className="flex flex-row gap-1.5 items-center">
         <Tooltip content={isCopied ? "Copied!" : "Copy profile link"} closeDelay={0}>
           <Button
-            className='mr-2'
-            variant='light'
+            className="mr-2"
+            variant="light"
             onPress={handleCopyLink}
-            aria-label='Copy profile link'
+            aria-label="Copy profile link"
             isIconOnly
           >
-            <AnimatePresence mode='wait'>
+            <AnimatePresence mode="wait">
               <motion.div
                 key={isCopied ? "copied" : "copy"}
                 initial={{ opacity: 0, y: -10 }}
@@ -66,11 +66,11 @@ export function UserProfileTopActions() {
             </AnimatePresence>
           </Button>
         </Tooltip>
-        {!isCurrentUser && <FollowButton targetUserId={profile.id} size='md' />}
+        {!isCurrentUser && <FollowButton targetUserId={profile.id} size="md" />}
         {isCurrentUser && (
           <Button
-            variant='flat'
-            color='primary'
+            variant="flat"
+            color="primary"
             onPress={toggleEditProfileModal}
             startContent={<PencilIcon size={16} />}
           >

@@ -1,4 +1,4 @@
-import { Tables } from "database.types";
+import type { Tables } from "database.types";
 
 type MockData = {
   users: Partial<Tables<"users">>[];

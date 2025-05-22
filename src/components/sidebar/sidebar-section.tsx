@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 
 interface SidebarSectionProps {
   title: string;
@@ -7,9 +7,9 @@ interface SidebarSectionProps {
 
 export function SidebarSection({ title, children }: SidebarSectionProps) {
   return (
-    <div className='py-2'>
-      <h2 className='px-6 my-2 text-xs font-medium uppercase text-gray-500'>{title}</h2>
-      <div className='space-y-1'>{children}</div>
+    <div className="py-2">
+      <h2 className="px-6 my-2 text-xs font-medium uppercase text-gray-500">{title}</h2>
+      <div className="space-y-1">{children}</div>
     </div>
   );
 }

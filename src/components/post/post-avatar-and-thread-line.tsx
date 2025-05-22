@@ -22,7 +22,7 @@ export function PostAvatarAndThreadLine() {
         "pl-4.5": isThreadPagePost,
       })}
     >
-      <Link href={`/@${user?.username}`} className='h-fit'>
+      <Link href={`/@${user?.username}`} className="h-fit">
         <Tooltip content={<UserProfilePopoverCard user={user!} />} delay={1000}>
           <Avatar
             isBordered
@@ -42,8 +42,8 @@ export function PostAvatarAndThreadLine() {
             "top-0 h-4": isLastInThread,
           })}
         >
-          <div className='relative w-[2px] z-10 h-full'>
-            <div className='absolute left-0 top-0 bottom-0 w-full bg-border/60 border border-content3' />
+          <div className="relative w-[2px] z-10 h-full">
+            <div className="absolute left-0 top-0 bottom-0 w-full bg-border/60 border border-content3" />
           </div>
         </div>
       )}

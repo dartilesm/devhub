@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
+import { type NextRequest, NextResponse } from "next/server";
 
 const HOST_NAME = process.env.VERCEL_PROJECT_PRODUCTION_URL || "localhost";
 
@@ -49,11 +49,8 @@ export async function handleAnalytics(req: NextRequest) {
       referrer: getHeader("referer"),
       tags: {},
     };
-
-    // Log the analytics data
-    console.log({ ...data, hostname: HOST_NAME });
     try {
-      const response = await fetch(`${process.env.PIRSCH_API_URL}/hit`, {
+      const _response = await fetch(`${process.env.PIRSCH_API_URL}/hit`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +58,6 @@ export async function handleAnalytics(req: NextRequest) {
         },
         body: JSON.stringify(data),
       });
-      console.log({ response });
     } catch (error) {
       console.error({ error });
     } finally {

@@ -13,8 +13,8 @@ export function PostThreadLine({ isFirstInThread, isLastInThread }: PostThreadLi
         "h-1/2": isLastInThread,
       })}
     >
-      <div className='relative w-[2px] z-10 h-full'>
-        <div className='absolute left-0 top-0 bottom-0 w-full bg-border/60 border border-content3' />
+      <div className="relative w-[2px] z-10 h-full">
+        <div className="absolute left-0 top-0 bottom-0 w-full bg-border/60 border border-content3" />
       </div>
     </div>
   );

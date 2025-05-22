@@ -3,7 +3,7 @@
 import { PostAvatarAndThreadLine } from "@/components/post/post-avatar-and-thread-line";
 import { usePostContext } from "@/hooks/use-post-context";
 import { cn } from "@/lib/utils";
-import { Card, CardProps } from "@heroui/react";
+import { Card, type CardProps } from "@heroui/react";
 import { usePathname, useRouter } from "next/navigation";
 interface PostCardProps {
   children: React.ReactNode;
@@ -35,15 +35,15 @@ export function PostCard({ children, className, classNames, ref }: PostCardProps
           {
             "cursor-pointer": !isModal,
           },
-          className
+          className,
         )}
         classNames={classNames}
         tabIndex={0}
-        role='article'
-        as='article'
+        role="article"
+        as="article"
       >
         {!isThreadPagePost && <PostAvatarAndThreadLine />}
-        <div className='w-full'>{children}</div>
+        <div className="w-full">{children}</div>
       </Card>
     </div>
   );

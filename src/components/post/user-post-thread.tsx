@@ -1,9 +1,9 @@
 "use client";
 
-import { NestedPost } from "@/types/nested-posts";
-import { UserPost } from "./user-post";
-import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
+import type { NestedPost } from "@/types/nested-posts";
+import { useEffect, useRef } from "react";
+import { UserPost } from "./user-post";
 
 interface UserPostThreadProps {
   posts: NestedPost[];
@@ -31,7 +31,7 @@ export function UserPostThread({ posts }: UserPostThreadProps) {
   }
 
   return (
-    <div ref={containerRef} className='flex flex-col w-full'>
+    <div ref={containerRef} className="flex flex-col w-full">
       {posts.map((post, index) => (
         <UserPost
           key={post.id}
@@ -47,7 +47,7 @@ export function UserPostThread({ posts }: UserPostThreadProps) {
               "max-w-[calc(100%-2rem)] mx-auto dark:bg-content2/70 rounded-none border-t-0":
                 index < posts.length - 1,
               "rounded-t-xl border-t border-x border-b-0": index === 0,
-            }
+            },
           )}
         />
       ))}

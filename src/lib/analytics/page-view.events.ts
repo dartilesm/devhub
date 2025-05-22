@@ -10,9 +10,6 @@ export async function sendPageViewEvent(data: PageViewEventData) {
   const userAgent = data.headerList.get("user-agent") || "";
 
   if (!isDomainAllowed({ url, userAgent })) {
-    console.log(
-      `Page view event not sent because domain ${url} or user agent ${userAgent} is not allowed`
-    );
     return;
   }
 
@@ -32,7 +29,7 @@ export async function sendPageViewEvent(data: PageViewEventData) {
   };
 
   try {
-    const response = await fetch(`${process.env.PIRSCH_API_URL}/hit`, {
+    const _response = await fetch(`${process.env.PIRSCH_API_URL}/hit`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,8 +37,6 @@ export async function sendPageViewEvent(data: PageViewEventData) {
       },
       body: JSON.stringify(pageInfo),
     });
-    console.log({ response });
-    console.log("Page view event sent", { response });
   } catch (error) {
     console.error({ error });
   }

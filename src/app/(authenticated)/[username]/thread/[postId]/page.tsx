@@ -5,9 +5,9 @@ import { UserPost } from "@/components/post/user-post";
 import { PageHeader } from "@/components/ui/page-header";
 import { PostsProvider } from "@/context/posts-context";
 import { createServerSupabaseClient } from "@/db/supabase";
-import { NestedPost } from "@/types/nested-posts";
-import { notFound } from "next/navigation";
 import { withAnalytics } from "@/lib/with-analytics";
+import type { NestedPost } from "@/types/nested-posts";
+import { notFound } from "next/navigation";
 function nestReplies(posts: NestedPost[]) {
   const map = new Map();
   const roots: NestedPost[] = [];
@@ -36,13 +36,12 @@ async function getPostData(postId: string) {
     "get_post_ancestry",
     {
       start_id: postId,
-    }
+    },
   );
 
   if (postAncestryError) {
     console.error("Error fetching thread:", postAncestryError);
   } else {
-    console.log("Thread (root to current):", postAncestry);
   }
 
   const { data: directReplies, error: directRepliesError } = await supabaseClient
@@ -52,7 +51,6 @@ async function getPostData(postId: string) {
   if (directRepliesError) {
     console.error("Error fetching direct replies:", directRepliesError);
   } else {
-    console.log("Direct replies:", nestReplies(directReplies));
   }
 
   const result = {
@@ -80,8 +78,8 @@ async function ThreadPage({ params }: ThreadPageProps) {
 
   return (
     <>
-      <PageHeader title='Thread' />
-      <div className='flex flex-col gap-4 w-full'>
+      <PageHeader title="Thread" />
+      <div className="flex flex-col gap-4 w-full">
         <PostsProvider initialPosts={directReplies || []}>
           <PostWrapper isAncestry>
             <UserPost ancestry={postAncestry} />
@@ -90,8 +88,8 @@ async function ThreadPage({ params }: ThreadPageProps) {
             placeholder={`Reply to @${postAncestry?.at(-1)?.user?.username}`}
             postId={postId}
           />
-          <div className='flex flex-col gap-4 min-h-[100dvh]'>
-            <h2 className='text-lg font-medium'>Replies</h2>
+          <div className="flex flex-col gap-4 min-h-[100dvh]">
+            <h2 className="text-lg font-medium">Replies</h2>
             {!!directReplies?.length && <PostList />}
           </div>
         </PostsProvider>

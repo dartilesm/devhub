@@ -1,6 +1,6 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { NextMiddlewareRequestParam } from "node_modules/@clerk/nextjs/dist/types/server/types";
+import type { NextMiddlewareRequestParam } from "node_modules/@clerk/nextjs/dist/types/server/types";
 
 /**
  * Route matcher to protect all routes except for the sign-in and sign-up pages

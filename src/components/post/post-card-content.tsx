@@ -17,7 +17,7 @@ export function PostContent({ children }: PostContentProps) {
         "px-8.5": isThreadPagePost,
       })}
     >
-      {children ?? <p className='text-sm'>{content}</p>}
+      {children ?? <p className="text-sm">{content}</p>}
     </CardBody>
   );
 }

@@ -1,8 +1,8 @@
 "use server";
 
 import { createServerSupabaseClient } from "@/db/supabase";
-import { PostgrestSingleResponse } from "@supabase/supabase-js";
-import { Tables } from "database.types";
+import type { PostgrestSingleResponse } from "@supabase/supabase-js";
+import type { Tables } from "database.types";
 
 export interface CreatePostCommentProps {
   comment: string;
@@ -23,8 +23,6 @@ export async function createPostComment({
     })
     .select()
     .single();
-
-  console.log({ result });
 
   return result;
 }

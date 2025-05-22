@@ -1,7 +1,7 @@
 "use client";
 
 import { PostCommentModal } from "@/components/post/post-comment-modal";
-import { NestedPost } from "@/types/nested-posts";
+import type { NestedPost } from "@/types/nested-posts";
 import { useParams } from "next/navigation";
 import { createContext, useState } from "react";
 

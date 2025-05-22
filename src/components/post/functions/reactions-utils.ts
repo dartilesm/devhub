@@ -1,5 +1,5 @@
-import { Tables } from "database.types";
-import { NestedPost } from "@/types/nested-posts";
+import type { NestedPost } from "@/types/nested-posts";
+import type { Tables } from "database.types";
 
 export interface Reaction {
   type: Tables<"reactions">["reaction_type"];
@@ -41,7 +41,7 @@ export function getReactionCount(post: NestedPost, type: Reaction["type"]): numb
 export function getReactionsWithCounts(
   post: NestedPost,
   reactions: Reaction[],
-  selectedReaction: Reaction["type"] | null
+  selectedReaction: Reaction["type"] | null,
 ): ReactionWithCount[] {
   return reactions.map((reaction) => {
     let count = getReactionCount(post, reaction.type);

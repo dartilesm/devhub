@@ -1,16 +1,16 @@
 "use client";
 
+import { PostWrapper } from "@/components/post/post-wrapper";
 import { usePostsContext } from "@/hooks/use-posts-context";
 import { AnimatePresence, motion } from "motion/react";
 import { UserPost } from "./user-post";
-import { PostWrapper } from "@/components/post/post-wrapper";
 
 export function PostList() {
   const { posts } = usePostsContext();
 
   return (
-    <div className='flex flex-col gap-2'>
-      <AnimatePresence mode='popLayout' initial={false}>
+    <div className="flex flex-col gap-2">
+      <AnimatePresence mode="popLayout" initial={false}>
         {posts.map((post) => (
           <motion.div
             key={post.id}
@@ -27,7 +27,7 @@ export function PostList() {
         ))}
       </AnimatePresence>
       {posts.length === 0 && (
-        <span className='text-center text-sm text-muted-foreground'>No posts found</span>
+        <span className="text-center text-sm text-muted-foreground">No posts found</span>
       )}
     </div>
   );

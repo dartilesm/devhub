@@ -4,7 +4,7 @@ import { PostFooter } from "@/components/post/post-card-footer";
 import { PostHeader } from "@/components/post/post-card-header";
 import { UserPostThread } from "@/components/post/user-post-thread";
 import { PostProvider } from "@/context/post-provider";
-import { NestedPost } from "@/types/nested-posts";
+import type { NestedPost } from "@/types/nested-posts";
 interface UserPostProps {
   ancestry?: UserPostProps["post"][];
   post?: NestedPost;
@@ -34,7 +34,7 @@ export function UserPost({
   const isFirstLevel = !!post?.level && post.level === 1;
   const hasReplies = !!post?.replies?.length;
 
-  const renderAsThread = isThread ?? hasLevel ? !isFirstLevel || hasReplies : false;
+  const renderAsThread = (isThread ?? hasLevel) ? !isFirstLevel || hasReplies : false;
   const firstInThread = isFirstInThread ?? isFirstLevel;
   const lastInThread = isLastInThread ?? !hasReplies;
 
@@ -54,11 +54,12 @@ export function UserPost({
             <PostContent />
             <PostFooter />
           </PostCard>
-          {post?.replies &&
-            post.replies
-              .filter((reply) => reply.level === (post.level ?? 1) + 1)
-              .slice(0, 1)
-              .map((reply) => <UserPost key={reply.id} post={reply} />)}
+          {post?.replies
+            ?.filter((reply) => reply.level === (post.level ?? 1) + 1)
+            .slice(0, 1)
+            .map((reply) => (
+              <UserPost key={reply.id} post={reply} />
+            ))}
         </PostProvider>
       )}
     </>

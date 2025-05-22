@@ -1,6 +1,6 @@
 "use client";
 
-import { Tables } from "database.types";
+import type { Tables } from "database.types";
 import { createContext } from "react";
 
 type ProfileProviderProps = {

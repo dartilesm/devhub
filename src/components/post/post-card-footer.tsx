@@ -2,14 +2,14 @@
 
 import { useToggleReactionMutation } from "@/hooks/mutation/use-toggle-reaction-mutation";
 import { usePostContext } from "@/hooks/use-post-context";
-import { Button, CardFooter, cn, Divider, Tooltip } from "@heroui/react";
+import { Button, CardFooter, Divider, Tooltip, cn } from "@heroui/react";
 import { ArchiveIcon, EllipsisIcon, MessageSquareIcon, Repeat2Icon, StarIcon } from "lucide-react";
 import { useState } from "react";
 import {
+  type Reaction,
   getReactionsWithCounts,
   getSortedReactions,
   getTotalReactions,
-  Reaction,
 } from "./functions/reactions-utils";
 
 const reactions: Reaction[] = [
@@ -22,7 +22,7 @@ const reactions: Reaction[] = [
 export function PostFooter() {
   const { isThreadPagePost, togglePostModal, post, isModal } = usePostContext();
   const [selectedReaction, setSelectedReaction] = useState<Reaction["type"] | null>(
-    post.reaction?.reaction_type ?? null
+    post.reaction?.reaction_type ?? null,
   );
   const [isReactionsTooltipOpen, setIsReactionsTooltipOpen] = useState(false);
 
@@ -47,7 +47,7 @@ export function PostFooter() {
   const reactionsWithCounts = getReactionsWithCounts(
     post,
     reactions,
-    post.reaction?.reaction_type ?? null
+    post.reaction?.reaction_type ?? null,
   );
   const sortedReactions = getSortedReactions(reactionsWithCounts);
   const totalReactions = getTotalReactions(sortedReactions);
@@ -63,9 +63,9 @@ export function PostFooter() {
                 className={cn("flex flex-row items-center ml-2 w-full gap-2 py-1", {
                   "px-3.5": isThreadPagePost,
                 })}
-                aria-label='Reactions legend'
+                aria-label="Reactions legend"
               >
-                <div className='flex flex-row items-center'>
+                <div className="flex flex-row items-center">
                   {sortedReactions.map((reaction, reactionIndex) => (
                     <span
                       key={reaction.type}
@@ -77,16 +77,16 @@ export function PostFooter() {
                           "z-[3]": reactionIndex === 1,
                           "z-[2]": reactionIndex === 2,
                           "z-[1]": reactionIndex === 3,
-                        }
+                        },
                       )}
                       aria-label={reaction.label}
                     >
-                      <span aria-hidden='true'>{reaction.icon}</span>
+                      <span aria-hidden="true">{reaction.icon}</span>
                     </span>
                   ))}
                 </div>
                 {totalReactions > 0 && (
-                  <span className='text-gray-400 text-xs' aria-label='Total reactions'>
+                  <span className="text-gray-400 text-xs" aria-label="Total reactions">
                     {totalReactions}
                   </span>
                 )}
@@ -104,14 +104,14 @@ export function PostFooter() {
             >
               {/* Reaction Button with Tooltip (original) */}
               <Tooltip
-                className='relative mt-4 flex flex-row gap-2 p-1'
-                placement='top-start'
+                className="relative mt-4 flex flex-row gap-2 p-1"
+                placement="top-start"
                 isOpen={isReactionsTooltipOpen}
                 onOpenChange={setIsReactionsTooltipOpen}
                 content={reactions.map((reaction) => (
                   <Tooltip
                     key={reaction.type}
-                    className='group relative'
+                    className="group relative"
                     content={reaction.label}
                     onOpenChange={(open) => {
                       if (open) {
@@ -120,13 +120,13 @@ export function PostFooter() {
                     }}
                   >
                     <Button
-                      variant='light'
-                      size='sm'
-                      className='p-2 group'
+                      variant="light"
+                      size="sm"
+                      className="p-2 group"
                       isIconOnly
                       onPress={() => handleReaction(reaction.type)}
                     >
-                      <span className='text-xl group-hover:text-3xl transition-all duration-200'>
+                      <span className="text-xl group-hover:text-3xl transition-all duration-200">
                         {reaction.icon}
                       </span>
                     </Button>
@@ -136,76 +136,76 @@ export function PostFooter() {
                 <Button
                   variant={!selectedReaction ? "light" : "flat"}
                   color={!selectedReaction ? "default" : "primary"}
-                  size='sm'
+                  size="sm"
                   isIconOnly={!selectedReaction}
                   className={cn("group flex items-center gap-2", {
                     "text-gray-400": !selectedReaction,
                   })}
                 >
                   {selectedReaction ? (
-                    <span className='text-lg'>
+                    <span className="text-lg">
                       {reactions.find((r) => r.type === selectedReaction)?.icon}
                     </span>
                   ) : (
-                    <span className='text-lg'>
-                      <StarIcon className='text-inherit' size={18} />
+                    <span className="text-lg">
+                      <StarIcon className="text-inherit" size={18} />
                     </span>
                   )}
                   {selectedReaction && (
-                    <span className='text-sm capitalize'>{selectedReaction}</span>
+                    <span className="text-sm capitalize">{selectedReaction}</span>
                   )}
                 </Button>
                 {/* Legend: All reactions ordered + total counter */}
               </Tooltip>
               {/* Comment Button */}
-              <Tooltip content='Comment'>
+              <Tooltip content="Comment">
                 <Button
-                  variant='light'
-                  size='sm'
-                  className='flex flex-row gap-2 text-gray-400'
+                  variant="light"
+                  size="sm"
+                  className="flex flex-row gap-2 text-gray-400"
                   onPress={() => togglePostModal(true)}
-                  aria-label='Comment'
+                  aria-label="Comment"
                   tabIndex={0}
                 >
-                  <MessageSquareIcon className='text-inherit' size={18} />
+                  <MessageSquareIcon className="text-inherit" size={18} />
                   {Boolean(post?.reply_count) && (
-                    <span className='text-sm'>{post?.reply_count}</span>
+                    <span className="text-sm">{post?.reply_count}</span>
                   )}
                 </Button>
               </Tooltip>
               {/* Other Buttons (Repost, Backup, More) */}
-              <Tooltip content='Repost (coming soon)'>
+              <Tooltip content="Repost (coming soon)">
                 <Button
-                  variant='light'
-                  size='sm'
-                  className='text-gray-400'
-                  aria-label='Repost (coming soon)'
+                  variant="light"
+                  size="sm"
+                  className="text-gray-400"
+                  aria-label="Repost (coming soon)"
                   tabIndex={0}
                 >
-                  <Repeat2Icon className='text-inherit' size={22} strokeWidth={1.5} />
+                  <Repeat2Icon className="text-inherit" size={22} strokeWidth={1.5} />
                 </Button>
               </Tooltip>
-              <Tooltip content='Backup (coming soon)'>
+              <Tooltip content="Backup (coming soon)">
                 <Button
-                  variant='light'
-                  size='sm'
-                  className='text-gray-400'
-                  aria-label='Backup (coming soon)'
+                  variant="light"
+                  size="sm"
+                  className="text-gray-400"
+                  aria-label="Backup (coming soon)"
                   tabIndex={0}
                 >
-                  <ArchiveIcon className='text-inherit' size={18} />
+                  <ArchiveIcon className="text-inherit" size={18} />
                 </Button>
               </Tooltip>
-              <Tooltip content='More (coming soon)'>
+              <Tooltip content="More (coming soon)">
                 <Button
-                  variant='light'
-                  size='sm'
-                  className='text-gray-400'
-                  aria-label='More (coming soon)'
+                  variant="light"
+                  size="sm"
+                  className="text-gray-400"
+                  aria-label="More (coming soon)"
                   tabIndex={0}
                   isIconOnly
                 >
-                  <EllipsisIcon className='text-inherit' size={18} />
+                  <EllipsisIcon className="text-inherit" size={18} />
                 </Button>
               </Tooltip>
             </div>
