@@ -1,4 +1,5 @@
 import { UserProfile } from "@clerk/nextjs";
+import { withAnalytics } from "@/lib/with-analytics";
 
 function UserProfilePage() {
   return (
@@ -15,4 +16,4 @@ function UserProfilePage() {
   );
 }
 
-export default UserProfilePage;
+export default withAnalytics(UserProfilePage, { event: "page-view" });

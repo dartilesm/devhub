@@ -7,7 +7,7 @@ import { PostsProvider } from "@/context/posts-context";
 import { createServerSupabaseClient } from "@/db/supabase";
 import { NestedPost } from "@/types/nested-posts";
 import { notFound } from "next/navigation";
-
+import { withAnalytics } from "@/lib/with-analytics";
 function nestReplies(posts: NestedPost[]) {
   const map = new Map();
   const roots: NestedPost[] = [];
@@ -70,7 +70,7 @@ interface ThreadPageProps {
   }>;
 }
 
-export default async function ThreadPage({ params }: ThreadPageProps) {
+async function ThreadPage({ params }: ThreadPageProps) {
   const { postId } = await params;
   const { postAncestry, directReplies } = await getPostData(postId);
 
@@ -99,3 +99,5 @@ export default async function ThreadPage({ params }: ThreadPageProps) {
     </>
   );
 }
+
+export default withAnalytics(ThreadPage, { event: "page-view" });

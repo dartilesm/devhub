@@ -1,5 +1,8 @@
 import { notFound } from "next/navigation";
+import { withAnalytics } from "@/lib/with-analytics";
 
-export default function MessagesPage() {
+function MessagesPage() {
   return notFound();
 }
+
+export default withAnalytics(MessagesPage, { event: "page-view" });

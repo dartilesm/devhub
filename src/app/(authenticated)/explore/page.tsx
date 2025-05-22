@@ -10,8 +10,9 @@ import { exploreMockData } from "@/lib/mock/explore-data";
 import { Alert } from "@heroui/react";
 import { Tables } from "database.types";
 import { useState } from "react";
+import { withAnalytics } from "@/lib/with-analytics";
 
-export default function ExplorePage() {
+function ExplorePage() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredUsers = exploreMockData.users.filter((user) => {
@@ -64,3 +65,5 @@ export default function ExplorePage() {
     </>
   );
 }
+
+export default withAnalytics(ExplorePage, { event: "page-view" });
