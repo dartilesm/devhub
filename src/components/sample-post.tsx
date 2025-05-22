@@ -6,8 +6,25 @@ import { CodeBlock } from "@/components/ui/code-block";
 import { NestedPost } from "@/types/nested-posts";
 import { Image, Link } from "@heroui/react";
 
+function getFakeDartilesPost(posts: NestedPost[]) {
+  const post = posts[0];
+  return {
+    ...post,
+    user: {
+      id: "user_2x1BsnAmgPArzn4l8kjqSpVB8bf",
+      username: "dartilesm",
+      display_name: "Diego Artiles",
+      image_url:
+        "https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ2l0aHViL2ltZ18yeDFCc3RqSFI5VTBBT2JXV2NqMkxZSWJLOVUifQ",
+      bio: "Senior Frontend Engineer 🚀",
+      location: "Buenos Aires, Argentina",
+      website: "https://dartiles.dev",
+    },
+  };
+}
+
 export function SamplePost({ posts }: { posts: NestedPost[] }) {
-  const dartilesPost = posts?.find((post: NestedPost) => post.user?.username === "dartilesm");
+  const dartilesPost = getFakeDartilesPost(posts);
 
   return (
     <div
