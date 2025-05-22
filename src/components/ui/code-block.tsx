@@ -192,9 +192,9 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
 
   return (
     <div
-      className={`rounded-lg overflow-hidden border border-default-200 bg-content1 ${className} cursor-default`}
+      className={`rounded-xl overflow-hidden border border-default-200 bg-content1 ${className} cursor-default`}
     >
-      <div className='flex items-center justify-between pl-4 pr-2 py-1'>
+      <div className='flex items-center justify-between pl-4 pr-1 py-1'>
         <div className='flex items-center gap-2'>
           <Icon icon={getLanguageIcon(language)} className='w-4 h-4' />
           <span className='text-xs font-medium'>{formatLanguage(language)}</span>
