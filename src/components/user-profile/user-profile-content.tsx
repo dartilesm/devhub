@@ -2,8 +2,8 @@
 
 import { PostList } from "@/components/post/post-list";
 import { PostsProvider } from "@/context/posts-context";
+import type { NestedPost } from "@/types/nested-posts";
 import { Tab, Tabs } from "@heroui/react";
-import type { Tables } from "database.types";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 
@@ -16,7 +16,7 @@ enum UserProfileTabs {
 const tabOrder = [UserProfileTabs.POSTS, UserProfileTabs.MEDIA, UserProfileTabs.LIKES];
 
 interface UserProfileContentProps {
-  posts: Tables<"posts">[];
+  posts: NestedPost[];
 }
 
 export function UserProfileContent({ posts }: UserProfileContentProps) {

@@ -1,12 +1,10 @@
 import { PostComposer } from "@/components/post/post-composer";
 import { PostThreadLine } from "@/components/post/post-thread-line";
 import { UserPost } from "@/components/post/user-post";
-import type { Tables } from "database.types";
+import type { NestedPost } from "@/types/nested-posts";
 
 interface ReplyToPostProps {
-  post: Partial<Tables<"posts">> & {
-    user?: Partial<Tables<"users">>;
-  };
+  post: NestedPost;
   onSubmit?: () => void;
 }
 

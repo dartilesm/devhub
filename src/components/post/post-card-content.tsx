@@ -8,7 +8,7 @@ interface PostContentProps {
 }
 
 export function PostContent({ children }: PostContentProps) {
-  const { isThreadPagePost, post = {} } = usePostContext();
+  const { isThreadPagePost, post } = usePostContext();
   const { content } = post;
 
   return (
