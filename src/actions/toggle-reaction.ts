@@ -1,8 +1,8 @@
 "use server";
 
 import { createServerSupabaseClient } from "@/db/supabase";
-import { PostgrestSingleResponse } from "@supabase/supabase-js";
-import { Tables } from "database.types";
+import type { PostgrestSingleResponse } from "@supabase/supabase-js";
+import type { Tables } from "database.types";
 
 export interface ToggleReactionData {
   post_id: string;
@@ -14,7 +14,6 @@ export async function toggleReaction({
   reaction_type,
 }: ToggleReactionData): Promise<PostgrestSingleResponse<Tables<"reactions">>> {
   const supabaseClient = createServerSupabaseClient();
-  console.log("[toggleReaction] Starting reaction toggle:", { post_id, reaction_type });
 
   const toggleReaction = await supabaseClient
     .rpc("toggle_reaction", {
@@ -23,7 +22,5 @@ export async function toggleReaction({
     })
     .select()
     .single();
-
-  console.log("[toggleReaction] Toggle result:", toggleReaction);
   return toggleReaction;
 }

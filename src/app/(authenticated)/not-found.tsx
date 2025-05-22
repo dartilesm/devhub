@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@heroui/react";
-import Link from "next/link";
 import { PageHeader } from "@/components/ui/page-header";
-import { useParams } from "next/navigation";
+import { Button } from "@heroui/react";
 import { HomeIcon } from "lucide-react";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 /**
  * NotFoundPage displays a context-aware not-found message for authenticated routes, styled like the thread page.
@@ -14,8 +14,6 @@ export default function NotFoundPage() {
   const params = useParams();
   const username = decodeURIComponent((params?.username as string) || "");
   const postId = params?.postId;
-
-  console.log({ username, postId });
 
   function getNotFoundData() {
     if (username && postId) {
@@ -49,22 +47,16 @@ export default function NotFoundPage() {
   return (
     <>
       <PageHeader title={title} subtitle={subtitle} />
-      <div className='flex flex-col items-center w-full px-4 min-h-[60vh]'>
-        <h1
-          className='text-xl font-bold text-foreground mb-2 mt-16'
-          tabIndex={0}
-          aria-label={heading}
-        >
+      <div className="flex flex-col items-center w-full px-4 min-h-[60vh]">
+        <h1 className="text-xl font-bold text-foreground mb-2 mt-16" aria-label={heading}>
           {heading}
         </h1>
-        <p className='text-default-500 mb-8' tabIndex={0}>
-          {message}
-        </p>
+        <p className="text-default-500 mb-8">{message}</p>
         <Button
           as={Link}
-          href='/root'
-          color='primary'
-          aria-label='Go to root'
+          href="/root"
+          color="primary"
+          aria-label="Go to root"
           tabIndex={0}
           startContent={<HomeIcon size={16} />}
         >

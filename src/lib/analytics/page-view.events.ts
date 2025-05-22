@@ -10,9 +10,6 @@ export async function sendPageViewEvent(data: PageViewEventData) {
   const userAgent = data.headerList.get("user-agent") || "";
 
   if (!isDomainAllowed({ url, userAgent })) {
-    console.log(
-      `Page view event not sent because domain ${url} or user agent ${userAgent} is not allowed`
-    );
     return;
   }
 
@@ -40,8 +37,8 @@ export async function sendPageViewEvent(data: PageViewEventData) {
       },
       body: JSON.stringify(pageInfo),
     });
-    console.log({ response });
-    console.log("Page view event sent", { response });
+    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
+    console.log({ pageViewAnalyticsResponse: response });
   } catch (error) {
     console.error({ error });
   }

@@ -1,16 +1,16 @@
-import { updateProfile, UpdateProfileData } from "@/actions/update-profile";
-import { useMutation, UseMutationOptions } from "@tanstack/react-query";
+import { type UpdateProfileData, updateProfile } from "@/actions/update-profile";
+import { type UseMutationOptions, useMutation } from "@tanstack/react-query";
 
 export function useUpdateProfileMutation(
   useMutationProps: UseMutationOptions<
     Awaited<ReturnType<typeof updateProfile>>,
     Error,
     UpdateProfileData
-  >
+  >,
 ) {
   const mutation = useMutation({
     ...useMutationProps,
-    mutationFn: async function (data: UpdateProfileData) {
+    mutationFn: async (data: UpdateProfileData) => {
       const response = await updateProfile(data);
 
       if (response.error) {

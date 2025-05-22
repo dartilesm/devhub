@@ -1,9 +1,9 @@
 "use client";
 
-import { Icon } from "@iconify/react";
 import { Input } from "@heroui/react";
-import { useCallback, useState } from "react";
+import { Icon } from "@iconify/react";
 import { useDebounce } from "@uidotdev/usehooks";
+import { useCallback, useState } from "react";
 
 interface SearchBoxProps {
   onSearch: (term: string) => void;
@@ -19,21 +19,21 @@ export function SearchBox({ onSearch, placeholder = "Search..." }: SearchBoxProp
       setSearchTerm(value);
       debouncedSearch(value);
     },
-    [debouncedSearch]
+    [debouncedSearch],
   );
 
   return (
-    <div className='relative w-full max-w-2xl mx-auto'>
-      <div className='relative'>
+    <div className="relative w-full max-w-2xl mx-auto">
+      <div className="relative">
         <Input
           value={searchTerm}
           onChange={(e) => handleSearch(e.target.value)}
           placeholder={placeholder}
-          aria-label='Search'
+          aria-label="Search"
           startContent={
             <Icon
-              icon='lucide:search'
-              className='text-default-400 pointer-events-none flex-shrink-0'
+              icon="lucide:search"
+              className="text-default-400 pointer-events-none flex-shrink-0"
               width={20}
               height={20}
             />

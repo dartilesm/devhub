@@ -1,5 +1,5 @@
-import { notFound } from "next/navigation";
 import { withAnalytics } from "@/lib/with-analytics";
+import { notFound } from "next/navigation";
 
 function MessagesPage() {
   return notFound();

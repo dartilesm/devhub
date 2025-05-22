@@ -8,7 +8,7 @@ interface PostContentProps {
 }
 
 export function PostContent({ children }: PostContentProps) {
-  const { isThreadPagePost, post = {} } = usePostContext();
+  const { isThreadPagePost, post } = usePostContext();
   const { content } = post;
 
   return (
@@ -17,7 +17,7 @@ export function PostContent({ children }: PostContentProps) {
         "px-8.5": isThreadPagePost,
       })}
     >
-      {children ?? <p className='text-sm'>{content}</p>}
+      {children ?? <p className="text-sm">{content}</p>}
     </CardBody>
   );
 }

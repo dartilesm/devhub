@@ -1,7 +1,7 @@
-import { Icon } from "@iconify/react";
 import { Button, Chip, cn } from "@heroui/react";
+import { Icon } from "@iconify/react";
 import Link from "next/link";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export interface SidebarItemProps {
   to?: string;
@@ -33,7 +33,7 @@ export function SidebarItem({
         "bg-content3 dark:bg-content3/50": isActive,
         "justify-center px-2 max-xl:px-0": true,
       })}
-      variant='light'
+      variant="light"
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
       // Icon only below xl
@@ -55,20 +55,18 @@ export function SidebarItem({
 
       {hasAddButton && (
         <button
-          className='text-content2-foreground hover:text-content1-foreground transition-colors opacity-0 group-hover:opacity-100 max-xl:hidden xl:inline'
+          className="text-content2-foreground hover:text-content1-foreground transition-colors opacity-0 group-hover:opacity-100 max-xl:hidden xl:inline"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            // Handle add action
-            console.log(`Add new ${label}`);
           }}
         >
-          <Icon icon='lucide:plus' width={16} height={16} />
+          <Icon icon="lucide:plus" width={16} height={16} />
         </button>
       )}
 
       {badge && (
-        <Chip color='primary' size='sm' className='max-xl:hidden xl:inline'>
+        <Chip color="primary" size="sm" className="max-xl:hidden xl:inline">
           {badge}
         </Chip>
       )}

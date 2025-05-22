@@ -1,7 +1,7 @@
 import "server-only";
-import { headers } from "next/headers";
-import { ReactNode } from "react";
 import { sendPageViewEvent } from "@/lib/analytics/page-view.events";
+import { headers } from "next/headers";
+import type { ReactNode } from "react";
 export async function getIp(headerList: Headers) {
   const forwardedFor = headerList.get("x-forwarded-for");
   const realIp = headerList.get("x-real-ip");
@@ -21,10 +21,9 @@ interface WithAnalyticsProps {
 
 export function withAnalytics<P>(
   PageComponent: (props: P) => ReactNode,
-  { event = "page-view" }: WithAnalyticsProps = {} as WithAnalyticsProps
+  { event = "page-view" }: WithAnalyticsProps = {} as WithAnalyticsProps,
 ) {
   return async function AnalyticsWrapper(props: P) {
-    console.log("AnalyticsWrapper");
     const headerList = await headers();
     const ip = await getIp(headerList);
 

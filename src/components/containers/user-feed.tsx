@@ -22,7 +22,7 @@ export async function UserFeed() {
 
   return (
     <PostsProvider initialPosts={initialPosts || []}>
-      <div className='w-full p-4 flex flex-col gap-4'>
+      <div className="w-full p-4 flex flex-col gap-4">
         <PostComposer />
         <PostList />
       </div>

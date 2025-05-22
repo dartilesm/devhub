@@ -12,7 +12,7 @@ export function PostWrapper({ children, isAncestry }: PostWrapperProps) {
         "relative dark:bg-content1 dark:border-content2 bg-default-200/20 border border-content3 rounded-large overflow-hidden",
         {
           "bg-transparent border-none dark:bg-transparent dark:border-none": isAncestry,
-        }
+        },
       )}
     >
       {children}

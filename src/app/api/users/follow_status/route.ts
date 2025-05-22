@@ -1,6 +1,6 @@
 import { createServerSupabaseClient } from "@/db/supabase";
 import { currentUser } from "@clerk/nextjs/server";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 
 /**
  * GET /api/users/follow_status?targetUserId=xxx

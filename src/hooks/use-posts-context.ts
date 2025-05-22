@@ -1,7 +1,7 @@
 "use client";
 
-import { useContext } from "react";
 import { PostsContext } from "@/context/posts-context";
+import { useContext } from "react";
 /**
  * Hook to access the posts context
  */

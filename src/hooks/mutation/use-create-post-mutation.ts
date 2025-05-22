@@ -1,6 +1,6 @@
-import { createPostComment, CreatePostCommentProps } from "@/actions/post-comment";
-import { useUser } from "@clerk/nextjs";
-import { useMutation, UseMutationOptions } from "@tanstack/react-query";
+import { type CreatePostCommentProps, createPostComment } from "@/actions/post-comment";
+import type { useUser } from "@clerk/nextjs";
+import { type UseMutationOptions, useMutation } from "@tanstack/react-query";
 
 export function useCreatePostMutation(
   useMutationProps: UseMutationOptions<
@@ -8,12 +8,12 @@ export function useCreatePostMutation(
     Error,
     CreatePostCommentProps
   >,
-  user: ReturnType<typeof useUser>["user"]
+  user: ReturnType<typeof useUser>["user"],
 ) {
   const mutation = useMutation({
     ...useMutationProps,
     mutationKey: ["create-post", user?.id],
-    mutationFn: async function (data: CreatePostCommentProps) {
+    mutationFn: async (data: CreatePostCommentProps) => {
       const response = await createPostComment(data);
       return response;
     },

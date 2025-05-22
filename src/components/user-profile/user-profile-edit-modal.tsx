@@ -15,7 +15,7 @@ import {
   Textarea,
 } from "@heroui/react";
 import { Icon } from "@iconify/react";
-import { Tables } from "database.types";
+import type { Tables } from "database.types";
 import Link from "next/link";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -82,70 +82,70 @@ export function UserProfileEditModal({ onClose, profile, onSave }: UserProfileEd
   };
 
   return (
-    <Modal onClose={onClose} size='xl' scrollBehavior='inside' defaultOpen backdrop='blur'>
+    <Modal onClose={onClose} size="xl" scrollBehavior="inside" defaultOpen backdrop="blur">
       <ModalContent>
         {(onModalClose) => (
           <div>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <ModalHeader className='flex flex-col gap-1'>Edit Profile</ModalHeader>
-              <ModalBody className='overflow-hidden'>
-                <div className='space-y-6'>
+              <ModalHeader className="flex flex-col gap-1">Edit Profile</ModalHeader>
+              <ModalBody className="overflow-hidden">
+                <div className="space-y-6">
                   <Alert
-                    color='primary'
+                    color="primary"
                     description={
                       <span>
                         To edit avatar and username, go to{" "}
                         <Link
-                          href='/account-settings'
-                          className='[font-size:inherit] text-inherit underline'
+                          href="/account-settings"
+                          className="[font-size:inherit] text-inherit underline"
                         >
                           Account Settings
                         </Link>
                       </span>
                     }
                   />
-                  <Card isDisabled className='rounded-none space-y-6 shadow-none'>
+                  <Card isDisabled className="rounded-none space-y-6 shadow-none">
                     {/* Avatar */}
-                    <div className='space-y-2'>
-                      <p className='text-small font-medium'>Profile Picture</p>
-                      <div className='flex items-center space-x-4'>
-                        <div className='w-20 h-20 rounded-full overflow-hidden'>
+                    <div className="space-y-2">
+                      <p className="text-small font-medium">Profile Picture</p>
+                      <div className="flex items-center space-x-4">
+                        <div className="w-20 h-20 rounded-full overflow-hidden">
                           {watch("image_url") ? (
-                            <div className='relative w-full h-full'>
+                            <div className="relative w-full h-full">
                               <Image
                                 src={watch("image_url") || ""}
-                                alt='Avatar'
-                                className='w-full h-full object-cover'
+                                alt="Avatar"
+                                className="w-full h-full object-cover"
                                 removeWrapper
                               />
                               <Button
                                 isIconOnly
-                                size='sm'
-                                color='danger'
-                                variant='flat'
-                                className='absolute top-0 right-0'
+                                size="sm"
+                                color="danger"
+                                variant="flat"
+                                className="absolute top-0 right-0"
                                 onPress={() => handleImageUpload("image_url", "")}
                               >
-                                <Icon icon='lucide:x' width={16} />
+                                <Icon icon="lucide:x" width={16} />
                               </Button>
                             </div>
                           ) : (
                             <ImageUploader
                               onImageUpload={(url) => handleImageUpload("image_url", url)}
-                              aspectRatio='1:1'
-                              className='w-full h-full bg-default-100 flex items-center justify-center'
+                              aspectRatio="1:1"
+                              className="w-full h-full bg-default-100 flex items-center justify-center"
                             >
-                              <div className='flex flex-col items-center justify-center text-default-500'>
-                                <Icon icon='lucide:user' width={16} />
+                              <div className="flex flex-col items-center justify-center text-default-500">
+                                <Icon icon="lucide:user" width={16} />
                               </div>
                             </ImageUploader>
                           )}
                         </div>
-                        <div className='flex-1'>
-                          <p className='text-tiny text-default-500'>
+                        <div className="flex-1">
+                          <p className="text-tiny text-default-500">
                             Upload a profile picture to make your profile more personalized.
                           </p>
-                          <p className='text-tiny text-default-500 mt-1'>
+                          <p className="text-tiny text-default-500 mt-1">
                             Recommended size: 400x400 pixels.
                           </p>
                         </div>
@@ -153,7 +153,7 @@ export function UserProfileEditModal({ onClose, profile, onSave }: UserProfileEd
                     </div>
                     {/* Display Name */}
                     <Controller
-                      name='display_name'
+                      name="display_name"
                       control={control}
                       disabled
                       rules={{
@@ -165,12 +165,12 @@ export function UserProfileEditModal({ onClose, profile, onSave }: UserProfileEd
                       }}
                       render={({ field }) => (
                         <Input
-                          label='Display Name'
-                          placeholder='Enter your name'
+                          label="Display Name"
+                          placeholder="Enter your name"
                           isRequired
                           isInvalid={!!errors.display_name}
                           errorMessage={errors.display_name?.message}
-                          description='This is how your name will appear across the platform'
+                          description="This is how your name will appear across the platform"
                           isDisabled
                           classNames={{
                             label: "top-0 pt-[inherit]",
@@ -183,7 +183,7 @@ export function UserProfileEditModal({ onClose, profile, onSave }: UserProfileEd
                   </Card>
                   {/* Bio */}
                   <Controller
-                    name='bio'
+                    name="bio"
                     control={control}
                     rules={{
                       maxLength: {
@@ -193,8 +193,8 @@ export function UserProfileEditModal({ onClose, profile, onSave }: UserProfileEd
                     }}
                     render={({ field }) => (
                       <Textarea
-                        label='Biography'
-                        placeholder='Tell us about yourself...'
+                        label="Biography"
+                        placeholder="Tell us about yourself..."
                         maxRows={5}
                         isInvalid={!!errors.bio}
                         errorMessage={errors.bio?.message}
@@ -206,12 +206,12 @@ export function UserProfileEditModal({ onClose, profile, onSave }: UserProfileEd
                   />
                   {/* Location */}
                   <Controller
-                    name='location'
+                    name="location"
                     control={control}
                     render={({ field }) => (
                       <Input
-                        label='Location'
-                        placeholder='e.g., San Francisco, CA'
+                        label="Location"
+                        placeholder="e.g., San Francisco, CA"
                         {...field}
                         value={field.value || ""}
                         classNames={{
@@ -222,7 +222,7 @@ export function UserProfileEditModal({ onClose, profile, onSave }: UserProfileEd
                   />
                   {/* Website */}
                   <Controller
-                    name='website'
+                    name="website"
                     control={control}
                     rules={{
                       pattern: {
@@ -233,12 +233,12 @@ export function UserProfileEditModal({ onClose, profile, onSave }: UserProfileEd
                     }}
                     render={({ field }) => (
                       <Input
-                        label='Website'
-                        placeholder='https://yourwebsite.com'
+                        label="Website"
+                        placeholder="https://yourwebsite.com"
                         isInvalid={!!errors.website}
                         errorMessage={errors.website?.message}
                         startContent={
-                          <Icon icon='lucide:globe' className='text-default-400' width={16} />
+                          <Icon icon="lucide:globe" className="text-default-400" width={16} />
                         }
                         classNames={{
                           label: "top-0 pt-[inherit]",
@@ -251,12 +251,12 @@ export function UserProfileEditModal({ onClose, profile, onSave }: UserProfileEd
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color='default' variant='flat' onPress={onModalClose}>
+                <Button color="default" variant="flat" onPress={onModalClose}>
                   Cancel
                 </Button>
                 <Button
-                  type='submit'
-                  color='primary'
+                  type="submit"
+                  color="primary"
                   isLoading={updateProfileMutation.isPending}
                   isDisabled={updateProfileMutation.isPending}
                 >
@@ -327,12 +327,12 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
     <div className={`cursor-pointer ${className || ""}`} onClick={triggerFileInput}>
       {children}
       <input
-        type='file'
+        type="file"
         ref={fileInputRef}
         onChange={handleFileChange}
-        accept='image/*'
-        className='hidden'
-        aria-label='Upload image'
+        accept="image/*"
+        className="hidden"
+        aria-label="Upload image"
       />
     </div>
   );

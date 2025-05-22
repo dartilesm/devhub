@@ -26,9 +26,9 @@ export function getRelativeTime(date: Date) {
   // For less than 24 hours, return concise format
   if (diffInSeconds < MINUTE) {
     return `${diffInSeconds}s`;
-  } else if (diffInSeconds < HOUR) {
-    return `${Math.floor(diffInSeconds / MINUTE)}m`;
-  } else {
-    return `${Math.floor(diffInSeconds / HOUR)}h`;
   }
+  if (diffInSeconds < HOUR) {
+    return `${Math.floor(diffInSeconds / MINUTE)}m`;
+  }
+  return `${Math.floor(diffInSeconds / HOUR)}h`;
 }

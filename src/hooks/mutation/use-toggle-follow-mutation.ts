@@ -1,6 +1,6 @@
-import { toggleFollow, ToggleFollowData } from "@/actions/toggle-follow";
-import { useMutation, UseMutationOptions, useQueryClient } from "@tanstack/react-query";
+import { type ToggleFollowData, toggleFollow } from "@/actions/toggle-follow";
 import { useUser } from "@clerk/nextjs";
+import { type UseMutationOptions, useMutation, useQueryClient } from "@tanstack/react-query";
 /**
  * Hook to handle toggling follow status for users
  * @param useMutationProps - Additional mutation options from React Query
@@ -11,7 +11,7 @@ export function useToggleFollowMutation(
     Awaited<ReturnType<typeof toggleFollow>>,
     Error,
     ToggleFollowData
-  > = {}
+  > = {},
 ) {
   const queryClient = useQueryClient();
   const { user: currentUser } = useUser();
@@ -23,7 +23,7 @@ export function useToggleFollowMutation(
         queryKey: ["isFollowing", currentUser?.id, variables.target_user_id],
       });
     },
-    mutationFn: async function (data: ToggleFollowData) {
+    mutationFn: async (data: ToggleFollowData) => {
       const response = await toggleFollow(data);
 
       if (response.error) {

@@ -1,7 +1,7 @@
 "use client";
 
-import { useContext } from "react";
 import { ProfileContext } from "@/context/profile-provider";
+import { useContext } from "react";
 /**
  * Hook to access the profile context
  */

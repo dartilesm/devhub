@@ -6,7 +6,7 @@
 export function formatDateTime(date: string | Date): string {
   const dateObj = typeof date === "string" ? new Date(date) : date;
 
-  if (isNaN(dateObj.getTime())) {
+  if (Number.isNaN(dateObj.getTime())) {
     return "Invalid date";
   }
 
