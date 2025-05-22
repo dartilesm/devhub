@@ -1,5 +1,6 @@
 import { PostComposer } from "@/components/post/post-composer";
 import { PostList } from "@/components/post/post-list";
+import { SamplePost } from "@/components/sample-post";
 import { PostsProvider } from "@/context/posts-context";
 import { createServerSupabaseClient } from "@/db/supabase";
 
@@ -24,6 +25,8 @@ export async function UserFeed() {
     <PostsProvider initialPosts={initialPosts || []}>
       <div className='w-full p-4 flex flex-col gap-4'>
         <PostComposer />
+        {/* Demostration of the UserPost component */}
+        <SamplePost posts={initialPosts} />
         <PostList />
       </div>
     </PostsProvider>

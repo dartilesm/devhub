@@ -14,6 +14,8 @@ interface UserPostProps {
   ref?: React.RefObject<HTMLDivElement>;
   className?: string;
   isModal?: boolean;
+  children?: React.ReactNode;
+  isSamplePost?: boolean;
 }
 
 export function UserPost({
@@ -25,6 +27,8 @@ export function UserPost({
   ref,
   className,
   isModal,
+  children,
+  isSamplePost,
 }: UserPostProps) {
   if (!post && !ancestry) {
     throw new Error("Either post or ancestry must be provided");
@@ -49,9 +53,9 @@ export function UserPost({
           isLastInThread={lastInThread}
           isModal={isModal}
         >
-          <PostCard ref={ref} className={className}>
+          <PostCard ref={ref} className={className} isSamplePost={isSamplePost}>
             <PostHeader />
-            <PostContent />
+            <PostContent>{children}</PostContent>
             <PostFooter />
           </PostCard>
           {post?.replies &&

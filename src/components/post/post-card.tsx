@@ -9,10 +9,11 @@ interface PostCardProps {
   children: React.ReactNode;
   className?: string;
   classNames?: CardProps["classNames"];
+  isSamplePost?: boolean;
   ref?: React.RefObject<HTMLDivElement>;
 }
 
-export function PostCard({ children, className, classNames, ref }: PostCardProps) {
+export function PostCard({ children, className, classNames, ref, isSamplePost }: PostCardProps) {
   const { isThreadPagePost, post, isModal } = usePostContext();
   const router = useRouter();
   const pathname = usePathname();
@@ -20,7 +21,7 @@ export function PostCard({ children, className, classNames, ref }: PostCardProps
   function handleClick(event: React.MouseEvent<HTMLDivElement>) {
     // Check if the clicked element or its parents is an anchor tag
     const isAnchorElement = (event.target as HTMLElement).closest("a");
-    if (isAnchorElement || isModal) return;
+    if (isAnchorElement || isModal || isSamplePost) return;
 
     const pushPath = `/@${post.user?.username}/thread/${post.id}`;
 
