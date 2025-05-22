@@ -1,7 +1,7 @@
 import { UserFeed } from "@/components/containers/user-feed";
 import { withAnalytics } from "@/lib/with-analytics";
 
-export function Home() {
+function Home() {
   return <UserFeed />;
 }
 

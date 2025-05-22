@@ -23,7 +23,6 @@ export function withAnalytics<P>(
   PageComponent: (props: P) => ReactNode,
   { event = "page-view" }: WithAnalyticsProps = {} as WithAnalyticsProps
 ) {
-  console.log({ event });
   return async function AnalyticsWrapper(props: P) {
     console.log("AnalyticsWrapper");
     const headerList = await headers();

@@ -5,7 +5,7 @@ interface PageViewEventData {
   headerList: Headers;
 }
 
-export function sendPageViewEvent(data: PageViewEventData) {
+export async function sendPageViewEvent(data: PageViewEventData) {
   const url = data.headerList.get("x-full-url") || "";
   const userAgent = data.headerList.get("user-agent") || "";
 
@@ -31,5 +31,18 @@ export function sendPageViewEvent(data: PageViewEventData) {
     tags: {},
   };
 
-  console.log("Page view event sent", pageInfo);
+  try {
+    const response = await fetch(`${process.env.PIRSCH_API_URL}/hit`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.PIRSCH_ACCESS_KEY}`,
+      },
+      body: JSON.stringify(pageInfo),
+    });
+    console.log({ response });
+    console.log("Page view event sent", { response });
+  } catch (error) {
+    console.error({ error });
+  }
 }
