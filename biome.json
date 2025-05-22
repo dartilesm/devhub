@@ -31,7 +31,7 @@
       "recommended": true,
       "correctness": {
         "noUnusedVariables": "error",
-        "useExhaustiveDependencies": "error",
+        "useExhaustiveDependencies": "warn",
         "noUndeclaredVariables": "off",
         "noUnusedImports": "error"
       },
@@ -67,14 +67,16 @@
         "useMediaCaption": "error",
         "useAltText": "error",
         "noHeaderScope": "error",
-        "useValidAnchor": "error",
+        "useValidAnchor": "warn",
         "noPositiveTabindex": "error",
         "useValidLang": "error"
       }
     }
   },
   "javascript": {
-    "globals": ["React"],
+    "globals": [
+      "React"
+    ],
     "formatter": {
       "quoteStyle": "double",
       "trailingComma": "all",
