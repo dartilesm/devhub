@@ -1,0 +1,47 @@
+name: "🛠️ Technical Improvement"
+description: "Refactor, optimize, or tidy up the internals of ByteBuzz."
+title: "[🛠️ Tech]: "
+labels: ["technical debt", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Improving the insides of ByteBuzz?**  
+        Use this template to propose refactors, performance tweaks, or technical upgrades.
+
+  - type: textarea
+    id: improvement-summary
+    attributes:
+      label: What's the improvement?
+      description: Briefly describe what you're aiming to improve.
+      placeholder: "Refactor the comment rendering logic to reduce duplication."
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Why is this needed?
+      description: Explain the benefit or reasoning—e.g., cleaner code, better performance, etc.
+      placeholder: "Helps avoid duplicate logic and improves maintainability."
+    validations:
+      required: true
+
+  - type: textarea
+    id: approach
+    attributes:
+      label: How might this be done?
+      description: Optionally describe how you'd approach the change.
+      placeholder: "Extract shared components and use hooks for state management."
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Any potential risks or impacts?
+      placeholder: "May affect comment layout if not properly tested."
+
+  - type: input
+    id: bytebuzz-username
+    attributes:
+      label: Your @username (if known)
+      placeholder: "@devwizard"
