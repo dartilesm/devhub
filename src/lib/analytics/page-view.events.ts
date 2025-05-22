@@ -29,7 +29,7 @@ export async function sendPageViewEvent(data: PageViewEventData) {
   };
 
   try {
-    const _response = await fetch(`${process.env.PIRSCH_API_URL}/hit`, {
+    const response = await fetch(`${process.env.PIRSCH_API_URL}/hit`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,6 +37,8 @@ export async function sendPageViewEvent(data: PageViewEventData) {
       },
       body: JSON.stringify(pageInfo),
     });
+    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
+    console.log({ pageViewAnalyticsResponse: response });
   } catch (error) {
     console.error({ error });
   }
