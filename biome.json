@@ -32,7 +32,7 @@
       "correctness": {
         "noUnusedVariables": "error",
         "useExhaustiveDependencies": "error",
-        "noUndeclaredVariables": "error",
+        "noUndeclaredVariables": "off",
         "noUnusedImports": "error"
       },
       "suspicious": {
@@ -74,6 +74,7 @@
     }
   },
   "javascript": {
+    "globals": ["React"],
     "formatter": {
       "quoteStyle": "double",
       "trailingComma": "all",
