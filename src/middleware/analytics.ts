@@ -33,7 +33,6 @@ export async function handleAnalytics() {
   const userAgent = await getHeader("user-agent");
   const pathname = await getHeader("x-current-path");
   const url = `https://${HOST_NAME}${pathname}`;
-  console.log({ headers: await headers() });
 
   // TODO: Find a way to exclude prefetch requests
   if (!userAgent?.includes("vercel") && url.includes(HOST_NAME)) {
