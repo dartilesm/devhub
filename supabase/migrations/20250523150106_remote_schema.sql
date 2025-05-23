@@ -92,30 +92,6 @@ $$;
 ALTER FUNCTION "public"."decrement_repost_count"() OWNER TO "postgres";
 
 
-CREATE OR REPLACE FUNCTION "public"."get_direct_replies"("target_id" "uuid") RETURNS TABLE("id" "uuid", "content" "text", "created_at" timestamp with time zone, "parent_post_id" "uuid", "repost_post_id" "uuid", "user" "json")
-    LANGUAGE "sql" STABLE
-    AS $$
-  SELECT
-    p.id,
-    p.content,
-    p.created_at,
-    p.parent_post_id,
-    p.repost_post_id,
-    json_build_object(
-      'username', u.username,
-      'display_name', u.display_name,
-      'image_url', u.image_url
-    ) AS user_info
-  FROM posts p
-  JOIN users u ON p.user_id = u.clerk_user_id
-  WHERE p.parent_post_id = target_id
-  ORDER BY p.created_at ASC;
-$$;
-
-
-ALTER FUNCTION "public"."get_direct_replies"("target_id" "uuid") OWNER TO "postgres";
-
-
 CREATE OR REPLACE FUNCTION "public"."get_post_ancestry"("start_id" "uuid") RETURNS TABLE("id" "uuid", "content" "text", "created_at" timestamp with time zone, "parent_post_id" "uuid", "repost_post_id" "uuid", "star_count" integer, "coffee_count" integer, "approve_count" integer, "cache_count" integer, "user" "json", "reaction" "json")
     LANGUAGE "sql" STABLE
     AS $$
@@ -564,48 +540,6 @@ $$;
 ALTER FUNCTION "public"."toggle_reaction"("input_post_id" "uuid", "input_reaction_type" "text") OWNER TO "postgres";
 
 
-CREATE OR REPLACE FUNCTION "public"."toggle_reaction"("input_post_id" "uuid", "input_user_id" "text", "input_reaction_type" "text") RETURNS "public"."reactions"
-    LANGUAGE "plpgsql"
-    AS $$
-DECLARE
-  existing_id UUID;
-  existing_type TEXT;
-  reaction_row reactions;
-BEGIN
-  -- Check if any reaction exists for that user + post
-  SELECT id, reaction_type INTO existing_id, existing_type
-  FROM reactions
-  WHERE post_id = input_post_id
-    AND user_id = input_user_id;
-
-  IF existing_id IS NOT NULL THEN
-    IF existing_type = input_reaction_type THEN
-      -- Same reaction: delete it (toggle off)
-      DELETE FROM reactions WHERE id = existing_id RETURNING * INTO reaction_row;
-      RETURN reaction_row;
-    ELSE
-      -- Different reaction: update to the new type
-      UPDATE reactions
-      SET reaction_type = input_reaction_type,
-          created_at = now()
-      WHERE id = existing_id
-      RETURNING * INTO reaction_row;
-      RETURN reaction_row;
-    END IF;
-  ELSE
-    -- No reaction yet: insert new
-    INSERT INTO reactions (post_id, user_id, reaction_type)
-    VALUES (input_post_id, input_user_id, input_reaction_type)
-    RETURNING * INTO reaction_row;
-    RETURN reaction_row;
-  END IF;
-END;
-$$;
-
-
-ALTER FUNCTION "public"."toggle_reaction"("input_post_id" "uuid", "input_user_id" "text", "input_reaction_type" "text") OWNER TO "postgres";
-
-
 CREATE OR REPLACE FUNCTION "public"."update_follow_counts"() RETURNS "trigger"
     LANGUAGE "plpgsql"
     AS $$
@@ -707,11 +641,11 @@ CREATE TABLE IF NOT EXISTS "public"."posts" (
     "repost_post_id" "uuid",
     "reply_count" integer DEFAULT 0,
     "repost_count" integer DEFAULT 0,
-    "created_at" timestamp with time zone DEFAULT "now"(),
     "star_count" integer DEFAULT 0,
     "coffee_count" integer DEFAULT 0,
     "approve_count" integer DEFAULT 0,
-    "cache_count" integer DEFAULT 0
+    "cache_count" integer DEFAULT 0,
+    "created_at" timestamp with time zone DEFAULT "now"()
 );
 
 
@@ -749,17 +683,28 @@ ALTER TABLE ONLY "public"."user_followers"
 
 
 ALTER TABLE ONLY "public"."users"
-    ADD CONSTRAINT "users_clerk_user_id_key" UNIQUE ("id");
-
-
-
-ALTER TABLE ONLY "public"."users"
     ADD CONSTRAINT "users_pkey" PRIMARY KEY ("id");
 
 
 
 ALTER TABLE ONLY "public"."users"
     ADD CONSTRAINT "users_username_key" UNIQUE ("username");
+
+
+
+CREATE OR REPLACE TRIGGER "trigger_decrement_reply_count" AFTER DELETE ON "public"."posts" FOR EACH ROW WHEN (("old"."parent_post_id" IS NOT NULL)) EXECUTE FUNCTION "public"."decrement_reply_count"();
+
+
+
+CREATE OR REPLACE TRIGGER "trigger_decrement_repost_count" AFTER DELETE ON "public"."posts" FOR EACH ROW WHEN (("old"."repost_post_id" IS NOT NULL)) EXECUTE FUNCTION "public"."decrement_repost_count"();
+
+
+
+CREATE OR REPLACE TRIGGER "trigger_increment_reply_count" AFTER INSERT ON "public"."posts" FOR EACH ROW WHEN (("new"."parent_post_id" IS NOT NULL)) EXECUTE FUNCTION "public"."increment_reply_count"();
+
+
+
+CREATE OR REPLACE TRIGGER "trigger_increment_repost_count" AFTER INSERT ON "public"."posts" FOR EACH ROW WHEN (("new"."repost_post_id" IS NOT NULL)) EXECUTE FUNCTION "public"."increment_repost_count"();
 
 
 
@@ -1050,12 +995,6 @@ GRANT ALL ON FUNCTION "public"."decrement_repost_count"() TO "service_role";
 
 
 
-GRANT ALL ON FUNCTION "public"."get_direct_replies"("target_id" "uuid") TO "anon";
-GRANT ALL ON FUNCTION "public"."get_direct_replies"("target_id" "uuid") TO "authenticated";
-GRANT ALL ON FUNCTION "public"."get_direct_replies"("target_id" "uuid") TO "service_role";
-
-
-
 GRANT ALL ON FUNCTION "public"."get_post_ancestry"("start_id" "uuid") TO "anon";
 GRANT ALL ON FUNCTION "public"."get_post_ancestry"("start_id" "uuid") TO "authenticated";
 GRANT ALL ON FUNCTION "public"."get_post_ancestry"("start_id" "uuid") TO "service_role";
@@ -1119,12 +1058,6 @@ GRANT ALL ON TABLE "public"."reactions" TO "service_role";
 GRANT ALL ON FUNCTION "public"."toggle_reaction"("input_post_id" "uuid", "input_reaction_type" "text") TO "anon";
 GRANT ALL ON FUNCTION "public"."toggle_reaction"("input_post_id" "uuid", "input_reaction_type" "text") TO "authenticated";
 GRANT ALL ON FUNCTION "public"."toggle_reaction"("input_post_id" "uuid", "input_reaction_type" "text") TO "service_role";
-
-
-
-GRANT ALL ON FUNCTION "public"."toggle_reaction"("input_post_id" "uuid", "input_user_id" "text", "input_reaction_type" "text") TO "anon";
-GRANT ALL ON FUNCTION "public"."toggle_reaction"("input_post_id" "uuid", "input_user_id" "text", "input_reaction_type" "text") TO "authenticated";
-GRANT ALL ON FUNCTION "public"."toggle_reaction"("input_post_id" "uuid", "input_user_id" "text", "input_reaction_type" "text") TO "service_role";
 
 
 
