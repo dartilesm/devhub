@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Start Supabase local development setup
+        run: supabase db start
+
+      - name: Run lint
+        run: supabase db lint --fail-on error
+
+      - name: Run tests
+        run: supabase test db
+
+      - name: Verify generated types are checked in
+        run: |
+          supabase gen types typescript --local > types.gen.ts
+          if ! git diff --ignore-space-at-eol --exit-code --quiet types.gen.ts; then
+            echo "Detected uncommitted changes after build. See status below:"
+            git diff
+            exit 1
+          fi
+
+      - name: Generate backup
+        run: bun db:dump-remote
+
+      - name: Archive backup
+        uses: actions/upload-artifact@v4
+        with:
+          name: db-backup
+          path: supabase/dump/
+          retention-days: 5
