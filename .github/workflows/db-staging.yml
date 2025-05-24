@@ -17,7 +17,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
 
       - uses: supabase/setup-cli@v1
         with:
@@ -36,6 +35,7 @@ jobs:
         run: supabase test db
 
       - name: Generate backup
+        uses: oven-sh/setup-bun@v2
         run: bun db:dump-remote
 
       - name: Archive backup

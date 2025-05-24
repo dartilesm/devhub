@@ -34,6 +34,7 @@ jobs:
           fi
 
       - name: Generate backup
+        uses: oven-sh/setup-bun@v2
         run: bun db:dump-remote
 
       - name: Archive backup
