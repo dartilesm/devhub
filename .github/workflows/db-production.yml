@@ -34,8 +34,10 @@ jobs:
       - name: Run tests
         run: supabase test db
 
-      - name: Generate backup
+      - name: Setup Bun
         uses: oven-sh/setup-bun@v2
+
+      - name: Generate backup
         run: bun db:dump-remote
 
       - name: Archive backup
