@@ -3,14 +3,14 @@ name: CI
 on:
   push:
     branches:
-      - feat/*
-      - fix/*
-      - chore/*
-      - docs/*
-      - refactor/*
-      - perf/*
-      - test/*
-      - style/*
+      - "feat/**"
+      - "fix/**"
+      - "chore/**"
+      - "docs/**"
+      - "refactor/**"
+      - "perf/**"
+      - "test/**"
+      - "style/**"
   pull_request:
   workflow_dispatch:
 
